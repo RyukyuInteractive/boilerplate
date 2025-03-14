@@ -1,0 +1,4 @@
+- `bun test` - テストを実行する
+- `bun run format` - コードを整形する
+- `bun run --cwd workspace update-pages-csv` - ページを追加した場合は実行する
+- `bun run --cwd workspace update-instructions-markdown` - ルールを更新する

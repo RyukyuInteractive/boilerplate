@@ -1,0 +1,23 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "boilerplate-api",
+  "main": "index.ts",
+  "compatibility_date": "2024-08-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "boilerplate",
+      "database_id": "-"
+    }
+  ],
+  "vars": {
+    "JWT_COOKIE_SECRET": "5a4f3b6a-33f6-419e-913e-d1c7a1f3c7cd",
+    "JWT_COOKIE_KEY": "boilerplate.session-token",
+    "JWT_SECRET": "0083d336-2215-4074-884b-d7b6ccd47569",
+    "CORS_DOMAIN": ""
+  }
+}

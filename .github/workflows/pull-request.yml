@@ -1,0 +1,22 @@
+name: 品質検査
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check:
+    name: 品質検査
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔨 Checkout!
+        uses: actions/checkout@v4
+      - name: 🔨 Setup Bun
+        uses: oven-sh/setup-bun@v1
+      - name: 🔨 Install
+        run: bun install --ignore-scripts        
+      - name: 💪 Build
+        run: bun prisma generate
+      - name: 🔍 Run TypeScript
+        run: bun --cwd app tsc --noEmit
+      - name: 🎬 Run Test
+        run: bun test

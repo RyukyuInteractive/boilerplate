@@ -1,0 +1,2 @@
+- `@pothos/core` - GraphQLのスキーマを定義する
+- `@prisma/client` - データベースのORM

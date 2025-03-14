@@ -1,11 +1,29 @@
 {
   "name": "boilerplate",
-  "module": "index.ts",
   "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "predev": "bun run --cwd workspace build",
+    "dev": "prisma generate && bun run index.ts",
+    "format": "biome check . --fix --unsafe && prisma format",
+    "check": "bun run --cwd api typecheck && bun run --cwd app typecheck",
+    "studio": "prisma studio",
+    "push": "prisma db push",
+    "generate": "prisma generate"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+  "dependencies": {
+    "@prisma/adapter-d1": "^6.5.0",
+    "@prisma/client": "^6.5.0",
+    "graphql": "^16.10.0",
+    "hono": "^4.7.0",
+    "valibot": "^1.0.0-beta.15"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest",
+    "concurrently": "^9.1.2",
+    "prisma": "^6.5.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^3.114.1"
+  },
+  "workspaces": ["app", "api"]
 }
