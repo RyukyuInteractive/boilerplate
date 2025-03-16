@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { DeleteProject } from "~/application/project/delete-project"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import type { SchemaTypes } from "~/interface/types/schema-types"
 
@@ -23,9 +22,7 @@ export const deleteProject: MutationFieldThunk<SchemaTypes> = (t) => {
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError(
-          "プロジェクトの削除に失敗しました。",
-        )
+        throw result
       }
 
       return result.id

@@ -1,4 +1,3 @@
-import { NameValue } from "~/domain/values/name.value"
 import type { Context } from "~/env"
 import { OrganizationRepository } from "~/infrastructure/repositories/organization.repository"
 import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
@@ -6,14 +5,13 @@ import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error
 
 type Props = {
   id: string
-  name: string
-  description?: string | null
+  userId: string
 }
 
 /**
- * 組織を更新する
+ * 組織を削除する
  */
-export class UpdateOrganization {
+export class DeleteOrganization {
   constructor(
     readonly c: Context,
     readonly deps = {
@@ -26,18 +24,23 @@ export class UpdateOrganization {
       const organization = await this.deps.repository.read(props.id)
 
       if (organization === null) {
+        return new NotFoundGraphQLError()
+      }
+
+      if (organization.deletedAt !== null) {
         return new NotFoundGraphQLError("組織が見つかりません。")
       }
 
-      const draft = organization.updateName(new NameValue(props.name))
+      // エンティティの delete メソッドを使用して論理削除を行う
+      const draft = organization.delete()
 
       const result = await this.deps.repository.write(draft)
 
       if (result instanceof Error) {
-        return new InternalGraphQLError("組織の更新に失敗しました。")
+        return new InternalGraphQLError()
       }
 
-      return draft
+      return { id: props.id }
     } catch (error) {
       return new InternalGraphQLError()
     }

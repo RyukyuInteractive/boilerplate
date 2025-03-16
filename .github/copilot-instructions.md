@@ -392,14 +392,15 @@ export class CreateOrganization {
         name: props.name,
       })
 
-      await this.deps.repository.write(organization)
+      const result = await this.deps.repository.write(organization)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
 
       return organization
     } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, error)
-      }
-      return new HTTPException(500, { message: "組織の作成に失敗しました。" })
+      return new InternalGraphQLError()
     }
   }
 }
@@ -436,14 +437,15 @@ export class UpdateOrganization {
         name: props.name,
       })
 
-      await this.deps.repository.write(draft)
+      const result = await this.deps.repository.write(draft)
 
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+      
       return organization
     } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, error)
-      }
-      return new HTTPException(500, { message: "組織の作成に失敗しました。" })
+      return new InternalGraphQLError()
     }
   }
 }

@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { UpdateOrganization } from "~/application/organization/update-organization"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosUpdateOrganizationInput } from "~/interface/inputs/update-organization-input"
 import { PothosOrganizationNode } from "~/interface/objects/organization-node"
@@ -28,7 +27,7 @@ export const updateOrganization: MutationFieldThunk<SchemaTypes> = (t) => {
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError("組織の更新に失敗しました。")
+        throw result
       }
 
       return await c.var.database.prismaOrganization.findUniqueOrThrow({

@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { UpdateProjectSetting } from "~/application/project/update-project-setting"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosUpdateProjectSettingInput } from "~/interface/inputs/update-project-setting-input"
 import { PothosProjectSettingNode } from "~/interface/objects/project-setting-node"
@@ -28,13 +27,11 @@ export const updateProjectSetting: MutationFieldThunk<SchemaTypes> = (t) => {
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError(
-          "プロジェクト設定の更新に失敗しました。",
-        )
+        throw result
       }
 
       return await c.var.database.prismaProjectSetting.findUnique({
-        where: { id: result.id },
+        where: { id: args.id },
       })
     },
   })

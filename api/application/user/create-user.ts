@@ -1,9 +1,9 @@
 import { hashSync } from "bcrypt-ts"
 import type { Context } from "env"
-import { HTTPException } from "hono/http-exception"
 import { UserEntity } from "~/domain/entities/user.entity"
 import { NameValue } from "~/domain/values/name.value"
 import { UserRepository } from "~/infrastructure/repositories/user.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
 
 type Props = {
   email: string
@@ -33,14 +33,15 @@ export class CreateUser {
         deletedAt: null,
       })
 
-      await repository.write(user)
+      const result = await repository.write(user)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError("ユーザの作成に失敗しました。")
+      }
 
       return user
     } catch (error) {
-      return new HTTPException(500, {
-        message:
-          "アカウントの作成に失敗しました。詳細が不明なエラーが発生しました。",
-      })
+      return new InternalGraphQLError()
     }
   }
 }

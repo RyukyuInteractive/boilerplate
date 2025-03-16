@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { CreateProjectMember } from "~/application/project/create-project-member"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosProjectMemberInput } from "~/interface/inputs/create-project-member-input"
 import { PothosProjectMemberNode } from "~/interface/objects/project-member-node"
@@ -23,10 +22,11 @@ export const createProjectMember: MutationFieldThunk<SchemaTypes> = (t) => {
       const result = await service.run({
         projectId: args.input.projectId,
         userId: args.input.userId,
+        role: args.input.role as never,
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError("メンバーの追加に失敗しました。")
+        throw result
       }
 
       return await c.var.database.prismaProjectMember.findUnique({

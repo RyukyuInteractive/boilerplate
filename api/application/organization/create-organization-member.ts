@@ -1,8 +1,8 @@
-import { HTTPException } from "hono/http-exception"
 import { OrganizationMemberEntity } from "~/domain/entities/organization-member.entity"
 import type { Context } from "~/env"
 import { OrganizationMemberRepository } from "~/infrastructure/repositories/organization-member.repository"
 import { OrganizationRepository } from "~/infrastructure/repositories/organization.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
 
 type Props = {
   organizationId: string
@@ -29,12 +29,11 @@ export class CreateOrganizationMember {
       )
 
       if (organization === null) {
-        return new HTTPException(404, {
-          message: "指定された組織が存在しません。",
-        })
+        return new InternalGraphQLError("指定された組織が存在しません。")
       }
 
       const memberId = crypto.randomUUID()
+
       const member = new OrganizationMemberEntity({
         id: memberId,
         organizationId: props.organizationId,
@@ -44,15 +43,14 @@ export class CreateOrganizationMember {
       })
 
       const result = await this.deps.memberRepository.write(member)
+
       if (result instanceof Error) {
-        return result
+        return new InternalGraphQLError()
       }
 
       return member
     } catch (error) {
-      return new HTTPException(500, {
-        message: "メンバーの作成に失敗しました。",
-      })
+      return new InternalGraphQLError()
     }
   }
 }

@@ -14,8 +14,8 @@
       }
     },
     "ignore": [
-      "app/interface/components/ui/**/*",
-      "app/interface/hooks/use-toast.ts",
+      "**/components/ui/*",
+      "**/hooks/use-toast.ts",
       "app/lib/route-tree.gen.ts",
       "app/graphql-env.d.ts"
     ]
@@ -26,6 +26,12 @@
     }
   },
   "files": {
-    "ignore": [".wrangler", "dist", "app/graphql-env.d.ts"]
+    "ignore": [
+      ".wrangler",
+      "app/graphql-env.d.ts",
+      "dist",
+      "workspace/.next",
+      "workspace/out"
+    ]
   }
 }

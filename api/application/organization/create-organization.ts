@@ -1,13 +1,13 @@
-import { HTTPException } from "hono/http-exception"
 import { OrganizationMemberEntity } from "~/domain/entities/organization-member.entity"
 import { OrganizationEntity } from "~/domain/entities/organization.entity"
+import { NameValue } from "~/domain/values/name.value"
 import type { Context } from "~/env"
 import { OrganizationMemberRepository } from "~/infrastructure/repositories/organization-member.repository"
 import { OrganizationRepository } from "~/infrastructure/repositories/organization.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
 
 type Props = {
   name: string
-  nameEN?: string | null
   userId: string
 }
 
@@ -28,15 +28,21 @@ export class CreateOrganization {
       const organizationId = crypto.randomUUID()
 
       const now = new Date()
+
       const organization = new OrganizationEntity({
         id: organizationId,
         login: organizationId,
-        name: props.name,
+        name: new NameValue(props.name),
+        deletedAt: null,
         createdAt: now,
         updatedAt: now,
       })
 
-      await this.deps.organizationRepository.write(organization)
+      const result = await this.deps.organizationRepository.write(organization)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError("組織の作成に失敗しました。")
+      }
 
       const member = new OrganizationMemberEntity({
         id: crypto.randomUUID(),
@@ -46,13 +52,15 @@ export class CreateOrganization {
         createdAt: now,
       })
 
-      await this.deps.memberRepository.write(member)
+      const memberResult = await this.deps.memberRepository.write(member)
+
+      if (memberResult instanceof Error) {
+        return new InternalGraphQLError("組織メンバーの作成に失敗しました。")
+      }
 
       return organization
     } catch (error) {
-      return new HTTPException(500, {
-        message: "組織の作成に失敗しました。詳細が不明なエラーが発生しました。",
-      })
+      return new InternalGraphQLError()
     }
   }
 }

@@ -1,8 +1,7 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { DeleteProjectMember } from "~/application/project/delete-project-member"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
-import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
+import { PothosDeleteProjectMemberInput } from "~/interface/inputs/delete-project-member-input"
 import type { SchemaTypes } from "~/interface/types/schema-types"
 
 export const deleteProjectMember: MutationFieldThunk<SchemaTypes> = (t) => {
@@ -10,7 +9,7 @@ export const deleteProjectMember: MutationFieldThunk<SchemaTypes> = (t) => {
     type: "ID",
     description: "プロジェクトメンバーを削除する",
     args: {
-      id: t.arg.string({ required: true }),
+      input: t.arg({ type: PothosDeleteProjectMemberInput, required: true }),
     },
     async resolve(_, args, c) {
       if (c.var.session === null) {
@@ -20,16 +19,12 @@ export const deleteProjectMember: MutationFieldThunk<SchemaTypes> = (t) => {
       const service = new DeleteProjectMember(c)
 
       const result = await service.run({
-        id: args.id,
+        projectId: args.input.projectId,
+        userId: args.input.userId,
       })
 
       if (result instanceof Error) {
-        if (result.status === 404) {
-          throw new NotFoundGraphQLError()
-        }
-        throw new InvalidArgumentGraphQLError(
-          "プロジェクトメンバーの削除に失敗しました。",
-        )
+        throw result
       }
 
       return result.id

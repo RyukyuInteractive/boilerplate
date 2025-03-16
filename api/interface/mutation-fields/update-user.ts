@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { UpdateUser } from "~/application/user/update-user"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosUpdateUserInput } from "~/interface/inputs/update-user-input"
 import { PothosUserNode } from "~/interface/objects/user-node"
@@ -28,16 +27,16 @@ export const updateUser: MutationFieldThunk<SchemaTypes> = (t) => {
         id: args.id,
         name: args.input.name,
         email: args.input.email,
+        displayName: args.input.displayName,
+        login: args.input.login,
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError(
-          "ユーザー情報の更新に失敗しました。",
-        )
+        throw result
       }
 
       return await c.var.database.prismaUser.findUniqueOrThrow({
-        where: { id: result.id },
+        where: { id: args.id },
       })
     },
   })

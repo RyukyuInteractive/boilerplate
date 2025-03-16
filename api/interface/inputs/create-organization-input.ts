@@ -7,7 +7,6 @@ export const PothosCreateOrganizationInput = builder.inputType(
     fields(t) {
       return {
         name: t.string({ required: true }),
-        nameEN: t.string(),
       }
     },
   },

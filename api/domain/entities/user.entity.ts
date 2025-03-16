@@ -64,8 +64,8 @@ export class UserEntity implements Props {
   /**
    * ユーザー名を更新する
    */
-  updateUsername(username: string) {
-    return new UserEntity({ ...this.props, login: username })
+  updateLogin(login: string) {
+    return new UserEntity({ ...this.props, login: login })
   }
 
   /**

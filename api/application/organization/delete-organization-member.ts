@@ -1,5 +1,6 @@
-import { HTTPException } from "hono/http-exception"
 import type { Context } from "~/env"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 type Props = {
   organizationMemberId: string
@@ -21,20 +22,20 @@ export class DeleteOrganizationMember {
         })
 
       if (member === null) {
-        return new HTTPException(404, {
-          message: "組織メンバーが見つかりません。",
-        })
+        return new NotFoundGraphQLError("組織メンバーが見つかりません。")
       }
 
-      await this.c.var.database.prismaOrganizationMember.delete({
+      const result = await this.c.var.database.prismaOrganizationMember.delete({
         where: { id: member.id },
       })
 
+      if (result instanceof Error) {
+        return new InternalGraphQLError("組織メンバーの作成に失敗しました。")
+      }
+
       return { id: member.id }
     } catch (error) {
-      return new HTTPException(500, {
-        message: "組織メンバーの削除に失敗しました。",
-      })
+      return new InternalGraphQLError()
     }
   }
 }

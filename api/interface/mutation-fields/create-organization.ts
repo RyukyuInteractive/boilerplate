@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { CreateOrganization } from "~/application/organization/create-organization"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosCreateOrganizationInput } from "~/interface/inputs/create-organization-input"
 import { PothosOrganizationNode } from "~/interface/objects/organization-node"
@@ -22,12 +21,11 @@ export const createOrganization: MutationFieldThunk<SchemaTypes> = (t) => {
 
       const result = await service.run({
         name: args.input.name,
-        nameEN: args.input.nameEN,
         userId: c.var.session.userId,
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError("組織の作成に失敗しました。")
+        throw result
       }
 
       return await c.var.database.prismaOrganization.findUniqueOrThrow({

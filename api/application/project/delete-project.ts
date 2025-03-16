@@ -1,5 +1,7 @@
-import { HTTPException } from "hono/http-exception"
 import type { Context } from "~/env"
+import { ProjectRepository } from "~/infrastructure/repositories/project.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 type Props = {
   projectId: string
@@ -9,36 +11,36 @@ type Props = {
  * プロジェクトを論理削除する
  */
 export class DeleteProject {
-  constructor(readonly c: Context) {}
+  constructor(
+    readonly c: Context,
+    readonly deps = {
+      repository: new ProjectRepository(c),
+    },
+  ) {}
 
   async run(props: Props) {
     try {
-      const project = await this.c.var.database.prismaProject.findUnique({
-        where: {
-          id: props.projectId,
-          deletedAt: null,
-        },
-      })
+      const project = await this.deps.repository.read(props.projectId)
 
       if (project === null) {
-        return new HTTPException(404, {
-          message: "プロジェクトが見つかりません。",
-        })
+        return new NotFoundGraphQLError("プロジェクトが見つかりません。")
       }
 
-      const updatedProject = await this.c.var.database.prismaProject.update({
-        where: { id: project.id },
-        data: { deletedAt: new Date() },
-      })
+      if (project.deletedAt !== null) {
+        return new NotFoundGraphQLError("プロジェクトが見つかりません。")
+      }
 
-      return { id: updatedProject.id }
+      const draft = project.delete()
+
+      const result = await this.deps.repository.write(draft)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+
+      return { id: draft.id }
     } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, error)
-      }
-      return new HTTPException(500, {
-        message: "プロジェクトの削除に失敗しました。",
-      })
+      return new InternalGraphQLError()
     }
   }
 }

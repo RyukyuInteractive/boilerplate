@@ -6,6 +6,8 @@ export const PothosUpdateUserInput = builder.inputType("UpdateUserInput", {
     return {
       name: t.string({ required: true }),
       email: t.string({ required: true }),
+      displayName: t.string({ required: true }),
+      login: t.string({ required: true }),
     }
   },
 })

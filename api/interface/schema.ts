@@ -7,7 +7,6 @@ import { createUser } from "~/interface/mutation-fields/create-user"
 import { deleteOrganization } from "~/interface/mutation-fields/delete-organization"
 import { deleteProject } from "~/interface/mutation-fields/delete-project"
 import { updateOrganization } from "~/interface/mutation-fields/update-organization"
-import { updateOrganizationSetting } from "~/interface/mutation-fields/update-organization-setting"
 import { updateProject } from "~/interface/mutation-fields/update-project"
 import { updateProjectSetting } from "~/interface/mutation-fields/update-project-setting"
 import { updateUser } from "~/interface/mutation-fields/update-user"
@@ -39,7 +38,6 @@ builder.mutationType({
       deleteOrganization: deleteOrganization(t),
       deleteProject: deleteProject(t),
       updateOrganization: updateOrganization(t),
-      updateOrganizationSetting: updateOrganizationSetting(t),
       updateProject: updateProject(t),
       updateProjectSetting: updateProjectSetting(t),
       updateUser: updateUser(t),

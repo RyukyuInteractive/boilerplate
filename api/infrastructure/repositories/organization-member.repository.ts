@@ -1,4 +1,3 @@
-import { HTTPException } from "hono/http-exception"
 import { OrganizationMemberEntity } from "~/domain/entities/organization-member.entity"
 import type { Context } from "~/env"
 
@@ -25,31 +24,36 @@ export class OrganizationMemberRepository {
 
       return null
     } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, error)
-      }
-      return new HTTPException(500, {
-        message: "メンバーの保存に失敗しました。",
-      })
+      console.error(error)
+      return new Error()
     }
   }
 
-  async read(id: string): Promise<OrganizationMemberEntity> {
-    const member =
-      await this.c.var.database.prismaOrganizationMember.findUnique({
-        where: { id },
+  async read(
+    organizationId: string,
+    userId: string,
+  ): Promise<OrganizationMemberEntity | null> {
+    try {
+      const data =
+        await this.c.var.database.prismaOrganizationMember.findUniqueOrThrow({
+          where: {
+            organizationId_userId: {
+              organizationId,
+              userId,
+            },
+          },
+        })
+
+      return new OrganizationMemberEntity({
+        id: data.id,
+        organizationId: data.organizationId,
+        userId: data.userId,
+        role: data.role,
+        createdAt: data.createdAt,
       })
-
-    if (!member) {
-      throw new Error("メンバーが見つかりません。")
+    } catch (error) {
+      console.error(error)
+      return null
     }
-
-    return new OrganizationMemberEntity({
-      id: member.id,
-      organizationId: member.organizationId,
-      userId: member.userId,
-      role: member.role,
-      createdAt: member.createdAt,
-    })
   }
 }

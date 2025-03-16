@@ -13,6 +13,7 @@ const vProps = object({
   id: string(),
   login: string(),
   name: instance(NameValue),
+  organizationId: nullable(string()),
   createdAt: date(),
   updatedAt: date(),
   deletedAt: nullable(date()),
@@ -21,12 +22,13 @@ const vProps = object({
 type Props = InferInput<typeof vProps>
 
 /**
- * 組織
+ * プロジェクト
  */
-export class OrganizationEntity implements Props {
+export class ProjectEntity implements Props {
   readonly id!: Props["id"]
   readonly login!: Props["login"]
   readonly name!: Props["name"]
+  readonly organizationId!: Props["organizationId"]
   readonly createdAt!: Props["createdAt"]
   readonly updatedAt!: Props["updatedAt"]
   readonly deletedAt!: Props["deletedAt"]
@@ -36,10 +38,10 @@ export class OrganizationEntity implements Props {
   }
 
   /**
-   * 組織名を更新する
+   * プロジェクト名を更新する
    */
   updateName(name: NameValue) {
-    return new OrganizationEntity({
+    return new ProjectEntity({
       ...this.props,
       name,
       updatedAt: new Date(),
@@ -47,10 +49,32 @@ export class OrganizationEntity implements Props {
   }
 
   /**
-   * 組織を削除する
+   * プロジェクトのログイン名を更新する
+   */
+  updateLogin(login: string) {
+    return new ProjectEntity({
+      ...this.props,
+      login,
+      updatedAt: new Date(),
+    })
+  }
+
+  /**
+   * プロジェクトの組織IDを更新する
+   */
+  updateOrganizationId(organizationId: string | null) {
+    return new ProjectEntity({
+      ...this.props,
+      organizationId,
+      updatedAt: new Date(),
+    })
+  }
+
+  /**
+   * プロジェクトを削除する
    */
   delete() {
-    return new OrganizationEntity({
+    return new ProjectEntity({
       ...this.props,
       deletedAt: new Date(),
       updatedAt: new Date(),

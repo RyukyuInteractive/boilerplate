@@ -1,7 +1,6 @@
 import type { PrismaOrganization } from "@prisma/client"
 import { builder } from "~/interface/builder"
 import { PothosOrganizationMemberNode } from "~/interface/objects/organization-member-node"
-import { PothosOrganizationSettingNode } from "~/interface/objects/organization-setting-node"
 import { PothosProjectNode } from "~/interface/objects/project-node"
 
 export const PothosOrganizationNode =
@@ -81,19 +80,6 @@ builder.objectField(PothosOrganizationNode, "members", (t) => {
       return c.var.database.prismaOrganization
         .findUniqueOrThrow({ where: { id: parent.id } })
         .members()
-    },
-  })
-})
-
-builder.objectField(PothosOrganizationNode, "settings", (t) => {
-  return t.field({
-    type: [PothosOrganizationSettingNode],
-    description: undefined,
-    nullable: false,
-    resolve(parent, _args, c) {
-      return c.var.database.prismaOrganization
-        .findUniqueOrThrow({ where: { id: parent.id } })
-        .settings()
     },
   })
 })

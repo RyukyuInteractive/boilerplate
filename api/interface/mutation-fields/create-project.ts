@@ -1,6 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { CreateProject } from "~/application/project/create-project"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import { PothosCreateProjectInput } from "~/interface/inputs/create-project-input"
 import { PothosProjectNode } from "~/interface/objects/project-node"
@@ -27,9 +26,7 @@ export const createProject: MutationFieldThunk<SchemaTypes> = (t) => {
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError(
-          "プロジェクトの作成に失敗しました。",
-        )
+        throw result
       }
 
       return await c.var.database.prismaProject.findUnique({

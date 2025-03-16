@@ -1,5 +1,9 @@
-import { HTTPException } from "hono/http-exception"
+import { ProjectSettingEntity } from "~/domain/entities/project-setting.entity"
 import type { Context } from "~/env"
+import { ProjectSettingRepository } from "~/infrastructure/repositories/project-setting.repository"
+import { ProjectRepository } from "~/infrastructure/repositories/project.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 type Props = {
   projectId: string
@@ -11,48 +15,49 @@ type Props = {
  * プロジェクトの設定を更新する
  */
 export class UpdateProjectSetting {
-  constructor(readonly c: Context) {}
+  constructor(
+    readonly c: Context,
+    readonly deps = {
+      projectRepository: new ProjectRepository(c),
+      projectSettingRepository: new ProjectSettingRepository(c),
+    },
+  ) {}
 
   async run(props: Props) {
     try {
-      const project = await this.c.var.database.prismaProject.findUnique({
-        where: { id: props.projectId },
-      })
+      const project = await this.deps.projectRepository.read(props.projectId)
 
       if (project === null) {
-        return new HTTPException(404, {
-          message: "プロジェクトが見つかりませんでした",
-        })
+        return new NotFoundGraphQLError("プロジェクトが見つかりません。")
       }
 
-      const setting = await this.c.var.database.prismaProjectSetting.upsert({
-        where: {
-          projectId_key: {
-            projectId: props.projectId,
-            key: props.key,
-          },
-        },
-        create: {
+      let draft = await this.deps.projectSettingRepository.read(
+        props.projectId,
+        props.key,
+      )
+
+      if (draft === null) {
+        draft = new ProjectSettingEntity({
           id: crypto.randomUUID(),
           projectId: props.projectId,
           key: props.key,
           value: props.value,
-        },
-        update: {
-          value: props.value,
-        },
-      })
-
-      return setting
-    } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, {
-          message: `プロジェクト設定の更新に失敗しました: ${error.message}`,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         })
+      } else {
+        draft = draft.updateValue(props.value)
       }
-      return new HTTPException(500, {
-        message: "プロジェクト設定の更新に失敗しました",
-      })
+
+      const result = await this.deps.projectSettingRepository.write(draft)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+
+      return null
+    } catch (error) {
+      return new InternalGraphQLError()
     }
   }
 }

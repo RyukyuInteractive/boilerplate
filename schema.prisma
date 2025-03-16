@@ -16,7 +16,6 @@ model PrismaUser {
   hashedPassword      String                     @map("hashed_password")
   projectMembers      PrismaProjectMember[]
   organizationMembers PrismaOrganizationMember[]
-  teamMembers         PrismaTeamMember[]
   settings            PrismaUserSetting[]
   deletedAt           DateTime?                  @map("deleted_at")
   createdAt           DateTime                   @default(now()) @map("created_at")
@@ -43,27 +42,12 @@ model PrismaOrganization {
   login     String                      @unique @map("login")
   name      String                      @map("name")
   projects  PrismaProject[]
-  teams     PrismaTeam[]
   members   PrismaOrganizationMember[]
-  settings  PrismaOrganizationSetting[]
   deletedAt DateTime?                   @map("deleted_at")
   createdAt DateTime                    @default(now()) @map("created_at")
   updatedAt DateTime                    @updatedAt @map("updated_at")
 
   @@map("organizations")
-}
-
-model PrismaOrganizationSetting {
-  id             String             @id @map("id")
-  key            String             @unique @map("key")
-  value          String             @map("value")
-  organizationId String             @map("organization_id")
-  organization   PrismaOrganization @relation(fields: [organizationId], references: [id])
-  createdAt      DateTime           @default(now()) @map("created_at")
-  updatedAt      DateTime           @updatedAt @map("updated_at")
-
-  @@unique([organizationId, key])
-  @@map("organization_settings")
 }
 
 model PrismaOrganizationMember {
@@ -85,7 +69,6 @@ model PrismaProject {
   name              String                      @map("name")
   organization      PrismaOrganization?         @relation(fields: [organizationId], references: [id])
   organizationId    String?                     @map("organization_id")
-  internalProjectId String?                     @map("internal_project_id")
   members           PrismaProjectMember[]
   settings          PrismaProjectSetting[]
   notifications     PrismaProjectNotification[]
@@ -126,40 +109,11 @@ model PrismaProjectNotification {
   id         String        @id @map("id")
   title      String        @map("title")
   message    String        @map("message")
-  isRead     Boolean       @default(false) @map("is_read")
-  readAt     DateTime?     @map("read_at")
   type       String        @map("type")
-  isArchived Boolean       @default(false) @map("is_archived")
   createdAt  DateTime      @default(now()) @map("created_at")
+  deletedAt  DateTime?     @map("deleted_at")
   projectId  String        @map("project_id")
   project    PrismaProject @relation(fields: [projectId], references: [id])
 
   @@map("project_notifications")
-}
-
-model PrismaTeam {
-  id             String             @id @map("id")
-  name           String             @map("name")
-  description    String?            @map("description")
-  organizationId String             @map("organization_id")
-  organization   PrismaOrganization @relation(fields: [organizationId], references: [id])
-  members        PrismaTeamMember[]
-  deletedAt      DateTime?          @map("deleted_at")
-  createdAt      DateTime           @default(now()) @map("created_at")
-  updatedAt      DateTime           @updatedAt @map("updated_at")
-
-  @@map("teams")
-}
-
-model PrismaTeamMember {
-  id        String     @id @map("id")
-  teamId    String     @map("team_id")
-  team      PrismaTeam @relation(fields: [teamId], references: [id])
-  userId    String     @map("user_id")
-  user      PrismaUser @relation(fields: [userId], references: [id])
-  role      String     @default("MEMBER") @map("role")
-  createdAt DateTime   @default(now()) @map("created_at")
-
-  @@unique([teamId, userId])
-  @@map("team_members")
 }

@@ -1,5 +1,9 @@
-import { HTTPException } from "hono/http-exception"
+import { UserSettingEntity } from "~/domain/entities/user-setting.entity"
 import type { Context } from "~/env"
+import { UserSettingRepository } from "~/infrastructure/repositories/user-setting.repository"
+import { UserRepository } from "~/infrastructure/repositories/user.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 type Props = {
   userId: string
@@ -11,48 +15,50 @@ type Props = {
  * ユーザー設定を更新する
  */
 export class UpdateUserSetting {
-  constructor(readonly c: Context) {}
+  constructor(
+    readonly c: Context,
+    readonly deps = {
+      userRepository: new UserRepository(c),
+      userSettingRepository: new UserSettingRepository(c),
+    },
+  ) {}
 
   async run(props: Props) {
     try {
-      const user = await this.c.var.database.prismaUser.findUnique({
-        where: { id: props.userId },
-      })
+      // ユーザーの存在確認
+      const user = await this.deps.userRepository.read(props.userId)
 
       if (user === null) {
-        return new HTTPException(404, {
-          message: "ユーザーが見つかりませんでした",
-        })
+        return new NotFoundGraphQLError("ユーザーが見つかりませんでした")
       }
 
-      const setting = await this.c.var.database.prismaUserSetting.upsert({
-        where: {
-          userId_key: {
-            userId: props.userId,
-            key: props.key,
-          },
-        },
-        create: {
+      let draft = await this.deps.userSettingRepository.read(
+        props.userId,
+        props.key,
+      )
+
+      if (draft === null) {
+        draft = new UserSettingEntity({
           id: crypto.randomUUID(),
           userId: props.userId,
           key: props.key,
           value: props.value,
-        },
-        update: {
-          value: props.value,
-        },
-      })
-
-      return setting
-    } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, {
-          message: `ユーザー設定の更新に失敗しました: ${error.message}`,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         })
+      } else {
+        draft = draft.updateValue(props.value)
       }
-      return new HTTPException(500, {
-        message: "ユーザー設定の更新に失敗しました",
-      })
+
+      const result = await this.deps.userSettingRepository.write(draft)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+
+      return draft
+    } catch (error) {
+      return new InternalGraphQLError()
     }
   }
 }

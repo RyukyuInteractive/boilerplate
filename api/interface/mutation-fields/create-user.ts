@@ -1,7 +1,6 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import type { PrismaUser } from "@prisma/client"
 import { CreateUser } from "application/user/create-user"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
 import { PothosCreateUserInput } from "~/interface/inputs/create-user-input"
 import { PothosUserNode } from "~/interface/objects/user-node"
 import type { SchemaTypes } from "~/interface/types/schema-types"
@@ -22,7 +21,7 @@ export const createUser: MutationFieldThunk<SchemaTypes> = (t) => {
       })
 
       if (result instanceof Error) {
-        throw new InvalidArgumentGraphQLError("アカウント作成に失敗しました。")
+        throw result
       }
 
       return await c.var.database.prismaUser.findUniqueOrThrow({

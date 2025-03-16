@@ -1,7 +1,5 @@
 import type { MutationFieldThunk } from "@pothos/core"
 import { DeleteOrganizationMember } from "~/application/organization/delete-organization-member"
-import { InvalidArgumentGraphQLError } from "~/interface/errors/invalid-argument-graphql-error"
-import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 import { UnauthenticatedGraphQLError } from "~/interface/errors/unauthenticated-graphql-error"
 import type { SchemaTypes } from "~/interface/types/schema-types"
 
@@ -26,12 +24,7 @@ export const deleteOrganizationMember: MutationFieldThunk<SchemaTypes> = (
       })
 
       if (result instanceof Error) {
-        if (result.status === 404) {
-          throw new NotFoundGraphQLError()
-        }
-        throw new InvalidArgumentGraphQLError(
-          "組織メンバーの削除に失敗しました。",
-        )
+        throw result
       }
 
       return result.id

@@ -56,16 +56,6 @@ builder.objectField(PothosProjectNode, "organization", (t) => {
   })
 })
 
-builder.objectField(PothosProjectNode, "internalProjectId", (t) => {
-  return t.string({
-    description: undefined,
-    nullable: true,
-    resolve(parent) {
-      return parent.internalProjectId
-    },
-  })
-})
-
 builder.objectField(PothosProjectNode, "createdAt", (t) => {
   return t.int({
     description: undefined,

@@ -1,6 +1,8 @@
 import { NameValue } from "~/domain/values/name.value"
 import type { Context } from "~/env"
 import { UserRepository } from "~/infrastructure/repositories/user.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 /**
  * ユーザー更新のパラメータ
@@ -9,9 +11,8 @@ type Props = {
   id: string
   name: string
   email: string
-  username?: string
-  displayName?: string
-  role?: string
+  login: string
+  displayName: string
 }
 
 /**
@@ -27,24 +28,26 @@ export class UpdateUser {
 
   async run(props: Props) {
     try {
-      let user = await this.deps.repository.read(props.id)
+      const user = await this.deps.repository.read(props.id)
 
-      user = user.updateName(new NameValue(props.name))
-
-      user = user.updateEmail(props.email)
-
-      if (props.username !== undefined) {
-        user = user.updateUsername(props.username)
+      if (user === null) {
+        return new NotFoundGraphQLError("指定されたユーザーが存在しません。")
       }
 
-      // 永続化
-      await this.deps.repository.write(user)
+      const draft = user
+        .updateName(new NameValue(props.name))
+        .updateEmail(props.email)
+        .updateLogin(props.login)
+
+      const result = await this.deps.repository.write(draft)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+
       return user
     } catch (error) {
-      if (error instanceof Error) {
-        return new Error(error.message)
-      }
-      return new Error("ユーザー情報の更新に失敗しました。")
+      return new InternalGraphQLError()
     }
   }
 }

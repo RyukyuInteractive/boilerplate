@@ -1,5 +1,8 @@
-import { HTTPException } from "hono/http-exception"
+import { NameValue } from "~/domain/values/name.value"
 import type { Context } from "~/env"
+import { ProjectRepository } from "~/infrastructure/repositories/project.repository"
+import { InternalGraphQLError } from "~/interface/errors/internal-graphql-error"
+import { NotFoundGraphQLError } from "~/interface/errors/not-found-graphql-error"
 
 type Props = {
   projectId: string
@@ -10,38 +13,32 @@ type Props = {
  * プロジェクトを更新する
  */
 export class UpdateProject {
-  constructor(readonly c: Context) {}
+  constructor(
+    readonly c: Context,
+    readonly deps = {
+      repository: new ProjectRepository(c),
+    },
+  ) {}
 
   async run(props: Props) {
     try {
-      const project = await this.c.var.database.prismaProject.findUnique({
-        where: { id: props.projectId },
-      })
+      const project = await this.deps.repository.read(props.projectId)
 
       if (project === null) {
-        return new HTTPException(404, {
-          message: "プロジェクトが見つかりませんでした",
-        })
+        return new NotFoundGraphQLError("プロジェクトが見つかりませんでした")
       }
 
-      const updated = await this.c.var.database.prismaProject.update({
-        where: { id: props.projectId },
-        data: {
-          name: props.name,
-          updatedAt: new Date(),
-        },
-      })
+      const draft = project.updateName(new NameValue(props.name))
 
-      return updated
+      const result = await this.deps.repository.write(draft)
+
+      if (result instanceof Error) {
+        return new InternalGraphQLError()
+      }
+
+      return null
     } catch (error) {
-      if (error instanceof Error) {
-        return new HTTPException(500, {
-          message: `プロジェクトの更新に失敗しました: ${error.message}`,
-        })
-      }
-      return new HTTPException(500, {
-        message: "プロジェクトの更新に失敗しました",
-      })
+      return new InternalGraphQLError()
     }
   }
 }
