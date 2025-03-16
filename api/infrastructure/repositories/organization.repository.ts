@@ -1,5 +1,5 @@
-import type { Context } from "~/env"
 import { OrganizationEntity } from "~/domain/entities/organization.entity"
+import type { Context } from "~/env"
 
 export class OrganizationRepository {
   constructor(readonly c: Context) {}

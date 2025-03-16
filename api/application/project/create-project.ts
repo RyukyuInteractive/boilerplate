@@ -1,5 +1,5 @@
-import type { Context } from "~/env"
 import { HTTPException } from "hono/http-exception"
+import type { Context } from "~/env"
 
 type Props = {
   userId: string

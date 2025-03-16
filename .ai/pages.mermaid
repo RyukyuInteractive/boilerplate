@@ -1,0 +1,41 @@
+flowchart LR
+  root["ホーム<br/><small>/</small>"]
+  ___root["__root<br/><small>/__root</small>"]
+  _p_project["プロジェクト詳細<br/><small>/:project</small>"]
+  _p_project_members["Members<br/><small>/:project/members</small>"]
+  _p_project_profile["プロジェクトプロフィール<br/><small>/:project/profile</small>"]
+  _p_project_settings["プロジェクト設定<br/><small>/:project/settings</small>"]
+  _my_account["アカウント<br/><small>/my/account</small>"]
+  _my_organizations["所属組織一覧<br/><small>/my/organizations</small>"]
+  _my_profile["プロフィール<br/><small>/my/profile</small>"]
+  _my_projects["参加プロジェクト一覧<br/><small>/my/projects</small>"]
+  _my_settings["設定<br/><small>/my/settings</small>"]
+  _new["新規作成<br/><small>/new</small>"]
+  _orgs_p_organization["組織詳細<br/><small>/orgs/:organization</small>"]
+  _orgs_p_organization_members["組織メンバー一覧<br/><small>/orgs/:organization/members</small>"]
+  _orgs_p_organization_projects["組織プロジェクト一覧<br/><small>/orgs/:organization/projects</small>"]
+  _orgs_p_organization_projects_new["新規プロジェクト作成<br/><small>/orgs/:organization/projects/new</small>"]
+  _orgs_p_organization_settings["組織設定<br/><small>/orgs/:organization/settings</small>"]
+  _orgs_new["新規組織作成<br/><small>/orgs/new</small>"]
+  _password_restore["パスワード復旧<br/><small>/password/restore</small>"]
+  _projects_new["新規プロジェクト作成<br/><small>/projects/new</small>"]
+
+  root --> ___root
+  root --> _p_project
+  root --> _new
+  _p_project --> _p_project_members
+  _p_project --> _p_project_profile
+  _p_project --> _p_project_settings
+  _my --> _my_account
+  _my --> _my_organizations
+  _my --> _my_profile
+  _my --> _my_projects
+  _my --> _my_settings
+  _orgs_p_organization --> _orgs_p_organization_members
+  _orgs_p_organization --> _orgs_p_organization_projects
+  _orgs_p_organization --> _orgs_p_organization_settings
+  _orgs --> _orgs_p_organization
+  _orgs --> _orgs_new
+  _password --> _password_restore
+  _projects --> _projects_new
+  _orgs_p_organization_projects --> _orgs_p_organization_projects_new

@@ -2,21 +2,15 @@
 
 - chain of draft - 問題解決に必要な最低限の短いメモを応答しなさい
 
-## 相談
+## 相談と記録
 
-以下のファイルを読んで機能やページに関する相談に応答しなさい。
-
-- `workspace/sheets/features.csv`: 機能の一覧
-- `workspace/sheets/pages.csv`: ページに関する更新
-
-## 記録
-
-作業の過程で必要に応じて以下のファイルを書き換えて、記録を残しなさい。
+以下のファイルを読んで機能やページに関する相談に応答しなさい。必要に応じてファイルを書き換え記録をしなさい。
 
 - `workspace/sheets/features.csv`: 機能の一覧
 - `workspace/sheets/pages.csv`: ページに関する更新
+- `workspace/sheets/words.csv`: 製品における用語集
 
-必要に応じて以下も書き換えなさい。
+必要に応じて以下のファイルも書き換えなさい。
 
 - `workspace/output.md`: 応答のルール
 - `workspace/development.md`: 開発規約
@@ -32,7 +26,7 @@
 bun run --cwd workspace build
 ```
 
-### `workspace/pages.csv`
+### `workspace/sheets/pages.csv`
 
 以下の形式のCSVであること。
 
@@ -41,7 +35,7 @@ path,name,description,deprecated_reason
 パス,名前,簡単な説明,廃止の場合は理由（or 空文字）
 ```
 
-### `workspace/features.csv`
+### `workspace/sheets/features.csv`
 
 以下の形式のCSVであること。
 
@@ -57,6 +51,15 @@ path,priority,name,description,deprecated_reason
   - 0: コアの機能
   - 1: 必要なサブ機能
   - 2: 補助的な機能
+
+### `workspace/sheets/words.csv`
+
+以下の形式のCSVであること。
+
+```
+name,description
+名前,説明
+```
 
 ## 条件分岐: 製品の機能の開発の場合
 
@@ -108,22 +111,7 @@ path,priority,name,description,deprecated_reason
 
 このリポジトリはモノレポです。
 
-## /app - 管理画面（Webサイト）
-
-管理画面です。
-
-APIの開発の場合は以下のルールに従ってください。
-
-- ディレクトリ「app」の配下のみを参照する
-
-## /api - GraphQL API
-
-APIの開発の場合は以下のルールに従ってください。
-
-- ディレクトリ「api」の配下のみを参照する
-- Prismaに関しては「schema.prisma」を参照する
-
-## ディレクトリ構成
+# ディレクトリ構成
 
 - `schema.prisma` - Prismaのスキーマ
 - `api/application/` - アプリケーション層
@@ -156,17 +144,34 @@ APIの開発の場合は以下のルールに従ってください。
 - `app/lib/graphql-client.ts` - GraphQLのクライアント
 - `app/lib/hono-client.ts` - HonoのAPIクライアント
 
-## ライブラリ
+# ライブラリ
 
 - `@pothos/core` - GraphQLのスキーマを定義する
 - `@prisma/client` - データベースのORM
 
-## コマンド
+# コマンド
 
 - `bun test` - テストを実行する
 - `bun run format` - コードを整形する
 - `bun run --cwd workspace update-pages-csv` - ページを追加した場合は実行する
 - `bun run --cwd workspace update-instructions-markdown` - ルールを更新する
+
+# モノレポ
+
+## /app - 管理画面（Webサイト）
+
+管理画面です。
+
+APIの開発の場合は以下のルールに従ってください。
+
+- ディレクトリ「app」の配下のみを参照する
+
+## /api - GraphQL API
+
+APIの開発の場合は以下のルールに従ってください。
+
+- ディレクトリ「api」の配下のみを参照する
+- Prismaに関しては「schema.prisma」を参照する
 
 # 開発ケース
 
