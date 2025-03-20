@@ -3,7 +3,7 @@
  */
 export function parseCsv<K extends string>(
   content: string,
-  keys: K[],
+  keys: readonly K[],
 ): Record<K, string>[] {
   const lines = content
     .split("\n")

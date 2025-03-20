@@ -1,11 +1,10 @@
+import { config } from "../config"
 import { readCsvRecords } from "./read-csv-records"
 import { readPageMarkdown } from "./read-page-markdown"
+import { removeFrontmatter } from "./remove-frontmatter"
 
-/**
- * ページ一覧をマークダウンに変換する
- */
 export async function readPageListMarkdown() {
-  const pages = await readCsvRecords("pages.csv", [
+  const pages = await readCsvRecords(config.path.pages, [
     "path",
     "name",
     "description",
@@ -17,8 +16,9 @@ export async function readPageListMarkdown() {
   let markdown = ""
 
   for (const page of pages) {
+    const content = await readPageMarkdown(page)
     markdown += "\n\n"
-    markdown += await readPageMarkdown(page)
+    markdown += removeFrontmatter(content)
   }
 
   return markdown.trim()

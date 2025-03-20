@@ -1,0 +1,10 @@
+---
+description: ライブラリ
+globs:
+alwaysApply: true
+---
+# ライブラリ
+
+- `@pothos/core` - GraphQLのスキーマを定義する
+- `@prisma/client` - データベースのORM
+- `hono` - Hono

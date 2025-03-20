@@ -1,3 +1,9 @@
+# Rules
+/.windsurfrules
+/.clinerules
+/.cursor/rules/*
+!/.cursor/rules/.gitkeep
+
 # TypeScript
 tsconfig.tsbuildinfo
 

@@ -1,0 +1,10 @@
+---
+description: コマンド
+globs:
+alwaysApply: true
+---
+# コマンド
+
+- `bun test` - テストを実行する
+- `bun run format` - コードを整形する
+- `bun run build` - 仕様書を更新する

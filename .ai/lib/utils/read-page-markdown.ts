@@ -1,4 +1,7 @@
+import { config } from "../config"
 import { readPageFeatureListMarkdown } from "./read-page-feature-list-markdown"
+import { readTextFileSafe } from "./read-text-file-safe"
+import { removeFrontmatter } from "./remove-frontmatter"
 
 type Page = Record<
   | "path"
@@ -34,9 +37,17 @@ export async function readPageMarkdown(page: Page) {
 
   if (featureListMarkdown) {
     markdown += "\n"
-    markdown += "### 機能"
-    markdown += "\n\n"
     markdown += featureListMarkdown
+  }
+
+  const text = await readTextFileSafe(
+    config.path.cursorRules,
+    `app.interface.routes.${page.path}.mdc`,
+  )
+
+  if (text !== null) {
+    markdown += "\n\n"
+    markdown += removeFrontmatter(text)
   }
 
   return markdown.trim()

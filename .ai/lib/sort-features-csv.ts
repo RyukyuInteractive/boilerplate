@@ -1,26 +1,28 @@
-import fs from "node:fs/promises"
 import { type InferInput, parse } from "valibot"
-import { config } from "../config"
+import { config } from "./config"
+import { escapeText } from "./utils/escape-text"
 import { readCsvRecords } from "./utils/read-csv-records"
+import { writeTextFile } from "./utils/write-text-file"
 import { vFeature } from "./validations/feature"
 
 export async function sortFeatureCsv() {
   type FeatureType = InferInput<typeof vFeature>
 
-  const features = await readCsvRecords("features.csv", [
+  const columns = [
     "path",
     "priority",
     "name",
     "description",
     "deprecated_reason",
-  ])
+  ] as const
+
+  const features = await readCsvRecords(config.path.features, columns)
 
   const validFeatures: FeatureType[] = []
 
   for (const item of features) {
     const feature = parse(vFeature, {
       path: item.path,
-      // バリデーション時にpriority文字列を数値に変換
       priority: Number.parseInt(item.priority, 10),
       name: item.name,
       description: item.description,
@@ -30,51 +32,22 @@ export async function sortFeatureCsv() {
   }
 
   const sortedFeatures = [...validFeatures].sort((a, b) => {
-    if (a.priority !== b.priority) {
-      return a.priority - b.priority
-    }
     return a.path.localeCompare(b.path)
   })
 
-  /**
-   * ヘッダー
-   */
-  const headers = [
-    "path",
-    "priority",
-    "name",
-    "description",
-    "deprecated_reason",
-  ]
+  const header = columns.join(",")
 
-  const headerRow = headers.join(",")
-
-  /**
-   * 行データ
-   */
   const rows = sortedFeatures.map((feature) => {
-    const escapedPath = `"${feature.path.replace(/"/g, '""')}"`
-    const priority = `"${feature.priority}"`
-    const escapedName = `"${feature.name.replace(/"/g, '""')}"`
-    const escapedDescription = `"${feature.description.replace(/"/g, '""')}"`
-    const escapedDeprecatedReason = feature.deprecated_reason
-      ? `"${feature.deprecated_reason.replace(/"/g, '""')}"`
-      : `""`
-
     return [
-      escapedPath,
-      priority,
-      escapedName,
-      escapedDescription,
-      escapedDeprecatedReason,
+      escapeText(feature.path),
+      escapeText(feature.priority.toString()),
+      escapeText(feature.name),
+      escapeText(feature.description),
+      escapeText(feature.deprecated_reason || ""),
     ].join(",")
   })
 
-  const content = [headerRow, ...rows].join("\n")
+  const content = [header, ...rows].join("\n")
 
-  const path = `${process.cwd()}/${config.root}/sheets/features.csv`
-
-  await fs.writeFile(path, content)
-
-  console.log(`Features CSV file has been sorted and written to ${path}`)
+  await writeTextFile(content, config.path.features)
 }

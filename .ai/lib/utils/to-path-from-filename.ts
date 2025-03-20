@@ -12,7 +12,7 @@ export function toPathFromFilename(filename: string): string {
   const processedSegments = segments
     .map((segment) => {
       if (segment === "_main") return null
-      if (segment.startsWith("$")) return `:${segment.substring(1)}`
+      if (segment.startsWith("$")) return `$${segment.substring(1)}`
       return segment
     })
     .filter((segment): segment is string => {
@@ -20,11 +20,11 @@ export function toPathFromFilename(filename: string): string {
       return segment !== null
     })
 
-  const routePath = processedSegments.join("/")
+  const routePath = processedSegments.join(".")
 
-  if (routePath === "") return "/"
+  if (routePath === "") return "index"
 
-  if (routePath === "index") return "/"
+  if (routePath === "index") return "index"
 
-  return `/${routePath}`
+  return routePath
 }

@@ -1,5 +1,5 @@
 import { type InferInput, parse } from "valibot"
-import { config } from "../../config"
+import { config } from "../config"
 import { vPage } from "../validations/page"
 import { readCsvRecords } from "./read-csv-records"
 
@@ -9,7 +9,7 @@ type RecordType = InferInput<typeof vPage>
  * CSVからページ情報を読み込む
  */
 export async function readCsvPages(): Promise<Map<string, RecordType>> {
-  const csvRecords = await readCsvRecords(config.sheet.page.path, [
+  const csvRecords = await readCsvRecords(config.path.pages, [
     "path",
     "name",
     "description",

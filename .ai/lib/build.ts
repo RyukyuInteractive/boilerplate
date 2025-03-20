@@ -1,13 +1,20 @@
 import { sortFeatureCsv } from "./sort-features-csv"
-import { updateInstructionsMarkdown } from "./update-instructions-markdown"
-import { updateMutationsCsv } from "./update-mutations-csv"
+import { updateClinerules } from "./update-clinerules"
+import { updateCopilotInstructions } from "./update-copilot-instructions"
+import { updateCursorRules } from "./update-cursor-rules"
 import { updatePagesCsv } from "./update-pages-csv"
-import { updatePagesMermaid } from "./update-pages-mermaid"
 import { updateProductMarkdown } from "./update-product-markdown"
+import { updateVscodeSettings } from "./update-vscode-settings"
+import { updateWindsurfrules } from "./update-windsurfrules"
 
 await updatePagesCsv()
-await updatePagesMermaid()
-await updateMutationsCsv()
 await sortFeatureCsv()
 await updateProductMarkdown()
-await updateInstructionsMarkdown()
+await updateVscodeSettings()
+await updateWindsurfrules()
+await updateCopilotInstructions()
+await updateClinerules()
+await updateCursorRules()
+
+// await updatePagesMermaid()
+// await updateMutationsCsv()

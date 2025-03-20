@@ -1,4 +1,3 @@
-import { config } from "../../config"
 import { parseCsv } from "./parse-csv"
 
 /**
@@ -6,9 +5,9 @@ import { parseCsv } from "./parse-csv"
  */
 export async function readCsvRecords<K extends string>(
   fileName: string,
-  columns: K[],
+  columns: readonly K[],
 ): Promise<Record<K, string>[]> {
-  const path = `${process.cwd()}/${config.root}/sheets/${fileName}`
+  const path = `${process.cwd()}/${fileName}`
 
   const data = await Bun.file(path).text()
 

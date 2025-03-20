@@ -47,25 +47,14 @@ export function analyzePathRelationships(pages: Page[]): Map<string, string[]> {
   return relationships
 }
 
-/**
- * パスからノードIDを生成する
- * 特殊文字を削除し、一意のIDを作成する
- */
 export function generateNodeId(path: string): string {
   if (path === "" || path === "/") {
     return "root"
   }
 
-  // /を_に置換し、:をp_に置換
-  return path
-    .replace(/^\/?/, "_") // 先頭の/を_に変換、または先頭に_を追加
-    .replace(/\//g, "_") // 残りの/も全て_に変換
-    .replace(/:/g, "p_") // :をp_に変換
+  return path.replace(/^\/?/, "_").replace(/\//g, "_").replace(/:/g, "p_")
 }
 
-/**
- * パスをセグメントに分割する
- */
 export function splitPath(path: string): string[] {
   return path.split("/").filter((segment) => segment !== "")
 }

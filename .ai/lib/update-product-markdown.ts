@@ -1,20 +1,13 @@
-import fs from "node:fs/promises"
-import { config } from "../config"
-import { readFeatureListMarkdown } from "./utils/read-feature-list-markdown"
-import { readFileText } from "./utils/read-file-text"
+import { config } from "./config"
 import { readPageListMarkdown } from "./utils/read-page-list-markdown"
+import { readTextFile } from "./utils/read-text-file"
+import { removeFrontmatter } from "./utils/remove-frontmatter"
+import { writeTextFile } from "./utils/write-text-file"
 
 export async function updateProductMarkdown() {
-  let markdown =
-    "※ このページは自動生成されました。手動で編集しないでください。"
+  const overview = await readTextFile(config.instructions.overview)
 
-  markdown += "\n\n"
-
-  markdown += "# 主要な機能"
-
-  markdown += "\n\n"
-
-  markdown += await readFeatureListMarkdown()
+  let markdown = removeFrontmatter(overview)
 
   markdown += "\n\n"
 
@@ -24,30 +17,7 @@ export async function updateProductMarkdown() {
 
   markdown += await readPageListMarkdown()
 
-  markdown += "\n\n"
-
-  markdown += "# 機能"
-
-  markdown += "\n\n"
-
-  markdown += await readFileText("features.md")
-
-  // {
-  //   markdown += "\n\n"
-  //   markdown += "# API"
-  //   markdown += "\n\n"
-  //   markdown += await readMutationListMarkdown()
-  // }
-
   markdown += "\n"
 
-  process.stdout.write("製品の仕様書を生成しました:\n")
-
-  const path = `${process.cwd()}/${config.product.path}`
-
-  await fs.writeFile(path, markdown, "utf8")
-
-  process.stdout.write(`- ${path}`)
-
-  process.stdout.write("\n")
+  await writeTextFile(markdown, config.path.productMarkdown)
 }
