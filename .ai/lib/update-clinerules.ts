@@ -36,5 +36,9 @@ export async function updateClinerules() {
 
   markdown = `${markdown.trim()}\n`
 
+  await writeTextFile(markdown, ".windsurfrules")
+
   await writeTextFile(markdown, ".clinerules")
+
+  await writeTextFile(markdown, "ClAUDE.md")
 }

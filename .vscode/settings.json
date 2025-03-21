@@ -1,8 +1,5 @@
 {
-  "cSpell.words": [
-    "clinerules",
-    "valibot"
-  ],
+  "cSpell.words": ["clinerules", "valibot"],
   "files.exclude": {
     "**/graphql-env.d.ts": true,
     "**/node_modules": true
