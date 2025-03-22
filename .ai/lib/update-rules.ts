@@ -4,7 +4,7 @@ import { readTextFile } from "./utils/read-text-file"
 import { removeFrontmatter } from "./utils/remove-frontmatter"
 import { writeTextFile } from "./utils/write-text-file"
 
-export async function updateClinerules() {
+export async function updateRules() {
   let markdown = ""
 
   markdown += await createRulesInstructions()
@@ -36,9 +36,9 @@ export async function updateClinerules() {
 
   markdown = `${markdown.trim()}\n`
 
-  await writeTextFile(markdown, ".windsurfrules")
+  await writeTextFile(markdown, config.output.windsurfrules)
 
-  await writeTextFile(markdown, ".clinerules")
+  await writeTextFile(markdown, config.output.clinerules)
 
-  await writeTextFile(markdown, "ClAUDE.md")
+  await writeTextFile(markdown, config.output.claude)
 }

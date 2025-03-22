@@ -1,13 +1,11 @@
-import { type InferInput, parse } from "valibot"
+// valibotは使わない
 import { config } from "./config"
+import type { FeatureType } from "./types/feature"
 import { escapeText } from "./utils/escape-text"
 import { readCsvRecords } from "./utils/read-csv-records"
 import { writeTextFile } from "./utils/write-text-file"
-import { vFeature } from "./validations/feature"
 
 export async function sortFeatureCsv() {
-  type FeatureType = InferInput<typeof vFeature>
-
   const columns = [
     "path",
     "priority",
@@ -16,18 +14,18 @@ export async function sortFeatureCsv() {
     "deprecated_reason",
   ] as const
 
-  const features = await readCsvRecords(config.path.features, columns)
+  const features = await readCsvRecords(config.input.features, columns)
 
   const validFeatures: FeatureType[] = []
 
   for (const item of features) {
-    const feature = parse(vFeature, {
+    const feature: FeatureType = {
       path: item.path,
       priority: Number.parseInt(item.priority, 10),
       name: item.name,
       description: item.description,
       deprecated_reason: item.deprecated_reason || null,
-    } satisfies FeatureType)
+    }
     validFeatures.push(feature)
   }
 
@@ -49,5 +47,5 @@ export async function sortFeatureCsv() {
 
   const content = [header, ...rows].join("\n")
 
-  await writeTextFile(content, config.path.features)
+  await writeTextFile(content, config.input.features)
 }

@@ -3,6 +3,7 @@
 /.clinerules
 /.cursor/rules/*
 !/.cursor/rules/.gitkeep
+CLAUDE.md
 
 # TypeScript
 tsconfig.tsbuildinfo

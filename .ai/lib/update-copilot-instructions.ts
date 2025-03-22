@@ -34,23 +34,23 @@ export async function updateCopilotInstructions() {
 
   markdown = `${markdown.trim()}\n`
 
-  await writeTextFile(markdown, ".github/copilot-instructions.md")
+  await writeTextFile(markdown, config.output.copilotInstructions)
 
   const instructions = [
     {
-      path: config.path.copilotInstructionsCommitMessageGeneration,
+      path: config.output.copilotInstructionsCommitMessageGeneration,
       files: [config.instructions.commitMessage],
     },
     {
-      path: config.path.copilotInstructionsPullRequestDescriptionGeneration,
+      path: config.output.copilotInstructionsPullRequestDescriptionGeneration,
       files: [config.instructions.pullRequestDescription],
     },
     {
-      path: config.path.copilotInstructionsReviewSelection,
+      path: config.output.copilotInstructionsReviewSelection,
       files: [config.instructions.review],
     },
     {
-      path: config.path.copilotInstructionsTestGeneration,
+      path: config.output.copilotInstructionsTestGeneration,
       files: [config.instructions.test],
     },
   ]

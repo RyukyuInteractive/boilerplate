@@ -24,11 +24,11 @@ export async function updateCursorRules() {
 
   markdown = `${markdown.trim()}\n`
 
-  await writeTextFile(markdown, config.path.cursorRules, "instructions.mdc")
+  await writeTextFile(markdown, config.output.cursorRules, "instructions.mdc")
 
-  const rules = readTextFiles(config.path.rules)
+  const rules = readTextFiles(config.input.rules)
 
   for await (const [path, text] of rules) {
-    await writeTextFile(text, config.path.cursorRules, path)
+    await writeTextFile(text, config.output.cursorRules, path)
   }
 }

@@ -6,13 +6,13 @@ export type CursorRule = ReturnType<typeof extractFrontmatter> & {
   path: string
 }
 
-export async function readCursorMdcRules(): Promise<CursorRule[]> {
+export async function readMdcRules(): Promise<CursorRule[]> {
   const glob = new Glob("*.mdc")
 
   const rules: CursorRule[] = []
 
-  for await (const file of glob.scan(config.path.rules)) {
-    const path = `${config.path.rules}/${file}`
+  for await (const file of glob.scan(config.input.rules)) {
+    const path = `${config.input.rules}/${file}`
     const content = await Bun.file(path).text()
     const frontmatter = extractFrontmatter(content)
     if (frontmatter.alwaysApply === "true") continue

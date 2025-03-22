@@ -1,4 +1,4 @@
-import { readCursorMdcRules } from "./read-cursor-mdc-rules"
+import { readMdcRules } from "./read-mdc-rules"
 
 export async function createRulesInstructions() {
   let markdown = "# ファイル読み込み\n\n"
@@ -10,7 +10,7 @@ export async function createRulesInstructions() {
 
   markdown += "\n"
 
-  const rules = await readCursorMdcRules()
+  const rules = await readMdcRules()
 
   for (const rule of rules) {
     markdown += `- \`${rule.path}\`\n`

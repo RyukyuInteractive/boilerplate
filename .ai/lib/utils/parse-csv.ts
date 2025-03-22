@@ -1,6 +1,3 @@
-/**
- * CSVの文字列をパースする自作関数
- */
 export function parseCsv<K extends string>(
   content: string,
   keys: readonly K[],
@@ -39,9 +36,6 @@ function countQuotes(str: string): number {
   return (str.match(/"/g) || []).length
 }
 
-/**
- * CSV行を解析してフィールドの配列に変換する
- */
 function parseCsvLine(line: string): string[] {
   const fields: string[] = []
   let currentField = ""
