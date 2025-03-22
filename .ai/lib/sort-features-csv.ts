@@ -45,7 +45,7 @@ export async function sortFeatureCsv() {
     ].join(",")
   })
 
-  const content = `${[header, ...rows].join("\n")}\n`
+  const content = `${[header, ...rows].join("\n").trim()}\n`
 
   await writeTextFile(content, config.input.features)
 }
