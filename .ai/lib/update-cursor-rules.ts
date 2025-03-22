@@ -2,7 +2,6 @@ import { config } from "./config"
 import { createMdcHeader } from "./utils/create-mdc-header"
 import { readTextFile } from "./utils/read-text-file"
 import { readTextFiles } from "./utils/read-text-files"
-import { removeFrontmatter } from "./utils/remove-frontmatter"
 import { writeTextFile } from "./utils/write-text-file"
 
 export async function updateCursorRules() {
@@ -17,8 +16,7 @@ export async function updateCursorRules() {
   markdown += "\n"
 
   for await (const file of files) {
-    const content = await readTextFile(file)
-    markdown += removeFrontmatter(content)
+    markdown += await readTextFile(file)
     markdown += "\n\n"
   }
 

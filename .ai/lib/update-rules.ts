@@ -1,7 +1,6 @@
 import { config } from "./config"
 import { createRulesInstructions } from "./utils/create-rules-instruction"
 import { readTextFile } from "./utils/read-text-file"
-import { removeFrontmatter } from "./utils/remove-frontmatter"
 import { writeTextFile } from "./utils/write-text-file"
 
 export async function updateRules() {
@@ -29,8 +28,7 @@ export async function updateRules() {
   ]
 
   for (const path of instructions) {
-    const content = await readTextFile(path)
-    markdown += removeFrontmatter(content)
+    markdown += await readTextFile(path)
     markdown += "\n\n"
   }
 
