@@ -70,11 +70,6 @@
   - コンポーネントの実装
   - テストの提案
 
----
-description: Memory
-globs:
-alwaysApply: true
----
 # Memory
 
 以下のファイルを読んで機能やページに関する相談に応答しなさい。必要に応じてファイルを書き換え記録をしなさい。
@@ -329,38 +324,38 @@ update: 日本語
   - description: Prismaのスキーマを生成する
   - globs: ``
 
-- `.ai/rules/api.interface.mutation-fields.*.mdc`
-  - description: 
-  - globs: `api/interface/mutation-fields/*.ts`
-
-- `.ai/rules/api.interface.query-fields.*.mdc`
-  - description: 
-  - globs: `api/interface/query-fields/*.ts`
-
-- `.ai/rules/api.interface.objects.*-node.mdc`
-  - description: 
-  - globs: `api/interface/objects/*-node.ts`
-
-- `.ai/rules/api.infrastructure.repositories.*.repository.mdc`
+- `.ai/rules/api.infrastructure.repositories.$.repository.mdc`
   - description: 
   - globs: `api/infrastructure/repositories/*.repository.ts`
 
-- `.ai/rules/api.domain.entities.*.entity.mdc`
-  - description: 
-  - globs: `api/domain/entities/*.entity.ts`
-
-- `.ai/rules/api.interface.*-input.mdc`
+- `.ai/rules/api.interface.$-input.mdc`
   - description: 
   - globs: `api/interface/inputs/*-input.ts`
 
-- `.ai/rules/api-application.**.*.mdc`
-  - description: 
-  - globs: `api/application/**/*.ts`
-
-- `.ai/rules/api.domain.values.*.value.mdc`
+- `.ai/rules/api.domain.values.$.value.mdc`
   - description: 
   - globs: `api/domain/values/*.value.ts`
+
+- `.ai/rules/api.interface.objects.$-node.mdc`
+  - description: 
+  - globs: `api/interface/objects/*-node.ts`
+
+- `.ai/rules/api.domain.entities.$.entity.mdc`
+  - description: 
+  - globs: `api/domain/entities/*.entity.ts`
+
+- `.ai/rules/api.interface.query-fields.$.mdc`
+  - description: 
+  - globs: `api/interface/query-fields/*.ts`
 
 - `.ai/rules/app.interface.routes.$project.index.mdc`
   - description: 
   - globs: `app/interface/routes/$project.index.tsx`
+
+- `.ai/rules/api.interface.mutation-fields.$.mdc`
+  - description: 
+  - globs: `api/interface/mutation-fields/*.ts`
+
+- `.ai/rules/api.application.$.$.mdc`
+  - description: 
+  - globs: `api/application/**/*.ts`
