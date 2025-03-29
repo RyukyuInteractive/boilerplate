@@ -1,4 +1,4 @@
-import { config } from "./config"
+import config from "../config.json"
 import { readTextFile } from "./utils/read-text-file"
 import { writeTextFile } from "./utils/write-text-file"
 

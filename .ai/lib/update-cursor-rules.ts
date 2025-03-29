@@ -1,5 +1,5 @@
-import { config } from "./config"
-import { createMdcHeader } from "./utils/create-mdc-header"
+import config from "../config.json"
+import { createFrontmatter } from "./utils/create-frontmatter"
 import { readTextFile } from "./utils/read-text-file"
 import { readTextFiles } from "./utils/read-text-files"
 import { writeTextFile } from "./utils/write-text-file"
@@ -7,7 +7,7 @@ import { writeTextFile } from "./utils/write-text-file"
 export async function updateCursorRules() {
   const files = Object.values(config.instructions)
 
-  let markdown = createMdcHeader({
+  let markdown = createFrontmatter({
     description: "Instructions",
     globs: "",
     alwaysApply: true,
@@ -16,6 +16,7 @@ export async function updateCursorRules() {
   markdown += "\n"
 
   for await (const file of files) {
+    if (file === null) continue
     markdown += await readTextFile(file)
     markdown += "\n\n"
   }

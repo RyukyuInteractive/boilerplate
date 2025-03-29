@@ -14,6 +14,53 @@
 - 1つのファイルに関数またはクラスまたは型を1つのみ定義する
 - 1つのファイルで複数のexportを使用しない
 
+# Core Workflows
+
+必ず以下の流れに従って確認を取りながら行動してください。
+
+```mermaid
+flowchart TD
+    START[開始] --> TASK_CHECK{タスクの分類?}
+    
+    TASK_CHECK -->|不明| TASK_CLARIFY[タスク種類の質問]
+    TASK_CLARIFY --> TASK_CHECK
+    
+    %% 各タスクへの分岐
+    TASK_CHECK -->|ファイル編集| FILE_ANALYSIS[問題/タスク分析]
+    TASK_CHECK -->|機能追加/変更/削除| FEATURE_SPEC_PROPOSE[仕様の提案]
+    TASK_CHECK -->|バグ修正| BUG_ANALYSIS[バグの原因推論と修正案]
+    TASK_CHECK -->|その他| OTHER_FREESTYLE[タスクに応じた対応]
+    
+    %% ファイル編集フロー
+    FILE_ANALYSIS --> FILE_SOLUTION[解決策の開発]
+    FILE_SOLUTION --> FILE_TEST_TARGET{テストの対象か?}
+    FILE_TEST_TARGET -->|テスト必要| FILE_TEST_CREATE[テストの更新・作成]
+    FILE_TEST_TARGET -->|スキップ| END
+    FILE_TEST_CREATE --> END
+    
+    %% 機能開発フロー
+    FEATURE_SPEC_PROPOSE --> FEATURE_SPEC_CHECK{ユーザに確認済み?}
+    FEATURE_SPEC_CHECK -->|いいえ| FEATURE_SPEC_PROPOSE
+    FEATURE_SPEC_CHECK -->|はい| FEATURE_DOC[仕様書の更新]
+    FEATURE_DOC --> FEATURE_DEV[開発]
+    FEATURE_DEV --> FEATURE_TEST_TARGET{テストの対象か?}
+    FEATURE_TEST_TARGET -->|テスト必要| FEATURE_TEST_CREATE[テストの更新・作成]
+    FEATURE_TEST_TARGET -->|スキップ| END
+    FEATURE_TEST_CREATE --> END
+    
+    %% バグ修正フロー
+    BUG_ANALYSIS --> BUG_CONFIRM{ユーザに確認済み?}
+    BUG_CONFIRM -->|いいえ| BUG_ANALYSIS
+    BUG_CONFIRM -->|はい| BUG_DEV[開発]
+    BUG_DEV --> END
+    
+    %% 通常モードフロー
+    OTHER_FREESTYLE --> END
+    
+    %% 共通終了ポイント
+    END[タスク完了]
+```
+
 # 概要
 
 このリポジトリはモノレポです。
@@ -24,57 +71,6 @@
 
 メールアドレスとパスワードでログインする。
 
-# Core Workflows
-
-顧客の発言が「製品の仕様に関する質問」や「製品の全体に関わる開発の依頼」である場合は、以下の流れに従います。
-
-顧客の要望をヒアリングし、相談に応じて、必要に応じて開発を行います。この開発を進める場合は必要かどうか顧客に確認しなさい。
-
-## 1. 要望のヒアリング
-
-- 顧客の最初の要望を丁寧に聞き、理解します
-- 曖昧な点や不明確な点があれば、具体的な質問をします
-
-## 2. 要望の整理と確認
-
-- 顧客の要望を整理し、以下の点を明確にします
-  - 追加したい機能やページの概要
-  - 期待する動作や挙動
-  - 優先度や期限
-- 整理した内容を顧客に確認し、合意を得ます
-
-## 3. 技術的な検討
-
-- 既存の機能やページ構成を踏まえ、実装方法を検討します
-- 以下の点を考慮します
-  - 既存のAPIとの連携方法
-  - 新規APIの必要性
-  - 既存のページ構成との整合性
-  - コンポーネントの再利用性
-
-## 4. 実装計画の提案
-
-- 検討結果をもとに、実装計画を提案します
-- 以下の内容を含めます
-  - 追加するAPIの仕様（必要な場合）
-  - 追加するページの構成とUI
-  - 既存コードへの変更点
-  - 想定される課題や懸念点
-
-## 5. 合意形成と実装
-
-- 提案した実装計画について顧客の同意を得ます
-- 合意が得られたら、実装を進めます
-  - APIの追加（必要な場合）
-  - ページの追加
-  - コンポーネントの実装
-  - テストの提案
-
----
-description: Memory
-globs:
-alwaysApply: true
----
 # Memory
 
 以下のファイルを読んで機能やページに関する相談に応答しなさい。必要に応じてファイルを書き換え記録をしなさい。
@@ -349,13 +345,13 @@ update: 日本語
   - description: 
   - globs: `api/domain/entities/*.entity.ts`
 
+- `.ai/rules/api.application.**.*.mdc`
+  - description: 
+  - globs: `api/application/**/*.ts`
+
 - `.ai/rules/api.interface.*-input.mdc`
   - description: 
   - globs: `api/interface/inputs/*-input.ts`
-
-- `.ai/rules/api-application.**.*.mdc`
-  - description: 
-  - globs: `api/application/**/*.ts`
 
 - `.ai/rules/api.domain.values.*.value.mdc`
   - description: 

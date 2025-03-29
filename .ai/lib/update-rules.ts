@@ -1,4 +1,4 @@
-import { config } from "./config"
+import config from "../config.json"
 import { createRulesInstructions } from "./utils/create-rules-instruction"
 import { readTextFile } from "./utils/read-text-file"
 import { writeTextFile } from "./utils/write-text-file"
@@ -6,14 +6,15 @@ import { writeTextFile } from "./utils/write-text-file"
 export async function updateRules() {
   let markdown = ""
 
-  markdown += await createRulesInstructions()
+  markdown += await createRulesInstructions({ rulesPath: config.input.rules })
 
   markdown += "\n"
 
   const instructions = [
     config.instructions.output,
-    config.instructions.overview,
     config.instructions.workflow,
+    config.instructions.overview,
+    config.instructions.packages,
     config.instructions.memory,
     config.instructions.code,
     config.instructions.test,
@@ -28,6 +29,7 @@ export async function updateRules() {
   ]
 
   for (const path of instructions) {
+    if (path === null) continue
     markdown += await readTextFile(path)
     markdown += "\n\n"
   }

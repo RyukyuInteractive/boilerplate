@@ -1,5 +1,4 @@
-// valibotは使わない
-import { config } from "./config"
+import config from "../config.json"
 import type { FeatureType } from "./types/feature"
 import { escapeText } from "./utils/escape-text"
 import { readCsvRecords } from "./utils/read-csv-records"

@@ -1,0 +1,35 @@
+{
+  "root": ".ai",
+  "instructions": {
+    "output": ".ai/00.output.md",
+    "workflow": ".ai/01.workflow.md",
+    "memory": ".ai/02.memory.md",
+    "code": ".ai/03.code.md",
+    "commitMessage": ".ai/04.commit-message.md",
+    "pullRequestDescription": ".ai/05.pull-request-description.md",
+    "review": ".ai/06.review.md",
+    "test": ".ai/07.test.md",
+    "overview": ".ai/10.overview.md",
+    "directories": ".ai/11.directories.md",
+    "libraries": ".ai/12.libraries.md",
+    "commands": ".ai/13.commands.md",
+    "methods": ".ai/14.methods.md",
+    "packages": null
+  },
+  "input": {
+    "pages": ".ai/pages.csv",
+    "features": ".ai/features.csv",
+    "rules": ".ai/rules"
+  },
+  "output": {
+    "copilotInstructions": ".github/copilot-instructions.md",
+    "copilotInstructionsCommitMessageGeneration": ".github/copilot-instructions.commit-message-generation.md",
+    "copilotInstructionsPullRequestDescriptionGeneration": ".github/copilot-instructions.pull-request-description-generation.md",
+    "copilotInstructionsReviewSelection": ".github/copilot-instructions.review-selection.md",
+    "copilotInstructionsTestGeneration": ".github/copilot-instructions.test-generation.md",
+    "windsurfrules": ".windsurfrules",
+    "clinerules": ".clinerules",
+    "claude": "CLAUDE.md",
+    "cursorRules": ".cursor/rules"
+  }
+}

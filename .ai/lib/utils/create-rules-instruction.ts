@@ -1,6 +1,10 @@
 import { readMdcRules } from "./read-mdc-rules"
 
-export async function createRulesInstructions() {
+type Props = {
+  rulesPath: string
+}
+
+export async function createRulesInstructions(props: Props) {
   let markdown = "# ファイル読み込み\n\n"
 
   markdown += "コードを生成する場合は以下のルールに従います。\n"
@@ -10,7 +14,7 @@ export async function createRulesInstructions() {
 
   markdown += "\n"
 
-  const rules = await readMdcRules()
+  const rules = await readMdcRules(props.rulesPath)
 
   for (const rule of rules) {
     markdown += `- \`${rule.path}\`\n`

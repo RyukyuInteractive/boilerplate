@@ -62,11 +62,6 @@ function RouteComponent() {
       icon: UserIcon,
     },
     {
-      title: "プロジェクト",
-      url: `/${params.project}/profile`,
-      icon: InboxIcon,
-    },
-    {
       title: "設定",
       url: `/${params.project}/settings`,
       icon: InboxIcon,

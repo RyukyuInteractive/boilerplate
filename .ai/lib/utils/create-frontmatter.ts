@@ -4,7 +4,7 @@ type Props = {
   alwaysApply: boolean
 }
 
-export function createMdcHeader(props: Props): string {
+export function createFrontmatter(props: Props): string {
   return `---
 description: ${props.description}
 globs: ${props.globs}

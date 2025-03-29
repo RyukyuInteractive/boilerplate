@@ -1,4 +1,4 @@
-import { config } from "./config"
+import config from "../config.json"
 import { createRulesInstructions } from "./utils/create-rules-instruction"
 import { readTextFile } from "./utils/read-text-file"
 import { writeTextFile } from "./utils/write-text-file"
@@ -8,8 +8,9 @@ export async function updateCopilotInstructions() {
 
   const rules = Object.values([
     config.instructions.output,
-    config.instructions.overview,
     config.instructions.workflow,
+    config.instructions.overview,
+    config.instructions.packages,
     config.instructions.memory,
     config.instructions.code,
     config.instructions.test,
@@ -24,11 +25,12 @@ export async function updateCopilotInstructions() {
   ])
 
   for (const path of rules) {
+    if (path === null) continue
     markdown += await readTextFile(path)
     markdown += "\n\n"
   }
 
-  markdown += await createRulesInstructions()
+  markdown += await createRulesInstructions({ rulesPath: config.input.rules })
 
   markdown = `${markdown.trim()}\n`
 
