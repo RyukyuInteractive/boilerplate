@@ -17,8 +17,6 @@
     "packages": null
   },
   "input": {
-    "pages": ".ai/pages.csv",
-    "features": ".ai/features.csv",
     "rules": ".ai/rules"
   },
   "output": {

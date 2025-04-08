@@ -75,12 +75,6 @@ flowchart TD
 
 以下のファイルを読んで機能やページに関する相談に応答しなさい。必要に応じてファイルを書き換え記録をしなさい。
 
-- `.ai/features.csv`: 機能の一覧
-- `.ai/pages.csv`: ページに関する更新
-- `.ai/words.csv`: 製品における用語集
-
-情報の不足や間違いがあるなど必要に応じて以下のファイルも書き換えなさい。
-
 - `.ai/10.overview.md`: 製品の概要
 - `.ai/11.directories.md`: ディレクトリ
 - `.ai/12.libraries.md`: ライブラリ
@@ -91,54 +85,6 @@ flowchart TD
 
 ```
 bun run build
-```
-
-## `.ai/pages.csv`
-
-以下の形式のCSVであること。
-
-```
-path,name,description,deprecated_reason
-パス,名前,簡単な説明,廃止の場合は理由（or 空文字）
-```
-
-ページを追加した場合は「app/interface/routes」に空のページを追加してください。
-
-```tsx
-export const Route = createFileRoute("")({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
-}
-```
-
-## `.ai/features.csv`
-
-以下の形式のCSVであること。
-
-```
-path,priority,name,description,deprecated_reason
-パス,重要度,名前,簡単な説明,廃止の場合は理由（or 空文字）
-```
-
-値は以下のルールに従うこと。
-
-- パス: pages.csvに存在するパスのみを使用する
-- priority: 数字で重要度を表現する
-  - 0: コアの機能
-  - 1: 必要なサブ機能
-  - 2: 補助的な機能
-
-ただし「$」は全てのページを意味しており[pages.csv]には存在しない。
-
-## `.ai/words.csv`
-
-固有名詞など製品の独自の単語である場合のみ追加してください。以下の形式のCSVであること。
-
-```
-name,description
-名前,説明
 ```
 
 # 開発ルール
