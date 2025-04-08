@@ -9,7 +9,7 @@ export async function updateCopilotInstructions() {
   const rules = Object.values([
     config.instructions.output,
     config.instructions.workflow,
-    config.instructions.overview,
+    config.instructions.product,
     config.instructions.packages,
     config.instructions.memory,
     config.instructions.code,
