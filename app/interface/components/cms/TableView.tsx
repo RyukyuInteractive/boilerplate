@@ -7,6 +7,42 @@ import { useToast } from "../../hooks/use-toast"
 import { graphql } from "../../gql"
 import { useMutation, useQuery } from "../../hooks/graphql"
 
+interface GetTableData {
+  table: TableType;
+}
+
+interface GetTableVars {
+  id: string;
+}
+
+interface CreateColumnData {
+  createColumn: ColumnType;
+}
+
+interface CreateColumnVars {
+  name: string;
+  type: string;
+  tableId: string;
+  order: number;
+}
+
+interface CreateRecordData {
+  createRecord: RecordType;
+}
+
+interface CreateRecordVars {
+  tableId: string;
+}
+
+interface UpdateCellData {
+  updateCell: CellType;
+}
+
+interface UpdateCellVars {
+  id: string;
+  value?: string;
+}
+
 const GET_TABLE = graphql(`
   query GetTable($id: String!) {
     table(id: $id) {
@@ -97,11 +133,11 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
   const [newColumnType, setNewColumnType] = useState("text")
   const [cellValues, setCellValues] = useState<Record<string, string>>({})
 
-  const { data, loading, error, refetch } = useQuery(GET_TABLE, {
+  const { data, loading, error, refetch } = useQuery<GetTableData, GetTableVars>(GET_TABLE, {
     variables: { id: tableId },
   })
 
-  const [createColumn] = useMutation(CREATE_COLUMN, {
+  const [createColumn] = useMutation<CreateColumnData, CreateColumnVars>(CREATE_COLUMN, {
     onCompleted: () => {
       setNewColumnName("")
       refetch()
@@ -119,7 +155,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
     },
   })
 
-  const [createRecord] = useMutation(CREATE_RECORD, {
+  const [createRecord] = useMutation<CreateRecordData, CreateRecordVars>(CREATE_RECORD, {
     onCompleted: () => {
       refetch()
       toast({
@@ -136,7 +172,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
     },
   })
 
-  const [updateCell] = useMutation(UPDATE_CELL, {
+  const [updateCell] = useMutation<UpdateCellData, UpdateCellVars>(UPDATE_CELL, {
     onCompleted: () => {
       toast({
         title: "Cell updated",
@@ -162,7 +198,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
       return
     }
 
-    const order = (data?.table as TableType | undefined)?.columns?.length || 0
+    const order = data?.table?.columns?.length || 0
 
     createColumn({
       variables: {
@@ -183,7 +219,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
   }, [createRecord, tableId])
 
   const handleCellChange = useCallback((cellId: string, value: string) => {
-    setCellValues((prev) => ({
+    setCellValues((prev: Record<string, string>) => ({
       ...prev,
       [cellId]: value,
     }))
@@ -205,7 +241,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
   if (error) return <div>Error: {error?.message || "Unknown error"}</div>
   if (!data?.table) return <div>Table not found</div>
 
-  const table = data.table as TableType
+  const table = data.table
   const columns = table.columns || []
   const records = table.records || []
 

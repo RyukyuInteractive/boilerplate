@@ -7,6 +7,23 @@ import { useMutation, useQuery } from "../../hooks/graphql"
 import { Input } from "../ui/input"
 import { useState } from "react"
 
+interface GetTablesData {
+  tables: TableType[];
+}
+
+interface GetTablesVars {
+  projectId: string;
+}
+
+interface CreateTableData {
+  createTable: TableType;
+}
+
+interface CreateTableVars {
+  name: string;
+  projectId: string;
+}
+
 const GET_TABLES = graphql(`
   query GetTables($projectId: String!) {
     tables(projectId: $projectId) {
@@ -42,11 +59,11 @@ export const TableList = ({ projectId }: TableListProps) => {
   const navigate = useNavigate()
   const [newTableName, setNewTableName] = useState("")
 
-  const { data, loading, error, refetch } = useQuery(GET_TABLES, {
+  const { data, loading, error, refetch } = useQuery<GetTablesData, GetTablesVars>(GET_TABLES, {
     variables: { projectId },
   })
 
-  const [createTable] = useMutation(CREATE_TABLE, {
+  const [createTable] = useMutation<CreateTableData, CreateTableVars>(CREATE_TABLE, {
     onCompleted: () => {
       setNewTableName("")
       refetch()
@@ -85,7 +102,7 @@ export const TableList = ({ projectId }: TableListProps) => {
   if (loading) return <div>読み込み中...</div>
   if (error) return <div>エラー: {error?.message || "不明なエラー"}</div>
 
-  const tables = (data?.tables || []) as TableType[]
+  const tables = data?.tables || []
 
   return (
     <div className="space-y-4">
