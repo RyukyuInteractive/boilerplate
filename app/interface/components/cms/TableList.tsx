@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import { Button } from "~/interface/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "~/interface/components/ui/card"
-import { useToast } from "~/interface/hooks/use-toast"
-import { graphql } from "~/interface/gql"
-import { useMutation, useQuery } from "~/interface/hooks/graphql"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { useToast } from "../../hooks/use-toast"
+import { graphql } from "../../gql"
+import { useMutation, useQuery } from "../../hooks/graphql"
 import { Input } from "../ui/input"
 import { useState } from "react"
 
@@ -31,6 +31,12 @@ export type TableListProps = {
   projectId: string
 }
 
+interface TableType {
+  id: string
+  name: string
+  projectId: string
+}
+
 export const TableList = ({ projectId }: TableListProps) => {
   const { toast } = useToast()
   const navigate = useNavigate()
@@ -49,7 +55,7 @@ export const TableList = ({ projectId }: TableListProps) => {
         description: "新しいテーブルが正常に作成されました。",
       })
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: "テーブル作成エラー",
         description: error.message,
@@ -77,9 +83,9 @@ export const TableList = ({ projectId }: TableListProps) => {
   }
 
   if (loading) return <div>読み込み中...</div>
-  if (error) return <div>エラー: {error.message}</div>
+  if (error) return <div>エラー: {error?.message || "不明なエラー"}</div>
 
-  const tables = data?.tables || []
+  const tables = (data?.tables || []) as TableType[]
 
   return (
     <div className="space-y-4">
@@ -100,7 +106,7 @@ export const TableList = ({ projectId }: TableListProps) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {tables.map((table) => (
+        {tables.map((table: TableType) => (
           <Card key={table.id} className="cursor-pointer hover:bg-gray-50" onClick={() => navigate(`/projects/${projectId}/tables/${table.id}`)}>
             <CardHeader className="pb-2">
               <CardTitle>{table.name}</CardTitle>

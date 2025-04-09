@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button } from "~/interface/components/ui/button"
-import { Input } from "~/interface/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/interface/components/ui/table"
-import { useToast } from "~/interface/components/ui/use-toast"
-import { graphql } from "~/interface/gql"
-import { useMutation, useQuery } from "~/interface/hooks/graphql"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
+import { useToast } from "../../hooks/use-toast"
+import { graphql } from "../../gql"
+import { useMutation, useQuery } from "../../hooks/graphql"
 
 const GET_TABLE = graphql(`
   query GetTable($id: String!) {
@@ -64,6 +64,32 @@ export type TableViewProps = {
   isEditMode?: boolean
 }
 
+interface ColumnType {
+  id: string
+  name: string
+  type: string
+  order: number
+}
+
+interface CellType {
+  id: string
+  value: string | null
+  columnId: string
+}
+
+interface RecordType {
+  id: string
+  cells: CellType[]
+}
+
+interface TableType {
+  id: string
+  name: string
+  projectId: string
+  columns: ColumnType[]
+  records: RecordType[]
+}
+
 export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
   const { toast } = useToast()
   const navigate = useNavigate()
@@ -84,7 +110,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
         description: "The column has been created successfully.",
       })
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: "Error creating column",
         description: error.message,
@@ -101,7 +127,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
         description: "The record has been created successfully.",
       })
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: "Error creating record",
         description: error.message,
@@ -117,7 +143,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
         description: "The cell has been updated successfully.",
       })
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast({
         title: "Error updating cell",
         description: error.message,
@@ -136,7 +162,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
       return
     }
 
-    const order = data?.table?.columns?.length || 0
+    const order = (data?.table as TableType | undefined)?.columns?.length || 0
 
     createColumn({
       variables: {
@@ -146,7 +172,7 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
         order,
       },
     })
-  }, [createColumn, data?.table?.columns?.length, newColumnName, newColumnType, tableId, toast])
+  }, [createColumn, data?.table, newColumnName, newColumnType, tableId, toast])
 
   const handleAddRecord = useCallback(() => {
     createRecord({
@@ -176,10 +202,10 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
   }, [cellValues, updateCell])
 
   if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
+  if (error) return <div>Error: {error?.message || "Unknown error"}</div>
   if (!data?.table) return <div>Table not found</div>
 
-  const { table } = data
+  const table = data.table as TableType
   const columns = table.columns || []
   const records = table.records || []
 
@@ -235,16 +261,16 @@ export const TableView = ({ tableId, isEditMode = false }: TableViewProps) => {
         <Table>
           <TableHeader>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column: ColumnType) => (
                 <TableHead key={column.id}>{column.name}</TableHead>
               ))}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {records.map((record) => (
+            {records.map((record: RecordType) => (
               <TableRow key={record.id}>
-                {columns.map((column) => {
-                  const cell = record.cells?.find((cell) => cell.columnId === column.id)
+                {columns.map((column: ColumnType) => {
+                  const cell = record.cells?.find((cell: CellType) => cell.columnId === column.id)
                   const cellId = cell?.id || ""
                   const cellValue = cellValues[cellId] !== undefined ? cellValues[cellId] : cell?.value || ""
 
