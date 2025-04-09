@@ -15,6 +15,7 @@ import "./query-fields/cms/tables"
 import "./mutation-fields/cms/create-table"
 import "./mutation-fields/cms/create-column"
 import "./mutation-fields/cms/create-record"
+import "./mutation-fields/cms/update-cell"
 
 builder.queryType({
   fields(t) {

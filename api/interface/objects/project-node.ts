@@ -1,8 +1,14 @@
-import type { PrismaProject } from "@prisma/client"
 import { builder } from "~/interface/builder"
-import { PothosOrganizationNode } from "~/interface/objects/organization-node"
 import { PothosProjectMemberNode } from "~/interface/objects/project-member-node"
 import { PothosProjectSettingNode } from "~/interface/objects/project-setting-node"
+
+interface PrismaProject {
+  id: string;
+  name: string;
+  organizationId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const PothosProjectNode = builder.objectRef<PrismaProject>("ProjectNode")
 
@@ -36,22 +42,6 @@ builder.objectField(PothosProjectNode, "organizationId", (t) => {
     nullable: true,
     resolve(parent) {
       return parent.organizationId
-    },
-  })
-})
-
-builder.objectField(PothosProjectNode, "organization", (t) => {
-  return t.field({
-    type: PothosOrganizationNode,
-    description: undefined,
-    nullable: true,
-    resolve(parent, _, c) {
-      if (parent.organizationId === null) {
-        return null
-      }
-      return c.var.database.prismaProject
-        .findUniqueOrThrow({ where: { id: parent.id } })
-        .organization()
     },
   })
 })
