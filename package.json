@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "open-cms",
   "type": "module",
   "scripts": {
     "dev": "bun run .ai/lib/build.ts && prisma generate && bun run index.ts",

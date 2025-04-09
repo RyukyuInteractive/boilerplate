@@ -20,6 +20,10 @@ export type Bindings = {
 export type Variables = {
   database: PrismaClient
   session: InferOutput<typeof vSessionPayload> | null
+  tableRepository: any
+  columnRepository: any
+  recordRepository: any
+  cellRepository: any
 }
 
 /**

@@ -1,25 +1,24 @@
-import { builder } from "~/interface/builder"
-import { createOrganization } from "~/interface/mutation-fields/create-organization"
-import { createOrganizationMember } from "~/interface/mutation-fields/create-organization-member"
-import { createProject } from "~/interface/mutation-fields/create-project"
-import { createProjectMember } from "~/interface/mutation-fields/create-project-member"
-import { createUser } from "~/interface/mutation-fields/create-user"
-import { deleteOrganization } from "~/interface/mutation-fields/delete-organization"
-import { deleteProject } from "~/interface/mutation-fields/delete-project"
-import { updateOrganization } from "~/interface/mutation-fields/update-organization"
-import { updateProject } from "~/interface/mutation-fields/update-project"
-import { updateProjectSetting } from "~/interface/mutation-fields/update-project-setting"
-import { updateUser } from "~/interface/mutation-fields/update-user"
-import { updateUserSetting } from "~/interface/mutation-fields/update-user-setting"
-import { organization } from "~/interface/query-fields/organization"
-import { project } from "~/interface/query-fields/project"
-import { user } from "~/interface/query-fields/user"
-import { viewer } from "~/interface/query-fields/viewer"
+import { builder } from "./builder"
+import { createProject } from "./mutation-fields/create-project"
+import { createProjectMember } from "./mutation-fields/create-project-member"
+import { createUser } from "./mutation-fields/create-user"
+import { deleteProject } from "./mutation-fields/delete-project"
+import { updateProject } from "./mutation-fields/update-project"
+import { updateProjectSetting } from "./mutation-fields/update-project-setting"
+import { updateUser } from "./mutation-fields/update-user"
+import { updateUserSetting } from "./mutation-fields/update-user-setting"
+import { project } from "./query-fields/project"
+import { user } from "./query-fields/user"
+import { viewer } from "./query-fields/viewer"
+
+import "./query-fields/cms/tables"
+import "./mutation-fields/cms/create-table"
+import "./mutation-fields/cms/create-column"
+import "./mutation-fields/cms/create-record"
 
 builder.queryType({
   fields(t) {
     return {
-      organization: organization(t),
       project: project(t),
       user: user(t),
       viewer: viewer(t),
@@ -30,14 +29,10 @@ builder.queryType({
 builder.mutationType({
   fields(t) {
     return {
-      createOrganization: createOrganization(t),
-      createOrganizationMember: createOrganizationMember(t),
       createProject: createProject(t),
       createProjectMember: createProjectMember(t),
       createUser: createUser(t),
-      deleteOrganization: deleteOrganization(t),
       deleteProject: deleteProject(t),
-      updateOrganization: updateOrganization(t),
       updateProject: updateProject(t),
       updateProjectSetting: updateProjectSetting(t),
       updateUser: updateUser(t),
