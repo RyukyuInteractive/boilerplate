@@ -1,5 +1,10 @@
+import { createFileRoute } from "@tanstack/react-router"
 import { useParams } from "react-router-dom"
 import { TableView } from "~/interface/components/cms/TableView"
+
+export const Route = createFileRoute("/projects/$projectId/tables/$tableId/edit")({
+  component: TableEditPage,
+})
 
 export default function TableEditPage() {
   const { projectId, tableId } = useParams<{ projectId: string; tableId: string }>()
