@@ -14,7 +14,7 @@
     "libraries": ".ai/12.libraries.md",
     "commands": ".ai/13.commands.md",
     "methods": ".ai/14.methods.md",
-    "packages": null
+    "tips": ".ai/15.tips.md"
   },
   "input": {
     "rules": ".ai/rules"
@@ -28,6 +28,7 @@
     "windsurfrules": ".windsurfrules",
     "clinerules": ".clinerules",
     "claude": "CLAUDE.md",
-    "cursorRules": ".cursor/rules"
+    "cursorRules": ".cursor/rules",
+    "devinrules": "devinrules.md"
   }
 }

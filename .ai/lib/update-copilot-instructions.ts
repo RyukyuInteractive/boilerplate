@@ -10,7 +10,6 @@ export async function updateCopilotInstructions() {
     config.instructions.output,
     config.instructions.workflow,
     config.instructions.product,
-    config.instructions.packages,
     config.instructions.memory,
     config.instructions.code,
     config.instructions.test,
