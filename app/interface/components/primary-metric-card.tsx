@@ -1,17 +1,26 @@
-import { type FragmentOf, graphql, readFragment } from "gql.tada"
 import { ArrowDownRightIcon, ArrowUpRightIcon } from "lucide-react"
 import { Card } from "~/interface/components/ui/card"
 import { cn } from "~/lib/utils"
 
+interface PrimaryMetricType {
+  id: string;
+  name: string;
+  description: string;
+  monthlyChangeRatio: number;
+  monthlyChangeValue: string;
+  value: string;
+  valueUnit: string;
+}
+
 type Props = {
-  primaryMetric: FragmentOf<typeof PrimaryMetricCardFragment>
+  primaryMetric: PrimaryMetricType
 }
 
 /**
  * KPI
  */
 export function PrimaryMetricCard(props: Props) {
-  const metric = readFragment(PrimaryMetricCardFragment, props.primaryMetric)
+  const metric = props.primaryMetric
 
   return (
     <Card className="space-y-2 p-4">
@@ -45,14 +54,12 @@ export function PrimaryMetricCard(props: Props) {
   )
 }
 
-export const PrimaryMetricCardFragment = graphql(
-  `fragment PrimaryMetricCardFragment on PrimaryMetricNode {
-    id
-    name
-    description
-    monthlyChangeRatio
-    monthlyChangeValue
-    value
-    valueUnit
-  }`,
-)
+export const PrimaryMetricCardFragment = {
+  id: '',
+  name: '',
+  description: '',
+  monthlyChangeRatio: 0,
+  monthlyChangeValue: '',
+  value: '',
+  valueUnit: ''
+}

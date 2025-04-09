@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { graphql } from "gql.tada"
-import { useQuery } from "urql"
+import { graphql } from "~/interface/gql"
+import { useQuery } from "~/interface/hooks/graphql"
 import { Button } from "~/interface/components/ui/button"
 import {
   Card,
@@ -26,11 +26,11 @@ export const Route = createFileRoute("/$project/settings")({
 
 function RouteComponent() {
   const params = Route.useParams()
-  const [result] = useQuery({
+  const { data: result, loading, error } = useQuery({
     query: ProjectQuery,
     variables: { id: params.project },
   })
-  const project = result.data?.node
+  const project = result?.node || {}
 
   if (!project) {
     return <div className="p-6">プロジェクト情報を読み込み中...</div>
