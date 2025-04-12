@@ -1,6 +1,6 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
-import { useQuery } from "urql"
 import { Button } from "~/interface/components/ui/button"
 import {
   Card,
@@ -26,14 +26,13 @@ export const Route = createFileRoute("/$project/settings")({
 
 function RouteComponent() {
   const params = Route.useParams()
-  const [result] = useQuery({
-    query: ProjectQuery,
+  const { data } = useSuspenseQuery(ProjectQuery, {
     variables: { id: params.project },
   })
-  const project = result.data?.node
-
-  if (!project) {
-    return <div className="p-6">プロジェクト情報を読み込み中...</div>
+  const project = data.node as {
+    id: string
+    name: string
+    description: string | null
   }
 
   return (

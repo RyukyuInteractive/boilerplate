@@ -2,7 +2,7 @@
   "name": "api",
   "scripts": {
     "dev": "wrangler dev",
-    "typecheck": "tsc --noEmit",
+    "check": "tsc --noEmit",
     "create-migration": "bun run workspace/create-migration.ts",
     "run-migration": "wrangler d1 migrations apply boilerplate --local"
   },

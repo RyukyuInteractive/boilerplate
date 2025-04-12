@@ -1,7 +1,7 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
 import { HomeIcon, InboxIcon, UserIcon } from "lucide-react"
-import { useQuery } from "urql"
 import { AccountDropdownMenu } from "~/interface/components/account-dropdown-menu"
 import { LoginPage } from "~/interface/components/pages/login-page"
 import {
@@ -36,7 +36,7 @@ function RouteComponent() {
 
   const params = Route.useParams()
 
-  const [result] = useQuery({ query: Query })
+  const { data } = useSuspenseQuery(Query)
 
   if (session === null) {
     return <LoginPage />
@@ -68,7 +68,7 @@ function RouteComponent() {
     },
   ]
 
-  const myProjects = result.data?.viewer?.projectMembers.flatMap((node) => {
+  const myProjects = data?.viewer?.projectMembers.flatMap((node) => {
     return node.project
   })
 

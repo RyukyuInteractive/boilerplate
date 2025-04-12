@@ -1,7 +1,7 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
 import { ArrowLeftIcon } from "lucide-react"
-import { useQuery } from "urql"
 import { LoginPage } from "~/interface/components/pages/login-page"
 import { Separator } from "~/interface/components/ui/separator"
 import {
@@ -22,8 +22,7 @@ function RouteComponent() {
 
   const params = Route.useParams()
 
-  const [result] = useQuery({
-    query: Query,
+  const { data } = useSuspenseQuery(Query, {
     variables: { id: params.organization },
   })
 

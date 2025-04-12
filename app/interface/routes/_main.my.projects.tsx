@@ -1,6 +1,6 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
-import { useQuery } from "urql"
 import {
   ProjectCard,
   ProjectCardFragment,
@@ -11,19 +11,13 @@ export const Route = createFileRoute("/_main/my/projects")({
 })
 
 function RouteComponent() {
-  const [result] = useQuery({ query: Query })
+  const { data } = useSuspenseQuery(Query)
 
-  const projects = result.data?.viewer?.projectMembers.flatMap((node) => {
+  const projects = data.viewer?.projectMembers.flatMap((node) => {
     return node.project
   })
 
-  if (result.fetching) {
-    return null
-  }
-
-  if (projects === undefined) {
-    return null
-  }
+  if (!projects) return null
 
   return (
     <div className="space-y-4 p-4">

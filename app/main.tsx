@@ -1,14 +1,14 @@
+import { ApolloProvider } from "@apollo/client"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { Suspense } from "react"
 import { createRoot } from "react-dom/client"
-import { Provider } from "urql"
 import { LoadingPage } from "~/interface/components/pages/loading-page"
 import { SessionProvider } from "~/interface/components/session-provider"
 import { ThemeProvider } from "~/interface/components/theme-provider"
 import { Toaster } from "~/interface/components/ui/sonner"
+import { apolloClient } from "~/lib/apollo-client"
 import { routeTree } from "~/lib/route-tree.gen"
-import { urqlClient } from "~/lib/urql-client"
 
 import "~/main.css"
 
@@ -35,7 +35,7 @@ const queryClient = new QueryClient()
 
 root.render(
   <ThemeProvider defaultTheme="dark">
-    <Provider value={urqlClient}>
+    <ApolloProvider client={apolloClient}>
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<LoadingPage />}>
           <SessionProvider>
@@ -44,6 +44,6 @@ root.render(
           </SessionProvider>
         </Suspense>
       </QueryClientProvider>
-    </Provider>
+    </ApolloProvider>
   </ThemeProvider>,
 )

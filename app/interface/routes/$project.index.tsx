@@ -1,6 +1,6 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
-import { useQuery } from "urql"
 
 export const Route = createFileRoute("/$project/")({
   component: RouteComponent,
@@ -9,14 +9,13 @@ export const Route = createFileRoute("/$project/")({
 function RouteComponent() {
   const params = Route.useParams()
 
-  const [result] = useQuery({
-    query: Query,
+  const { data } = useSuspenseQuery(Query, {
     variables: { projectId: params.project },
   })
 
   return (
     <div className="flex w-full flex-1 overflow-x-hidden">
-      {result.data?.project?.name}
+      {data.project?.name}
     </div>
   )
 }

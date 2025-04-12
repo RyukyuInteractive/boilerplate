@@ -1,8 +1,8 @@
+import { useMutation } from "@apollo/client"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
 import { useState } from "react"
 import { toast } from "sonner"
-import { useMutation } from "urql"
 import { Button } from "~/interface/components/ui/button"
 import { Card } from "~/interface/components/ui/card"
 import { Input } from "~/interface/components/ui/input"
@@ -19,21 +19,22 @@ function RouteComponent() {
 
   const [nameEN, setNameEN] = useState("")
 
-  const [result, createProject] = useMutation(Mutation)
+  const [createProject, { loading }] = useMutation(Mutation)
 
   const onSubmit = async () => {
     try {
-      const response = await createProject({
-        input: {
-          organizationId: "1",
-          name,
+      const { data } = await createProject({
+        variables: {
+          input: {
+            organizationId: "1",
+            name,
+          },
         },
       })
-      if (response.data === undefined) return
-      if (response.data.createProject === null) return
+      if (!data?.createProject) return
       navigate({
         to: "/$project",
-        params: { project: response.data.createProject.id },
+        params: { project: data.createProject.id },
       })
       toast.success("プロジェクトを作成しました")
     } catch (error) {
@@ -72,7 +73,7 @@ function RouteComponent() {
             <Button
               type={"submit"}
               className="w-full"
-              disabled={!name || result.fetching}
+              disabled={!name || loading}
             >
               作成
             </Button>

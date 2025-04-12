@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@apollo/client"
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
 import {
@@ -8,7 +9,6 @@ import {
   SettingsIcon,
   SquareUserIcon,
 } from "lucide-react"
-import { useQuery } from "urql"
 import { DarkModeButton } from "~/interface/components/dark-mode-button"
 import { LoginPage } from "~/interface/components/pages/login-page"
 import {
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/_main")({
 function RouteComponent() {
   const [session] = useSession()
 
-  const [result] = useQuery({ query: Query })
+  const { data } = useSuspenseQuery(Query)
 
   if (session === null) {
     return <LoginPage />
@@ -57,7 +57,7 @@ function RouteComponent() {
     },
   ]
 
-  const viewer = result.data?.viewer
+  const viewer = data.viewer
 
   const projects = viewer?.projectMembers.flatMap((t) => {
     return t.project

@@ -31,6 +31,15 @@ You MUST update these files at the end of EVERY task when:
 
 Additionally, if you update, run `bun run .ai/build.ts`.
 
+## Task Completion
+
+Before completing any task, you must always:
+
+- Record your work progress
+- Check and fix type errors
+- Run tests and fix any issues found
+- Fix and format code
+
 # Memory
 
 Basic rules. These files are written in English.
@@ -293,6 +302,13 @@ This system is a platform for project management and collaboration. It enables e
 
 # Development
 
+## Npm Scripts
+
+- `bun test` - テストを実行する
+- `bun run format` - コードのエラーを修正して整形する
+- `bun --cwd app tsc --noEmit` - 型エラーを確認する
+- `bun --cwd api tsc --noEmit` - 型エラーを確認する
+
 ## 開発環境のセットアップ
 
 プロジェクトをセットアップするには以下のコマンドを実行します。
@@ -316,12 +332,6 @@ bun run --cwd api dev
 # フロントエンドの開発サーバー起動
 bun run --cwd app dev
 ```
-
-## Npm Scripts
-
-- `bun test` - テストを実行する
-- `bun run format` - コードを整形する
-- `bun run build` - 仕様書を更新する
 
 ## APIにMutationを追加する
 
