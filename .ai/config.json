@@ -1,20 +1,22 @@
 {
   "root": ".ai",
   "instructions": {
-    "output": ".ai/00.output.md",
-    "workflow": ".ai/01.workflow.md",
-    "memory": ".ai/02.memory.md",
-    "code": ".ai/03.code.md",
-    "commitMessage": ".ai/04.commit-message.md",
-    "pullRequestDescription": ".ai/05.pull-request-description.md",
-    "review": ".ai/06.review.md",
-    "test": ".ai/07.test.md",
-    "product": ".ai/10.product.md",
-    "directories": ".ai/11.directories.md",
-    "libraries": ".ai/12.libraries.md",
-    "commands": ".ai/13.commands.md",
-    "methods": ".ai/14.methods.md",
-    "tips": ".ai/15.tips.md"
+    "overview": ".ai/00.overview.md",
+    "memory": ".ai/01.memory.md",
+    "output": ".ai/10.output.md",
+    "commitMessage": ".ai/11.commit-message.md",
+    "pullRequestDescription": ".ai/12.pull-request-description.md",
+    "review": ".ai/13.review.md",
+    "test": ".ai/14.test.md",
+    "code": ".ai/15.code.md",
+    "project": ".ai/20.project.md",
+    "product": ".ai/21.product.md",
+    "architecture": ".ai/22.architecture.md",
+    "development": ".ai/23.development.md",
+    "context": ".ai/30.context.md",
+    "progress": ".ai/31.progress.md",
+    "restriction": ".ai/32.restriction.md",
+    "note": ".ai/33.note.md"
   },
   "input": {
     "rules": ".ai/rules"
@@ -29,6 +31,6 @@
     "clinerules": ".clinerules",
     "claude": "CLAUDE.md",
     "cursorRules": ".cursor/rules",
-    "devinrules": "devinrules.md"
+    "devin": "devin.md"
   }
 }

@@ -3,6 +3,7 @@ description:
 globs: api/interface/mutation-fields/*.ts
 alwaysApply: false
 ---
+
 ## api/interface/mutation-fields/*.ts
 
 データの書き込みを定義する。

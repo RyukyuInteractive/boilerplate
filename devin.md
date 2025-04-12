@@ -131,6 +131,13 @@ Features must be described with regards to the interaction design and user exper
 - Define only one function or class or type per file
 - Do not use multiple exports in a single file
 
+# Tests
+
+- Do not create tests for files with side effects such as database operations
+- Use only `test` and `expect` from `bun:test`
+- Test titles should use Japanese
+- Filename format is "*.test.ts"
+
 # Code
 
 - Use descriptive naming conventions
@@ -409,44 +416,3 @@ bun run --cwd api run-migration
 
 - 大量のデータを扱う場合は、ページネーションを使用してください
 - 不要なAPIリクエストを減らすためにキャッシュを活用してください
-
-# ファイル読み込み
-
-コードを生成する場合は以下のルールに従います。
-対象が、以下のうちの「description」または「globs」のどちらかに一致する場合はそのファイルの指示を読んで従います。
-
-- `.ai/rules/prisma.schema.mdc`
-  - description: Prismaのスキーマを生成する
-  - globs: ``
-
-- `.ai/rules/api.infrastructure.repositories.$.repository.mdc`
-  - description: 
-  - globs: `api/infrastructure/repositories/*.repository.ts`
-
-- `.ai/rules/api.interface.$-input.mdc`
-  - description: 
-  - globs: `api/interface/inputs/*-input.ts`
-
-- `.ai/rules/api.domain.values.$.value.mdc`
-  - description: 
-  - globs: `api/domain/values/*.value.ts`
-
-- `.ai/rules/api.interface.objects.$-node.mdc`
-  - description: 
-  - globs: `api/interface/objects/*-node.ts`
-
-- `.ai/rules/api.domain.entities.$.entity.mdc`
-  - description: 
-  - globs: `api/domain/entities/*.entity.ts`
-
-- `.ai/rules/api.interface.query-fields.$.mdc`
-  - description: 
-  - globs: `api/interface/query-fields/*.ts`
-
-- `.ai/rules/api.interface.mutation-fields.$.mdc`
-  - description: 
-  - globs: `api/interface/mutation-fields/*.ts`
-
-- `.ai/rules/api.application.$.$.mdc`
-  - description: 
-  - globs: `api/application/**/*.ts`

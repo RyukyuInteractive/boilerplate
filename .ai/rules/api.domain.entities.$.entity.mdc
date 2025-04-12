@@ -3,6 +3,7 @@ description:
 globs: api/domain/entities/*.entity.ts
 alwaysApply: false
 ---
+
 ## api/domain/entities/*.entity.ts
 
 - クラス名はEntityで終わる

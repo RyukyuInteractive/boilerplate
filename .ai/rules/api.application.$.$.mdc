@@ -3,6 +3,7 @@ description:
 globs: api/application/**/*.ts
 alwaysApply: false
 ---
+
 ## api/application/**/*.ts
 
 - idはcrypto.randomUUID()

@@ -3,6 +3,7 @@ description:
 globs: api/interface/query-fields/*.ts
 alwaysApply: false
 ---
+
 ## api/interface/query-fields/*.ts
 
 データの取得を定義する

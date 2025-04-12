@@ -1,6 +1,0 @@
----
-description: 
-globs: app/interface/routes/$project.index.tsx
-alwaysApply: false
----
-ここにページの仕様を追加します。

@@ -3,6 +3,7 @@ description:
 globs: api/interface/inputs/*-input.ts
 alwaysApply: false
 ---
+
 ## api/interface/inputs/*-input.ts
 
 - Mutationの引数を定義する

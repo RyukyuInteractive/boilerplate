@@ -3,6 +3,7 @@ description:
 globs: api/infrastructure/repositories/*.repository.ts
 alwaysApply: false
 ---
+
 ## api/infrastructure/repositories/*.repository.ts
 
 2つのメソッドしか実装しません。

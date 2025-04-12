@@ -3,6 +3,7 @@ description:
 globs: api/domain/values/*.value.ts
 alwaysApply: false
 ---
+
 ## api/domain/values/*.value.ts
 
 - クラス名はValueで終わる
