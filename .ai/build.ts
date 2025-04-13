@@ -1,24 +1,7 @@
 import fs from "node:fs/promises"
 import config from "./config.json"
 
-export type FeatureType = {
-  path: string
-  priority: number
-  name: string
-  description: string
-  deprecated_reason: string | null
-}
-
-export type PageType = {
-  path: string
-  name: string
-  description: string
-  is_deprecated: boolean
-  deprecated_reason: string
-  file: string
-}
-
-export function extractFrontmatter(markdownText: string): {
+function extractFrontmatter(markdownText: string): {
   description: string
   globs: string
   alwaysApply: string
@@ -66,13 +49,13 @@ export function extractFrontmatter(markdownText: string): {
   return result
 }
 
-export function extractMarkdownTitle(text: string): string | null {
+function extractMarkdownTitle(text: string): string | null {
   const match = text.match(/^# (.+)$/m)
 
   return match ? match[1] : null
 }
 
-export function createFrontmatter(props: {
+function createFrontmatter(props: {
   description: string
   globs: string
   alwaysApply: boolean
@@ -84,9 +67,15 @@ alwaysApply: ${props.alwaysApply}
 ---`
 }
 
-export async function createRulesInstructions(props: {
+async function createRulesInstructions(props: {
   rulesPath: string
 }) {
+  const rules = await readMdcRules(props.rulesPath)
+
+  if (rules.length === 0) {
+    return ""
+  }
+
   let markdown = "# ファイル読み込み\n\n"
 
   markdown += "コードを生成する場合は以下のルールに従います。\n"
@@ -95,8 +84,6 @@ export async function createRulesInstructions(props: {
     "対象が、以下のうちの「description」または「globs」のどちらかに一致する場合はそのファイルの指示を読んで従います。\n"
 
   markdown += "\n"
-
-  const rules = await readMdcRules(props.rulesPath)
 
   for (const rule of rules) {
     markdown += `- \`${rule.path}\`\n`
@@ -108,7 +95,7 @@ export async function createRulesInstructions(props: {
   return `${markdown.trim()}\n`
 }
 
-export async function readMdcRules(rulesPath: string): Promise<
+async function readMdcRules(rulesPath: string): Promise<
   (ReturnType<typeof extractFrontmatter> & {
     path: string
   })[]
@@ -130,7 +117,7 @@ export async function readMdcRules(rulesPath: string): Promise<
   return rules
 }
 
-export async function readTextFile(...filePath: string[]): Promise<string> {
+async function readTextFile(...filePath: string[]): Promise<string> {
   const contentPath = `${process.cwd()}/${filePath.join("/")}`
 
   const content = await Bun.file(contentPath).text()
@@ -138,7 +125,7 @@ export async function readTextFile(...filePath: string[]): Promise<string> {
   return content.replace(/\n{3,}/g, "\n\n").trim()
 }
 
-export async function* readTextFiles(...paths: string[]) {
+async function* readTextFiles(...paths: string[]) {
   const directoryPath = [process.cwd(), ...paths].join("/")
 
   const files = await fs.readdir(directoryPath)
@@ -158,7 +145,7 @@ export async function* readTextFiles(...paths: string[]) {
   }
 }
 
-export function removeFrontmatter(markdownText: string): string {
+function removeFrontmatter(markdownText: string): string {
   if (markdownText.length === 0) {
     return markdownText
   }
@@ -170,7 +157,7 @@ export function removeFrontmatter(markdownText: string): string {
   return result.trim()
 }
 
-export async function writeTextFile(
+async function writeTextFile(
   content: string,
   ...filePath: string[]
 ): Promise<null> {
@@ -181,7 +168,7 @@ export async function writeTextFile(
   return null
 }
 
-export async function updateCopilotInstructions() {
+async function updateCopilotInstructions() {
   let markdown = ""
 
   const rules = Object.values([
@@ -242,7 +229,7 @@ export async function updateCopilotInstructions() {
   }
 }
 
-export async function updateCursorRules() {
+async function updateCursorRules() {
   const files = Object.values(config.instructions)
 
   let markdown = createFrontmatter({
@@ -270,7 +257,7 @@ export async function updateCursorRules() {
   }
 }
 
-export async function updateDevinRule() {
+async function updateDevinRule() {
   if (config.output.devin === null) return
 
   let markdown = ""
@@ -298,7 +285,7 @@ export async function updateDevinRule() {
   await writeTextFile(markdown, config.output.devin)
 }
 
-export async function updateEditorRule() {
+async function updateEditorRule() {
   let markdown = ""
 
   markdown += await createRulesInstructions({ rulesPath: config.input.rules })
@@ -341,7 +328,7 @@ export async function updateEditorRule() {
   }
 }
 
-export async function updateVscodeSettings() {
+async function updateVscodeSettings() {
   const settingsJson = await readTextFile(".vscode", "settings.json")
 
   const settings = {
