@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useSession } from "~/interface/hooks/use-session"
 
-export const Route = createFileRoute("/_main/my/settings")({
+export const Route = createFileRoute("/_auth/_home/my/settings")({
   component: RouteComponent,
 })
 

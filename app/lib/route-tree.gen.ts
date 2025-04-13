@@ -12,25 +12,19 @@
 
 import { Route as rootRoute } from './../interface/routes/__root'
 import { Route as NewImport } from './../interface/routes/new'
-import { Route as MainImport } from './../interface/routes/_main'
-import { Route as ProjectImport } from './../interface/routes/$project'
-import { Route as MainIndexImport } from './../interface/routes/_main.index'
-import { Route as ProjectIndexImport } from './../interface/routes/$project.index'
+import { Route as AuthImport } from './../interface/routes/_auth'
 import { Route as PasswordRestoreImport } from './../interface/routes/password.restore'
-import { Route as OrgsOrganizationImport } from './../interface/routes/orgs.$organization'
-import { Route as ProjectSettingsImport } from './../interface/routes/$project.settings'
-import { Route as ProjectMembersImport } from './../interface/routes/$project.members'
-import { Route as OrgsOrganizationSettingsImport } from './../interface/routes/orgs.$organization.settings'
-import { Route as OrgsOrganizationProjectsImport } from './../interface/routes/orgs.$organization.projects'
-import { Route as OrgsOrganizationMembersImport } from './../interface/routes/orgs.$organization.members'
-import { Route as MainProjectsNewImport } from './../interface/routes/_main.projects.new'
-import { Route as MainOrgsNewImport } from './../interface/routes/_main.orgs.new'
-import { Route as MainMySettingsImport } from './../interface/routes/_main.my.settings'
-import { Route as MainMyProjectsImport } from './../interface/routes/_main.my.projects'
-import { Route as MainMyProfileImport } from './../interface/routes/_main.my.profile'
-import { Route as MainMyOrganizationsImport } from './../interface/routes/_main.my.organizations'
-import { Route as MainMyAccountImport } from './../interface/routes/_main.my.account'
-import { Route as OrgsOrganizationProjectsNewImport } from './../interface/routes/orgs.$organization.projects.new'
+import { Route as AuthHomeImport } from './../interface/routes/_auth._home'
+import { Route as AuthProjectImport } from './../interface/routes/_auth.$project'
+import { Route as AuthHomeIndexImport } from './../interface/routes/_auth._home.index'
+import { Route as AuthProjectIndexImport } from './../interface/routes/_auth.$project.index'
+import { Route as AuthProjectSettingsImport } from './../interface/routes/_auth.$project.settings'
+import { Route as AuthProjectMembersImport } from './../interface/routes/_auth.$project.members'
+import { Route as AuthHomeProjectsNewImport } from './../interface/routes/_auth._home.projects.new'
+import { Route as AuthHomeMySettingsImport } from './../interface/routes/_auth._home.my.settings'
+import { Route as AuthHomeMyProjectsImport } from './../interface/routes/_auth._home.my.projects'
+import { Route as AuthHomeMyProfileImport } from './../interface/routes/_auth._home.my.profile'
+import { Route as AuthHomeMyAccountImport } from './../interface/routes/_auth._home.my.account'
 
 // Create/Update Routes
 
@@ -40,27 +34,9 @@ const NewRoute = NewImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const MainRoute = MainImport.update({
-  id: '/_main',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
-} as any)
-
-const ProjectRoute = ProjectImport.update({
-  id: '/$project',
-  path: '/$project',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MainIndexRoute = MainIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const ProjectIndexRoute = ProjectIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProjectRoute,
 } as any)
 
 const PasswordRestoreRoute = PasswordRestoreImport.update({
@@ -69,107 +45,80 @@ const PasswordRestoreRoute = PasswordRestoreImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const OrgsOrganizationRoute = OrgsOrganizationImport.update({
-  id: '/orgs/$organization',
-  path: '/orgs/$organization',
-  getParentRoute: () => rootRoute,
+const AuthHomeRoute = AuthHomeImport.update({
+  id: '/_home',
+  getParentRoute: () => AuthRoute,
 } as any)
 
-const ProjectSettingsRoute = ProjectSettingsImport.update({
+const AuthProjectRoute = AuthProjectImport.update({
+  id: '/$project',
+  path: '/$project',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthHomeIndexRoute = AuthHomeIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthHomeRoute,
+} as any)
+
+const AuthProjectIndexRoute = AuthProjectIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthProjectRoute,
+} as any)
+
+const AuthProjectSettingsRoute = AuthProjectSettingsImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => ProjectRoute,
+  getParentRoute: () => AuthProjectRoute,
 } as any)
 
-const ProjectMembersRoute = ProjectMembersImport.update({
+const AuthProjectMembersRoute = AuthProjectMembersImport.update({
   id: '/members',
   path: '/members',
-  getParentRoute: () => ProjectRoute,
+  getParentRoute: () => AuthProjectRoute,
 } as any)
 
-const OrgsOrganizationSettingsRoute = OrgsOrganizationSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => OrgsOrganizationRoute,
-} as any)
-
-const OrgsOrganizationProjectsRoute = OrgsOrganizationProjectsImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => OrgsOrganizationRoute,
-} as any)
-
-const OrgsOrganizationMembersRoute = OrgsOrganizationMembersImport.update({
-  id: '/members',
-  path: '/members',
-  getParentRoute: () => OrgsOrganizationRoute,
-} as any)
-
-const MainProjectsNewRoute = MainProjectsNewImport.update({
+const AuthHomeProjectsNewRoute = AuthHomeProjectsNewImport.update({
   id: '/projects/new',
   path: '/projects/new',
-  getParentRoute: () => MainRoute,
+  getParentRoute: () => AuthHomeRoute,
 } as any)
 
-const MainOrgsNewRoute = MainOrgsNewImport.update({
-  id: '/orgs/new',
-  path: '/orgs/new',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainMySettingsRoute = MainMySettingsImport.update({
+const AuthHomeMySettingsRoute = AuthHomeMySettingsImport.update({
   id: '/my/settings',
   path: '/my/settings',
-  getParentRoute: () => MainRoute,
+  getParentRoute: () => AuthHomeRoute,
 } as any)
 
-const MainMyProjectsRoute = MainMyProjectsImport.update({
+const AuthHomeMyProjectsRoute = AuthHomeMyProjectsImport.update({
   id: '/my/projects',
   path: '/my/projects',
-  getParentRoute: () => MainRoute,
+  getParentRoute: () => AuthHomeRoute,
 } as any)
 
-const MainMyProfileRoute = MainMyProfileImport.update({
+const AuthHomeMyProfileRoute = AuthHomeMyProfileImport.update({
   id: '/my/profile',
   path: '/my/profile',
-  getParentRoute: () => MainRoute,
+  getParentRoute: () => AuthHomeRoute,
 } as any)
 
-const MainMyOrganizationsRoute = MainMyOrganizationsImport.update({
-  id: '/my/organizations',
-  path: '/my/organizations',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainMyAccountRoute = MainMyAccountImport.update({
+const AuthHomeMyAccountRoute = AuthHomeMyAccountImport.update({
   id: '/my/account',
   path: '/my/account',
-  getParentRoute: () => MainRoute,
+  getParentRoute: () => AuthHomeRoute,
 } as any)
-
-const OrgsOrganizationProjectsNewRoute =
-  OrgsOrganizationProjectsNewImport.update({
-    id: '/new',
-    path: '/new',
-    getParentRoute: () => OrgsOrganizationProjectsRoute,
-  } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/$project': {
-      id: '/$project'
-      path: '/$project'
-      fullPath: '/$project'
-      preLoaderRoute: typeof ProjectImport
-      parentRoute: typeof rootRoute
-    }
-    '/_main': {
-      id: '/_main'
+    '/_auth': {
+      id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof MainImport
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
     '/new': {
@@ -179,26 +128,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewImport
       parentRoute: typeof rootRoute
     }
-    '/$project/members': {
-      id: '/$project/members'
-      path: '/members'
-      fullPath: '/$project/members'
-      preLoaderRoute: typeof ProjectMembersImport
-      parentRoute: typeof ProjectImport
+    '/_auth/$project': {
+      id: '/_auth/$project'
+      path: '/$project'
+      fullPath: '/$project'
+      preLoaderRoute: typeof AuthProjectImport
+      parentRoute: typeof AuthImport
     }
-    '/$project/settings': {
-      id: '/$project/settings'
-      path: '/settings'
-      fullPath: '/$project/settings'
-      preLoaderRoute: typeof ProjectSettingsImport
-      parentRoute: typeof ProjectImport
-    }
-    '/orgs/$organization': {
-      id: '/orgs/$organization'
-      path: '/orgs/$organization'
-      fullPath: '/orgs/$organization'
-      preLoaderRoute: typeof OrgsOrganizationImport
-      parentRoute: typeof rootRoute
+    '/_auth/_home': {
+      id: '/_auth/_home'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthHomeImport
+      parentRoute: typeof AuthImport
     }
     '/password/restore': {
       id: '/password/restore'
@@ -207,319 +149,231 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PasswordRestoreImport
       parentRoute: typeof rootRoute
     }
-    '/$project/': {
-      id: '/$project/'
+    '/_auth/$project/members': {
+      id: '/_auth/$project/members'
+      path: '/members'
+      fullPath: '/$project/members'
+      preLoaderRoute: typeof AuthProjectMembersImport
+      parentRoute: typeof AuthProjectImport
+    }
+    '/_auth/$project/settings': {
+      id: '/_auth/$project/settings'
+      path: '/settings'
+      fullPath: '/$project/settings'
+      preLoaderRoute: typeof AuthProjectSettingsImport
+      parentRoute: typeof AuthProjectImport
+    }
+    '/_auth/$project/': {
+      id: '/_auth/$project/'
       path: '/'
       fullPath: '/$project/'
-      preLoaderRoute: typeof ProjectIndexImport
-      parentRoute: typeof ProjectImport
+      preLoaderRoute: typeof AuthProjectIndexImport
+      parentRoute: typeof AuthProjectImport
     }
-    '/_main/': {
-      id: '/_main/'
+    '/_auth/_home/': {
+      id: '/_auth/_home/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof MainIndexImport
-      parentRoute: typeof MainImport
+      preLoaderRoute: typeof AuthHomeIndexImport
+      parentRoute: typeof AuthHomeImport
     }
-    '/_main/my/account': {
-      id: '/_main/my/account'
+    '/_auth/_home/my/account': {
+      id: '/_auth/_home/my/account'
       path: '/my/account'
       fullPath: '/my/account'
-      preLoaderRoute: typeof MainMyAccountImport
-      parentRoute: typeof MainImport
+      preLoaderRoute: typeof AuthHomeMyAccountImport
+      parentRoute: typeof AuthHomeImport
     }
-    '/_main/my/organizations': {
-      id: '/_main/my/organizations'
-      path: '/my/organizations'
-      fullPath: '/my/organizations'
-      preLoaderRoute: typeof MainMyOrganizationsImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/my/profile': {
-      id: '/_main/my/profile'
+    '/_auth/_home/my/profile': {
+      id: '/_auth/_home/my/profile'
       path: '/my/profile'
       fullPath: '/my/profile'
-      preLoaderRoute: typeof MainMyProfileImport
-      parentRoute: typeof MainImport
+      preLoaderRoute: typeof AuthHomeMyProfileImport
+      parentRoute: typeof AuthHomeImport
     }
-    '/_main/my/projects': {
-      id: '/_main/my/projects'
+    '/_auth/_home/my/projects': {
+      id: '/_auth/_home/my/projects'
       path: '/my/projects'
       fullPath: '/my/projects'
-      preLoaderRoute: typeof MainMyProjectsImport
-      parentRoute: typeof MainImport
+      preLoaderRoute: typeof AuthHomeMyProjectsImport
+      parentRoute: typeof AuthHomeImport
     }
-    '/_main/my/settings': {
-      id: '/_main/my/settings'
+    '/_auth/_home/my/settings': {
+      id: '/_auth/_home/my/settings'
       path: '/my/settings'
       fullPath: '/my/settings'
-      preLoaderRoute: typeof MainMySettingsImport
-      parentRoute: typeof MainImport
+      preLoaderRoute: typeof AuthHomeMySettingsImport
+      parentRoute: typeof AuthHomeImport
     }
-    '/_main/orgs/new': {
-      id: '/_main/orgs/new'
-      path: '/orgs/new'
-      fullPath: '/orgs/new'
-      preLoaderRoute: typeof MainOrgsNewImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/projects/new': {
-      id: '/_main/projects/new'
+    '/_auth/_home/projects/new': {
+      id: '/_auth/_home/projects/new'
       path: '/projects/new'
       fullPath: '/projects/new'
-      preLoaderRoute: typeof MainProjectsNewImport
-      parentRoute: typeof MainImport
-    }
-    '/orgs/$organization/members': {
-      id: '/orgs/$organization/members'
-      path: '/members'
-      fullPath: '/orgs/$organization/members'
-      preLoaderRoute: typeof OrgsOrganizationMembersImport
-      parentRoute: typeof OrgsOrganizationImport
-    }
-    '/orgs/$organization/projects': {
-      id: '/orgs/$organization/projects'
-      path: '/projects'
-      fullPath: '/orgs/$organization/projects'
-      preLoaderRoute: typeof OrgsOrganizationProjectsImport
-      parentRoute: typeof OrgsOrganizationImport
-    }
-    '/orgs/$organization/settings': {
-      id: '/orgs/$organization/settings'
-      path: '/settings'
-      fullPath: '/orgs/$organization/settings'
-      preLoaderRoute: typeof OrgsOrganizationSettingsImport
-      parentRoute: typeof OrgsOrganizationImport
-    }
-    '/orgs/$organization/projects/new': {
-      id: '/orgs/$organization/projects/new'
-      path: '/new'
-      fullPath: '/orgs/$organization/projects/new'
-      preLoaderRoute: typeof OrgsOrganizationProjectsNewImport
-      parentRoute: typeof OrgsOrganizationProjectsImport
+      preLoaderRoute: typeof AuthHomeProjectsNewImport
+      parentRoute: typeof AuthHomeImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface ProjectRouteChildren {
-  ProjectMembersRoute: typeof ProjectMembersRoute
-  ProjectSettingsRoute: typeof ProjectSettingsRoute
-  ProjectIndexRoute: typeof ProjectIndexRoute
+interface AuthProjectRouteChildren {
+  AuthProjectMembersRoute: typeof AuthProjectMembersRoute
+  AuthProjectSettingsRoute: typeof AuthProjectSettingsRoute
+  AuthProjectIndexRoute: typeof AuthProjectIndexRoute
 }
 
-const ProjectRouteChildren: ProjectRouteChildren = {
-  ProjectMembersRoute: ProjectMembersRoute,
-  ProjectSettingsRoute: ProjectSettingsRoute,
-  ProjectIndexRoute: ProjectIndexRoute,
+const AuthProjectRouteChildren: AuthProjectRouteChildren = {
+  AuthProjectMembersRoute: AuthProjectMembersRoute,
+  AuthProjectSettingsRoute: AuthProjectSettingsRoute,
+  AuthProjectIndexRoute: AuthProjectIndexRoute,
 }
 
-const ProjectRouteWithChildren =
-  ProjectRoute._addFileChildren(ProjectRouteChildren)
+const AuthProjectRouteWithChildren = AuthProjectRoute._addFileChildren(
+  AuthProjectRouteChildren,
+)
 
-interface MainRouteChildren {
-  MainIndexRoute: typeof MainIndexRoute
-  MainMyAccountRoute: typeof MainMyAccountRoute
-  MainMyOrganizationsRoute: typeof MainMyOrganizationsRoute
-  MainMyProfileRoute: typeof MainMyProfileRoute
-  MainMyProjectsRoute: typeof MainMyProjectsRoute
-  MainMySettingsRoute: typeof MainMySettingsRoute
-  MainOrgsNewRoute: typeof MainOrgsNewRoute
-  MainProjectsNewRoute: typeof MainProjectsNewRoute
+interface AuthHomeRouteChildren {
+  AuthHomeIndexRoute: typeof AuthHomeIndexRoute
+  AuthHomeMyAccountRoute: typeof AuthHomeMyAccountRoute
+  AuthHomeMyProfileRoute: typeof AuthHomeMyProfileRoute
+  AuthHomeMyProjectsRoute: typeof AuthHomeMyProjectsRoute
+  AuthHomeMySettingsRoute: typeof AuthHomeMySettingsRoute
+  AuthHomeProjectsNewRoute: typeof AuthHomeProjectsNewRoute
 }
 
-const MainRouteChildren: MainRouteChildren = {
-  MainIndexRoute: MainIndexRoute,
-  MainMyAccountRoute: MainMyAccountRoute,
-  MainMyOrganizationsRoute: MainMyOrganizationsRoute,
-  MainMyProfileRoute: MainMyProfileRoute,
-  MainMyProjectsRoute: MainMyProjectsRoute,
-  MainMySettingsRoute: MainMySettingsRoute,
-  MainOrgsNewRoute: MainOrgsNewRoute,
-  MainProjectsNewRoute: MainProjectsNewRoute,
+const AuthHomeRouteChildren: AuthHomeRouteChildren = {
+  AuthHomeIndexRoute: AuthHomeIndexRoute,
+  AuthHomeMyAccountRoute: AuthHomeMyAccountRoute,
+  AuthHomeMyProfileRoute: AuthHomeMyProfileRoute,
+  AuthHomeMyProjectsRoute: AuthHomeMyProjectsRoute,
+  AuthHomeMySettingsRoute: AuthHomeMySettingsRoute,
+  AuthHomeProjectsNewRoute: AuthHomeProjectsNewRoute,
 }
 
-const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+const AuthHomeRouteWithChildren = AuthHomeRoute._addFileChildren(
+  AuthHomeRouteChildren,
+)
 
-interface OrgsOrganizationProjectsRouteChildren {
-  OrgsOrganizationProjectsNewRoute: typeof OrgsOrganizationProjectsNewRoute
+interface AuthRouteChildren {
+  AuthProjectRoute: typeof AuthProjectRouteWithChildren
+  AuthHomeRoute: typeof AuthHomeRouteWithChildren
 }
 
-const OrgsOrganizationProjectsRouteChildren: OrgsOrganizationProjectsRouteChildren =
-  {
-    OrgsOrganizationProjectsNewRoute: OrgsOrganizationProjectsNewRoute,
-  }
-
-const OrgsOrganizationProjectsRouteWithChildren =
-  OrgsOrganizationProjectsRoute._addFileChildren(
-    OrgsOrganizationProjectsRouteChildren,
-  )
-
-interface OrgsOrganizationRouteChildren {
-  OrgsOrganizationMembersRoute: typeof OrgsOrganizationMembersRoute
-  OrgsOrganizationProjectsRoute: typeof OrgsOrganizationProjectsRouteWithChildren
-  OrgsOrganizationSettingsRoute: typeof OrgsOrganizationSettingsRoute
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthProjectRoute: AuthProjectRouteWithChildren,
+  AuthHomeRoute: AuthHomeRouteWithChildren,
 }
 
-const OrgsOrganizationRouteChildren: OrgsOrganizationRouteChildren = {
-  OrgsOrganizationMembersRoute: OrgsOrganizationMembersRoute,
-  OrgsOrganizationProjectsRoute: OrgsOrganizationProjectsRouteWithChildren,
-  OrgsOrganizationSettingsRoute: OrgsOrganizationSettingsRoute,
-}
-
-const OrgsOrganizationRouteWithChildren =
-  OrgsOrganizationRoute._addFileChildren(OrgsOrganizationRouteChildren)
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/$project': typeof ProjectRouteWithChildren
-  '': typeof MainRouteWithChildren
+  '': typeof AuthHomeRouteWithChildren
   '/new': typeof NewRoute
-  '/$project/members': typeof ProjectMembersRoute
-  '/$project/settings': typeof ProjectSettingsRoute
-  '/orgs/$organization': typeof OrgsOrganizationRouteWithChildren
+  '/$project': typeof AuthProjectRouteWithChildren
   '/password/restore': typeof PasswordRestoreRoute
-  '/$project/': typeof ProjectIndexRoute
-  '/': typeof MainIndexRoute
-  '/my/account': typeof MainMyAccountRoute
-  '/my/organizations': typeof MainMyOrganizationsRoute
-  '/my/profile': typeof MainMyProfileRoute
-  '/my/projects': typeof MainMyProjectsRoute
-  '/my/settings': typeof MainMySettingsRoute
-  '/orgs/new': typeof MainOrgsNewRoute
-  '/projects/new': typeof MainProjectsNewRoute
-  '/orgs/$organization/members': typeof OrgsOrganizationMembersRoute
-  '/orgs/$organization/projects': typeof OrgsOrganizationProjectsRouteWithChildren
-  '/orgs/$organization/settings': typeof OrgsOrganizationSettingsRoute
-  '/orgs/$organization/projects/new': typeof OrgsOrganizationProjectsNewRoute
+  '/$project/members': typeof AuthProjectMembersRoute
+  '/$project/settings': typeof AuthProjectSettingsRoute
+  '/$project/': typeof AuthProjectIndexRoute
+  '/': typeof AuthHomeIndexRoute
+  '/my/account': typeof AuthHomeMyAccountRoute
+  '/my/profile': typeof AuthHomeMyProfileRoute
+  '/my/projects': typeof AuthHomeMyProjectsRoute
+  '/my/settings': typeof AuthHomeMySettingsRoute
+  '/projects/new': typeof AuthHomeProjectsNewRoute
 }
 
 export interface FileRoutesByTo {
+  '': typeof AuthRouteWithChildren
   '/new': typeof NewRoute
-  '/$project/members': typeof ProjectMembersRoute
-  '/$project/settings': typeof ProjectSettingsRoute
-  '/orgs/$organization': typeof OrgsOrganizationRouteWithChildren
   '/password/restore': typeof PasswordRestoreRoute
-  '/$project': typeof ProjectIndexRoute
-  '/': typeof MainIndexRoute
-  '/my/account': typeof MainMyAccountRoute
-  '/my/organizations': typeof MainMyOrganizationsRoute
-  '/my/profile': typeof MainMyProfileRoute
-  '/my/projects': typeof MainMyProjectsRoute
-  '/my/settings': typeof MainMySettingsRoute
-  '/orgs/new': typeof MainOrgsNewRoute
-  '/projects/new': typeof MainProjectsNewRoute
-  '/orgs/$organization/members': typeof OrgsOrganizationMembersRoute
-  '/orgs/$organization/projects': typeof OrgsOrganizationProjectsRouteWithChildren
-  '/orgs/$organization/settings': typeof OrgsOrganizationSettingsRoute
-  '/orgs/$organization/projects/new': typeof OrgsOrganizationProjectsNewRoute
+  '/$project/members': typeof AuthProjectMembersRoute
+  '/$project/settings': typeof AuthProjectSettingsRoute
+  '/$project': typeof AuthProjectIndexRoute
+  '/': typeof AuthHomeIndexRoute
+  '/my/account': typeof AuthHomeMyAccountRoute
+  '/my/profile': typeof AuthHomeMyProfileRoute
+  '/my/projects': typeof AuthHomeMyProjectsRoute
+  '/my/settings': typeof AuthHomeMySettingsRoute
+  '/projects/new': typeof AuthHomeProjectsNewRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/$project': typeof ProjectRouteWithChildren
-  '/_main': typeof MainRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
   '/new': typeof NewRoute
-  '/$project/members': typeof ProjectMembersRoute
-  '/$project/settings': typeof ProjectSettingsRoute
-  '/orgs/$organization': typeof OrgsOrganizationRouteWithChildren
+  '/_auth/$project': typeof AuthProjectRouteWithChildren
+  '/_auth/_home': typeof AuthHomeRouteWithChildren
   '/password/restore': typeof PasswordRestoreRoute
-  '/$project/': typeof ProjectIndexRoute
-  '/_main/': typeof MainIndexRoute
-  '/_main/my/account': typeof MainMyAccountRoute
-  '/_main/my/organizations': typeof MainMyOrganizationsRoute
-  '/_main/my/profile': typeof MainMyProfileRoute
-  '/_main/my/projects': typeof MainMyProjectsRoute
-  '/_main/my/settings': typeof MainMySettingsRoute
-  '/_main/orgs/new': typeof MainOrgsNewRoute
-  '/_main/projects/new': typeof MainProjectsNewRoute
-  '/orgs/$organization/members': typeof OrgsOrganizationMembersRoute
-  '/orgs/$organization/projects': typeof OrgsOrganizationProjectsRouteWithChildren
-  '/orgs/$organization/settings': typeof OrgsOrganizationSettingsRoute
-  '/orgs/$organization/projects/new': typeof OrgsOrganizationProjectsNewRoute
+  '/_auth/$project/members': typeof AuthProjectMembersRoute
+  '/_auth/$project/settings': typeof AuthProjectSettingsRoute
+  '/_auth/$project/': typeof AuthProjectIndexRoute
+  '/_auth/_home/': typeof AuthHomeIndexRoute
+  '/_auth/_home/my/account': typeof AuthHomeMyAccountRoute
+  '/_auth/_home/my/profile': typeof AuthHomeMyProfileRoute
+  '/_auth/_home/my/projects': typeof AuthHomeMyProjectsRoute
+  '/_auth/_home/my/settings': typeof AuthHomeMySettingsRoute
+  '/_auth/_home/projects/new': typeof AuthHomeProjectsNewRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/$project'
     | ''
     | '/new'
+    | '/$project'
+    | '/password/restore'
     | '/$project/members'
     | '/$project/settings'
-    | '/orgs/$organization'
-    | '/password/restore'
     | '/$project/'
     | '/'
     | '/my/account'
-    | '/my/organizations'
     | '/my/profile'
     | '/my/projects'
     | '/my/settings'
-    | '/orgs/new'
     | '/projects/new'
-    | '/orgs/$organization/members'
-    | '/orgs/$organization/projects'
-    | '/orgs/$organization/settings'
-    | '/orgs/$organization/projects/new'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | ''
     | '/new'
+    | '/password/restore'
     | '/$project/members'
     | '/$project/settings'
-    | '/orgs/$organization'
-    | '/password/restore'
     | '/$project'
     | '/'
     | '/my/account'
-    | '/my/organizations'
     | '/my/profile'
     | '/my/projects'
     | '/my/settings'
-    | '/orgs/new'
     | '/projects/new'
-    | '/orgs/$organization/members'
-    | '/orgs/$organization/projects'
-    | '/orgs/$organization/settings'
-    | '/orgs/$organization/projects/new'
   id:
     | '__root__'
-    | '/$project'
-    | '/_main'
+    | '/_auth'
     | '/new'
-    | '/$project/members'
-    | '/$project/settings'
-    | '/orgs/$organization'
+    | '/_auth/$project'
+    | '/_auth/_home'
     | '/password/restore'
-    | '/$project/'
-    | '/_main/'
-    | '/_main/my/account'
-    | '/_main/my/organizations'
-    | '/_main/my/profile'
-    | '/_main/my/projects'
-    | '/_main/my/settings'
-    | '/_main/orgs/new'
-    | '/_main/projects/new'
-    | '/orgs/$organization/members'
-    | '/orgs/$organization/projects'
-    | '/orgs/$organization/settings'
-    | '/orgs/$organization/projects/new'
+    | '/_auth/$project/members'
+    | '/_auth/$project/settings'
+    | '/_auth/$project/'
+    | '/_auth/_home/'
+    | '/_auth/_home/my/account'
+    | '/_auth/_home/my/profile'
+    | '/_auth/_home/my/projects'
+    | '/_auth/_home/my/settings'
+    | '/_auth/_home/projects/new'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  ProjectRoute: typeof ProjectRouteWithChildren
-  MainRoute: typeof MainRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
   NewRoute: typeof NewRoute
-  OrgsOrganizationRoute: typeof OrgsOrganizationRouteWithChildren
   PasswordRestoreRoute: typeof PasswordRestoreRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  ProjectRoute: ProjectRouteWithChildren,
-  MainRoute: MainRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
   NewRoute: NewRoute,
-  OrgsOrganizationRoute: OrgsOrganizationRouteWithChildren,
   PasswordRestoreRoute: PasswordRestoreRoute,
 }
 
@@ -533,110 +387,80 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/$project",
-        "/_main",
+        "/_auth",
         "/new",
-        "/orgs/$organization",
         "/password/restore"
       ]
     },
-    "/$project": {
-      "filePath": "$project.tsx",
+    "/_auth": {
+      "filePath": "_auth.tsx",
       "children": [
-        "/$project/members",
-        "/$project/settings",
-        "/$project/"
-      ]
-    },
-    "/_main": {
-      "filePath": "_main.tsx",
-      "children": [
-        "/_main/",
-        "/_main/my/account",
-        "/_main/my/organizations",
-        "/_main/my/profile",
-        "/_main/my/projects",
-        "/_main/my/settings",
-        "/_main/orgs/new",
-        "/_main/projects/new"
+        "/_auth/$project",
+        "/_auth/_home"
       ]
     },
     "/new": {
       "filePath": "new.tsx"
     },
-    "/$project/members": {
-      "filePath": "$project.members.tsx",
-      "parent": "/$project"
-    },
-    "/$project/settings": {
-      "filePath": "$project.settings.tsx",
-      "parent": "/$project"
-    },
-    "/orgs/$organization": {
-      "filePath": "orgs.$organization.tsx",
+    "/_auth/$project": {
+      "filePath": "_auth.$project.tsx",
+      "parent": "/_auth",
       "children": [
-        "/orgs/$organization/members",
-        "/orgs/$organization/projects",
-        "/orgs/$organization/settings"
+        "/_auth/$project/members",
+        "/_auth/$project/settings",
+        "/_auth/$project/"
+      ]
+    },
+    "/_auth/_home": {
+      "filePath": "_auth._home.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/_home/",
+        "/_auth/_home/my/account",
+        "/_auth/_home/my/profile",
+        "/_auth/_home/my/projects",
+        "/_auth/_home/my/settings",
+        "/_auth/_home/projects/new"
       ]
     },
     "/password/restore": {
       "filePath": "password.restore.tsx"
     },
-    "/$project/": {
-      "filePath": "$project.index.tsx",
-      "parent": "/$project"
+    "/_auth/$project/members": {
+      "filePath": "_auth.$project.members.tsx",
+      "parent": "/_auth/$project"
     },
-    "/_main/": {
-      "filePath": "_main.index.tsx",
-      "parent": "/_main"
+    "/_auth/$project/settings": {
+      "filePath": "_auth.$project.settings.tsx",
+      "parent": "/_auth/$project"
     },
-    "/_main/my/account": {
-      "filePath": "_main.my.account.tsx",
-      "parent": "/_main"
+    "/_auth/$project/": {
+      "filePath": "_auth.$project.index.tsx",
+      "parent": "/_auth/$project"
     },
-    "/_main/my/organizations": {
-      "filePath": "_main.my.organizations.tsx",
-      "parent": "/_main"
+    "/_auth/_home/": {
+      "filePath": "_auth._home.index.tsx",
+      "parent": "/_auth/_home"
     },
-    "/_main/my/profile": {
-      "filePath": "_main.my.profile.tsx",
-      "parent": "/_main"
+    "/_auth/_home/my/account": {
+      "filePath": "_auth._home.my.account.tsx",
+      "parent": "/_auth/_home"
     },
-    "/_main/my/projects": {
-      "filePath": "_main.my.projects.tsx",
-      "parent": "/_main"
+    "/_auth/_home/my/profile": {
+      "filePath": "_auth._home.my.profile.tsx",
+      "parent": "/_auth/_home"
     },
-    "/_main/my/settings": {
-      "filePath": "_main.my.settings.tsx",
-      "parent": "/_main"
+    "/_auth/_home/my/projects": {
+      "filePath": "_auth._home.my.projects.tsx",
+      "parent": "/_auth/_home"
     },
-    "/_main/orgs/new": {
-      "filePath": "_main.orgs.new.tsx",
-      "parent": "/_main"
+    "/_auth/_home/my/settings": {
+      "filePath": "_auth._home.my.settings.tsx",
+      "parent": "/_auth/_home"
     },
-    "/_main/projects/new": {
-      "filePath": "_main.projects.new.tsx",
-      "parent": "/_main"
-    },
-    "/orgs/$organization/members": {
-      "filePath": "orgs.$organization.members.tsx",
-      "parent": "/orgs/$organization"
-    },
-    "/orgs/$organization/projects": {
-      "filePath": "orgs.$organization.projects.tsx",
-      "parent": "/orgs/$organization",
-      "children": [
-        "/orgs/$organization/projects/new"
-      ]
-    },
-    "/orgs/$organization/settings": {
-      "filePath": "orgs.$organization.settings.tsx",
-      "parent": "/orgs/$organization"
-    },
-    "/orgs/$organization/projects/new": {
-      "filePath": "orgs.$organization.projects.new.tsx",
-      "parent": "/orgs/$organization/projects"
+    "/_auth/_home/projects/new": {
+      "filePath": "_auth._home.projects.new.tsx",
+      "parent": "/_auth/_home"
     }
   }
 }

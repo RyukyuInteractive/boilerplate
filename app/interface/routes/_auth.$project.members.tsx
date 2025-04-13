@@ -2,7 +2,7 @@ import { useSuspenseQuery } from "@apollo/client"
 import { createFileRoute } from "@tanstack/react-router"
 import { graphql } from "gql.tada"
 
-export const Route = createFileRoute("/$project/members")({
+export const Route = createFileRoute("/_auth/$project/members")({
   component: RouteComponent,
 })
 

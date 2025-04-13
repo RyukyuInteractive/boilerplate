@@ -1,6 +1,5 @@
 import type { PrismaUser } from "@prisma/client"
 import { builder } from "~/interface/builder"
-import { PothosOrganizationMemberNode } from "~/interface/objects/organization-member-node"
 import { PothosProjectMemberNode } from "~/interface/objects/project-member-node"
 import { PothosUserSettingNode } from "~/interface/objects/user-setting"
 
@@ -100,23 +99,6 @@ builder.objectField(PothosUserNode, "projectMembers", (t) => {
       return c.var.database.prismaUser
         .findUniqueOrThrow({ where: { id: parent.id } })
         .projectMembers()
-    },
-  })
-})
-
-builder.objectField(PothosUserNode, "organizationMembers", (t) => {
-  return t.field({
-    type: [PothosOrganizationMemberNode],
-    description: undefined,
-    nullable: false,
-    args: {
-      offset: t.arg({ type: "Int", required: true }),
-      limit: t.arg({ type: "Int", required: true }),
-    },
-    resolve(parent, _args, c) {
-      return c.var.database.prismaUser
-        .findUniqueOrThrow({ where: { id: parent.id } })
-        .organizationMembers()
     },
   })
 })

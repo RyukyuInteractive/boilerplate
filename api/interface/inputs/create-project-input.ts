@@ -7,7 +7,6 @@ export const PothosCreateProjectInput = builder.inputType(
     fields(t) {
       return {
         name: t.string({ required: true }),
-        organizationId: t.id(),
       }
     },
   },

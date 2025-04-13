@@ -18,21 +18,20 @@ import {
   TabsList,
   TabsTrigger,
 } from "~/interface/components/ui/tabs"
-import { Textarea } from "~/interface/components/ui/textarea"
 
-export const Route = createFileRoute("/$project/settings")({
+export const Route = createFileRoute("/_auth/$project/settings")({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   const params = Route.useParams()
+
   const { data } = useSuspenseQuery(ProjectQuery, {
     variables: { id: params.project },
   })
-  const project = data.node as {
-    id: string
-    name: string
-    description: string | null
+
+  if (data === null || data.project === null) {
+    return <div>プロジェクトが見つかりません</div>
   }
 
   return (
@@ -63,15 +62,7 @@ function RouteComponent() {
               <form className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">プロジェクト名</Label>
-                  <Input id="name" defaultValue={project.name} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="description">プロジェクト説明</Label>
-                  <Textarea
-                    id="description"
-                    defaultValue={project.description || ""}
-                    placeholder="プロジェクトの説明を入力してください"
-                  />
+                  <Input id="name" defaultValue={data.project.name} />
                 </div>
                 <Button>保存</Button>
               </form>
@@ -172,12 +163,9 @@ function RouteComponent() {
 
 const ProjectQuery = graphql(
   `query ProjectQuery($id: ID!) {
-    node(id: $id) {
-      ... on Project {
-        id
-        name
-        description
-      }
+    project(id: $id) {
+      id
+      name
     }
   }`,
 )

@@ -22,7 +22,6 @@ export const createProject: MutationFieldThunk<SchemaTypes> = (t) => {
       const result = await service.run({
         userId: c.var.session.userId,
         name: args.input.name,
-        organizationId: args.input.organizationId,
       })
 
       if (result instanceof Error) {

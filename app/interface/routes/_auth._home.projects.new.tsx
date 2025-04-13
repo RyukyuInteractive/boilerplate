@@ -8,7 +8,7 @@ import { Card } from "~/interface/components/ui/card"
 import { Input } from "~/interface/components/ui/input"
 import { Label } from "~/interface/components/ui/label"
 
-export const Route = createFileRoute("/_main/projects/new")({
+export const Route = createFileRoute("/_auth/_home/projects/new")({
   component: RouteComponent,
 })
 
@@ -26,7 +26,6 @@ function RouteComponent() {
       const { data } = await createProject({
         variables: {
           input: {
-            organizationId: "1",
             name,
           },
         },

@@ -10,7 +10,6 @@ import {
   SquareUserIcon,
 } from "lucide-react"
 import { DarkModeButton } from "~/interface/components/dark-mode-button"
-import { LoginPage } from "~/interface/components/pages/login-page"
 import {
   Sidebar,
   SidebarContent,
@@ -24,20 +23,13 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "~/interface/components/ui/sidebar"
-import { useSession } from "~/interface/hooks/use-session"
 
-export const Route = createFileRoute("/_main")({
+export const Route = createFileRoute("/_auth/_home")({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const [session] = useSession()
-
   const { data } = useSuspenseQuery(Query)
-
-  if (session === null) {
-    return <LoginPage />
-  }
 
   const sectionItems = [
     {
@@ -61,10 +53,6 @@ function RouteComponent() {
 
   const projects = viewer?.projectMembers.flatMap((t) => {
     return t.project
-  })
-
-  const organizations = viewer?.organizationMembers.flatMap((t) => {
-    return t.organization
   })
 
   return (
@@ -110,42 +98,6 @@ function RouteComponent() {
             </SidebarGroupContent>
           </SidebarGroup>
           <SidebarGroup>
-            <SidebarGroupLabel>{"組織"}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link to={"/my/organizations"}>
-                      <ListIcon />
-                      <span>{"一覧"}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                {organizations?.map((node) => (
-                  <SidebarMenuItem key={node.id}>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        to={"/orgs/$organization"}
-                        params={{ organization: node.id }}
-                      >
-                        <Layers2Icon />
-                        <span>{node.name}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link to={"/orgs/new"}>
-                      <PlusIcon />
-                      <span>{"新しい組織"}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarGroup>
             <SidebarGroupLabel>{"設定"}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
@@ -184,13 +136,6 @@ const Query = graphql(`
       projectMembers(limit: 16,offset: 0) {
         id
         project {
-          id
-          name
-        }
-      }
-      organizationMembers(limit: 16, offset: 0) {
-        id
-        organization {
           id
           name
         }

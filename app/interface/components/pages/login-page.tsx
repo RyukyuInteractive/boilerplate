@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "~/interface/components/ui/button"
@@ -12,12 +13,17 @@ import {
 } from "~/interface/components/ui/card"
 import { Input } from "~/interface/components/ui/input"
 import { Label } from "~/interface/components/ui/label"
+import { useSession } from "~/interface/hooks/use-session"
 import { honoClient } from "~/lib/hono-client"
 
 /**
  * ログインページ
  */
 export function LoginPage() {
+  const navigate = useNavigate()
+
+  const [, refreshSession] = useSession()
+
   const [email, setEmail] = useState("")
 
   const [password, setPassword] = useState("")
@@ -34,6 +40,10 @@ export function LoginPage() {
   const onLogin = async () => {
     try {
       await mutation.mutateAsync()
+      // セッション情報を更新
+      await refreshSession()
+      toast.success("ログインしました")
+      navigate({ to: "/" })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {

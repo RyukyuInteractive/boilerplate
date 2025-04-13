@@ -9,7 +9,6 @@ type Props = {
   userId: string
   name: string
   nameEN?: string | null
-  organizationId?: string | null
 }
 
 export class CreateProject {
@@ -36,7 +35,6 @@ export class CreateProject {
         id: projectId,
         login: projectId,
         name: new NameValue(props.name),
-        organizationId: props.organizationId || null,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,

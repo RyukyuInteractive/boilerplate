@@ -9,17 +9,16 @@ datasource db {
 }
 
 model PrismaUser {
-  id                  String                     @id @map("id")
-  login               String                     @unique @map("login")
-  email               String                     @unique @map("email")
-  name                String                     @map("name")
-  hashedPassword      String                     @map("hashed_password")
-  projectMembers      PrismaProjectMember[]
-  organizationMembers PrismaOrganizationMember[]
-  settings            PrismaUserSetting[]
-  deletedAt           DateTime?                  @map("deleted_at")
-  createdAt           DateTime                   @default(now()) @map("created_at")
-  updatedAt           DateTime                   @updatedAt @map("updated_at")
+  id             String                @id @map("id")
+  login          String                @unique @map("login")
+  email          String                @unique @map("email")
+  name           String                @map("name")
+  hashedPassword String                @map("hashed_password")
+  projectMembers PrismaProjectMember[]
+  settings       PrismaUserSetting[]
+  deletedAt      DateTime?             @map("deleted_at")
+  createdAt      DateTime              @default(now()) @map("created_at")
+  updatedAt      DateTime              @updatedAt @map("updated_at")
 
   @@map("users")
 }
@@ -37,38 +36,10 @@ model PrismaUserSetting {
   @@map("user_settings")
 }
 
-model PrismaOrganization {
-  id        String                     @id @map("id")
-  login     String                     @unique @map("login")
-  name      String                     @map("name")
-  projects  PrismaProject[]
-  members   PrismaOrganizationMember[]
-  deletedAt DateTime?                  @map("deleted_at")
-  createdAt DateTime                   @default(now()) @map("created_at")
-  updatedAt DateTime                   @updatedAt @map("updated_at")
-
-  @@map("organizations")
-}
-
-model PrismaOrganizationMember {
-  id             String             @id @map("id")
-  organization   PrismaOrganization @relation(fields: [organizationId], references: [id])
-  organizationId String             @map("organization_id")
-  user           PrismaUser         @relation(fields: [userId], references: [id])
-  userId         String             @map("user_id")
-  role           String             @default("OWNER") @map("role")
-  createdAt      DateTime           @default(now()) @map("created_at")
-
-  @@unique([organizationId, userId])
-  @@map("organization_members")
-}
-
 model PrismaProject {
   id             String                      @id @map("id")
   login          String                      @unique @map("login")
   name           String                      @map("name")
-  organization   PrismaOrganization?         @relation(fields: [organizationId], references: [id])
-  organizationId String?                     @map("organization_id")
   members        PrismaProjectMember[]
   settings       PrismaProjectSetting[]
   notifications  PrismaProjectNotification[]

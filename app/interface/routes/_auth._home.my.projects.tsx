@@ -6,7 +6,7 @@ import {
   ProjectCardFragment,
 } from "~/interface/components/card/project-card"
 
-export const Route = createFileRoute("/_main/my/projects")({
+export const Route = createFileRoute("/_auth/_home/my/projects")({
   component: RouteComponent,
 })
 

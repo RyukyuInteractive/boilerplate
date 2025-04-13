@@ -13,7 +13,6 @@ export class ProjectRepository {
           id: entity.id,
           login: entity.login,
           name: entity.name.value,
-          organizationId: entity.organizationId,
           createdAt: entity.createdAt,
           updatedAt: entity.updatedAt,
           deletedAt: entity.deletedAt,
@@ -21,7 +20,6 @@ export class ProjectRepository {
         update: {
           login: entity.login,
           name: entity.name.value,
-          organizationId: entity.organizationId,
           updatedAt: entity.updatedAt,
           deletedAt: entity.deletedAt,
         },
@@ -44,7 +42,6 @@ export class ProjectRepository {
         id: data.id,
         login: data.login,
         name: new NameValue(data.name),
-        organizationId: data.organizationId,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
         deletedAt: data.deletedAt,

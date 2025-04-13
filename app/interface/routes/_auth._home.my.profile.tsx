@@ -5,7 +5,7 @@ import { Input } from "~/interface/components/ui/input"
 import { Label } from "~/interface/components/ui/label"
 import { useSession } from "~/interface/hooks/use-session"
 
-export const Route = createFileRoute("/_main/my/profile")({
+export const Route = createFileRoute("/_auth/_home/my/profile")({
   component: RouteComponent,
 })
 

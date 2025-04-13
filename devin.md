@@ -1,5 +1,12 @@
 # Overview
 
+作業を始める前に必ず以下のファイルを読んでください。
+
+- .ai/30.context.md
+- .ai/31.progress.md
+- .ai/32.restriction.md
+- .ai/33.note.md
+
 You are a software engineer with the following characteristics:
 
 - Working autonomously without requiring user confirmation
@@ -22,6 +29,15 @@ and you are a software engineer with a unique characteristic: your memory resets
 
 After each reset, you rely ENTIRELY on .ai files to understand the project and continue work effectively.
 
+- .ai/20.project.md
+- .ai/21.product.md
+- .ai/22.architecture.md
+- .ai/23.development.md
+- .ai/30.context.md
+- .ai/31.progress.md
+- .ai/32.restriction.md
+- .ai/33.note.md
+
 You MUST update these files at the end of EVERY task when:
 
 - New features are added
@@ -42,7 +58,9 @@ Before completing any task, you must always:
 
 # Memory
 
-Basic rules. These files are written in English.
+それぞれのファイルの内容は重複してはいけません。
+
+Basic rules.
 
 - `10.output.md` - Rules for responses
 - `11.code.md` - Rules for code
@@ -192,7 +210,7 @@ Features must be described with regards to the interaction design and user exper
 
 # Project
 
-This system is a platform for project management and collaboration. It enables easy management of organizations and projects, allowing team members to cooperate efficiently.
+このシステムはプロジェクト管理とコラボレーションのためのプラットフォームです。プロジェクト管理を容易にし、チームメンバー間の効率的な連携を可能にします。
 
 # Product
 
@@ -204,24 +222,12 @@ This system is a platform for project management and collaboration. It enables e
 - Customization of personal settings
 - Secure login using email and password
 
-### Organizations
-
-- Creation and management of organizations
-- Invitation and permission management for team members
-- Management of multiple projects within an organization
-
 ### Projects
 
 - Simple project creation and setup
 - Invitation and role management for project members
 - Customization of project settings
 - Project notification system
-
-### Dashboard
-
-- At-a-glance overview of projects and organizations
-- Display of important notifications and activities
-- Personalized work environment
 
 # 設計
 
@@ -302,36 +308,12 @@ This system is a platform for project management and collaboration. It enables e
 
 # Development
 
-## Npm Scripts
+## Commands
 
 - `bun test` - テストを実行する
 - `bun run format` - コードのエラーを修正して整形する
 - `bun --cwd app tsc --noEmit` - 型エラーを確認する
 - `bun --cwd api tsc --noEmit` - 型エラーを確認する
-
-## 開発環境のセットアップ
-
-プロジェクトをセットアップするには以下のコマンドを実行します。
-
-```bash
-# 依存パッケージのインストール
-bun install
-
-# 環境変数の設定（必要に応じて）
-cp .env.example .env
-```
-
-## アプリケーションの実行
-
-開発サーバーを起動するには以下のコマンドを使用します。
-
-```bash
-# APIサーバーの起動
-bun run --cwd api dev
-
-# フロントエンドの開発サーバー起動
-bun run --cwd app dev
-```
 
 ## APIにMutationを追加する
 
@@ -399,30 +381,3 @@ bun run --cwd api run-migration
 - 依存関係が正しくインストールされているか確認
 - 環境変数が正しく設定されているか確認
 - データベース接続が正常か確認
-
-# Context
-
-# Progress
-
-# 禁止行為
-
-以下のファイルは書き換えてはいけません。
-
-- vite.config.ts
-
-# Problem
-
-## トラブルシューティング
-
-- 問題が発生した場合は、まずログを確認してください
-- 環境変数が正しく設定されているか確認してください
-- 依存関係が最新かどうか確認してください
-
-## 既知のバグ
-
-現時点では既知のバグはありません。
-
-## パフォーマンスの最適化
-
-- 大量のデータを扱う場合は、ページネーションを使用してください
-- 不要なAPIリクエストを減らすためにキャッシュを活用してください

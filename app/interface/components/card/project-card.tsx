@@ -13,7 +13,7 @@ export function ProjectCard(props: Props) {
   const node = readFragment(ProjectCardFragment, props.project)
 
   return (
-    <Link to="/orgs/$organization" params={{ organization: node.id }}>
+    <Link to="/$project" params={{ project: node.id }}>
       <Card className="p-4">
         <h2>{node.name}</h2>
       </Card>

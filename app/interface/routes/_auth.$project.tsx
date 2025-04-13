@@ -27,7 +27,7 @@ import {
 } from "~/interface/components/ui/sidebar"
 import { useSession } from "~/interface/hooks/use-session"
 
-export const Route = createFileRoute("/$project")({
+export const Route = createFileRoute("/_auth/$project")({
   component: RouteComponent,
 })
 
