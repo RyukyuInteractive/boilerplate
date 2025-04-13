@@ -193,10 +193,6 @@ export async function updateCopilotInstructions() {
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
-    config.instructions.context,
-    config.instructions.progress,
-    config.instructions.restriction,
-    config.instructions.note,
   ])
 
   for (const path of rules) {
@@ -289,10 +285,6 @@ export async function updateDevinRule() {
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
-    config.instructions.context,
-    config.instructions.progress,
-    config.instructions.restriction,
-    config.instructions.note,
   ]
 
   for (const path of instructions) {
@@ -326,10 +318,6 @@ export async function updateEditorRule() {
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
-    config.instructions.context,
-    config.instructions.progress,
-    config.instructions.restriction,
-    config.instructions.note,
   ]
 
   for (const path of instructions) {
