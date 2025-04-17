@@ -1,5 +1,5 @@
 ---
-description: 
+description: APIのQueryを定義する
 globs: api/interface/query-fields/*.ts
 alwaysApply: false
 ---

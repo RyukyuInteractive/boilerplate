@@ -1,6 +1,6 @@
 ---
 description: Prismaのスキーマを生成する
-globs:
+globs: schema.prisma
 alwaysApply: false
 ---
 

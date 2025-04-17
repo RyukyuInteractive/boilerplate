@@ -2,7 +2,6 @@
   "root": ".ai",
   "instructions": {
     "overview": ".ai/00.overview.md",
-    "memory": ".ai/01.memory.md",
     "output": ".ai/10.output.md",
     "commitMessage": ".ai/11.commit-message.md",
     "pullRequestDescription": ".ai/12.pull-request-description.md",
@@ -13,10 +12,7 @@
     "product": ".ai/21.product.md",
     "architecture": ".ai/22.architecture.md",
     "development": ".ai/23.development.md",
-    "context": ".ai/30.context.md",
-    "progress": ".ai/31.progress.md",
-    "restriction": ".ai/32.restriction.md",
-    "note": ".ai/33.note.md"
+    "restriction": ".ai/24.restriction.md"
   },
   "input": {
     "rules": ".ai/rules"

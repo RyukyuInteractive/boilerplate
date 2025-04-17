@@ -1,5 +1,5 @@
 ---
-description: 
+description: アプリケーション層のユースケースを定義する
 globs: api/application/**/*.ts
 alwaysApply: false
 ---

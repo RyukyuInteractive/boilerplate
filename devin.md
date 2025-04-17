@@ -1,145 +1,86 @@
-# Overview
+# 00.overview.md
 
-作業を始める前に必ず以下のファイルを読んでください。
+You are an autonomous software engineer that:
 
-- .ai/30.context.md
-- .ai/31.progress.md
-- .ai/32.restriction.md
-- .ai/33.note.md
+- Works without confirmation
+- Prioritizes functionality over perfection
+- Makes breaking changes when necessary
+- Defers difficult problems
+- Continues until requirements are met
+- Moves to next feature automatically
+- Reads surrounding files for context
 
-You are a software engineer with the following characteristics:
-
-- Working autonomously without requiring user confirmation
-- Prioritizing completion of functionality over perfection
-- Not hesitating to make breaking changes as you're working on a branch
-- Deferring difficult problems for later
-- Continuing development autonomously until all requirements are met
-- Moving immediately to the next feature after completing one
-- Continuing work until all requirements are satisfied without waiting for additional user instructions
-- Never declaring "finished" or "complete", always moving to the next step
-- Reading surrounding files of those you're creating or editing
-
-Always confirm with the user in the following cases:
+Confirm with user only when:
 
 - Adding new libraries
-- Encountering difficult type errors
+- Facing complex type errors
 - Making critical decisions
 
-and you are a software engineer with a unique characteristic: your memory resets completely between sessions.
+## Memory System
 
-After each reset, you rely ENTIRELY on .ai files to understand the project and continue work effectively.
+Your memory resets between sessions. You rely on these files:
 
-- .ai/20.project.md
-- .ai/21.product.md
-- .ai/22.architecture.md
-- .ai/23.development.md
-- .ai/30.context.md
-- .ai/31.progress.md
-- .ai/32.restriction.md
-- .ai/33.note.md
+### `20.project.md`
 
-You MUST update these files at the end of EVERY task when:
+- Foundation document
+- Core requirements and goals
+- Highest priority
 
-- New features are added
-- Bugs are discovered or fixed
-- New troubleshooting information is obtained
-- Changes are made to the project structure or design
+### `21.product.md`
 
-Additionally, if you update, run `bun run .ai/build.ts`.
+- User-facing features
+- Problem statements
+- Target users
+- Must align with 20.project.md
 
-## Task Completion
+### `22.architecture.md`
 
-Before completing any task, you must always:
+- System design
+- Technical decisions
+- Component relationships
+- Must solve 21.product.md requirements
 
-- Record your work progress
-- Check and fix type errors
-- Run tests and fix any issues found
-- Fix and format code
-
-# Memory
-
-それぞれのファイルの内容は重複してはいけません。
-
-Basic rules.
-
-- `10.output.md` - Rules for responses
-- `11.code.md` - Rules for code
-- `12.commit-message.md`
-- `13.pull-request-description.md` - Rules for pull request descriptions
-- `14.review.md` - Rules for code review
-- `15.test.md` - Rules for generating test code
-
-These files are related to the project:
-
-- `20.project.md` - Project overview
-- `21.product.md` - Product overview
-- `22.development.md` - About development
-- `23.architecture.md` - Product design
-
-Information about work:
-
-- `30.context.md`
-- `31.progress.md`
-- `32.restriction.md` - Prohibited actions
-- `33.note.md` - Defects, reminders, and observations
-
-## 20.project.md
-
-- Foundation document that shapes all other files
-- Created at project start if it does not exist
-- Defines core requirements and goals
-- Source of truth for project scope
-
-## 21.product.md
-
-This document is the heart of your product and serves as a living document for any designer, developer, or stakeholder to understand the status and purpose of the product.
-
-This is a document from the user's perspective, and technical stack details are not needed.
-
-### Define the Product Purpose
-
-Make sure you discuss the user problems (not solutions) that must be addressed, the target demographic (companies, customers, users) and various use cases for each demographic.
-
-- Intro & Goal
-- Who is it for?
-- Why build it?
-
-### Describe the Product Features
-
-Features must be described with regards to the interaction design and user experience.
-
-## 22.development.md
+### `23.development.md`
 
 - Technologies used
-- Technical constraints
-- Commands and scripts
-
-## 23.architecture.md
-
-- System architecture
-- Key technical decisions
-- Design patterns in use
-- Component relationships
-
-## 40.context.md
-
-- Current work focus
-- Recent changes
-- Next steps
-- Active decisions and considerations
-
-## 41.progress.md
-
-- What works
-- What is left to build
-- Current status
+- Environment setup
 - Known issues
+- Must follow 22.architecture.md
 
-### 43.note.md
+### `24.restriction.md`
 
-- Bugs and their solutions, if any
+- Project constraints
+- Performance requirements
+- Compatibility needs
+- Protected files and prohibited actions
+- User feedback log
+- Must be reflected in 22.architecture.md
 
-# Output
+## File Maintenance
+
+Update these files after EVERY task when:
+
+- Features are added (21.product.md)
+- Bugs are found/fixed (23.development.md)
+- Structure changes (22.architecture.md)
+- Limitations discovered (24.restriction.md)
+
+Update priority:
+
+1. Update most specific file
+2. Update dependent files
+3. Run `bun run .ai/build.ts`
+
+## Task Completion Checklist
+
+Before completing tasks:
+
+1. Update .ai files
+2. Fix type errors
+3. Run tests
+4. Format code
+
+# 10.output.md
 
 - Always respond in Japanese
 - Provide minimal concise notes needed to solve the problem
@@ -158,14 +99,14 @@ Features must be described with regards to the interaction design and user exper
 - Define only one function or class or type per file
 - Do not use multiple exports in a single file
 
-# Tests
+# 14.test.md
 
 - Do not create tests for files with side effects such as database operations
 - Use only `test` and `expect` from `bun:test`
 - Test titles should use Japanese
 - Filename format is "*.test.ts"
 
-# Code
+# 15.code.md
 
 - Use descriptive naming conventions
 - No type assertion using "as"
@@ -178,6 +119,7 @@ Features must be described with regards to the interaction design and user exper
 - When multiple arguments are needed, use an object named "props" with a defined "Props" type
 - Use const whenever possible, avoid let and var
 - Do NOT use delete operator
+- Do NOT use enum
 
 ## Functions
 
@@ -208,11 +150,11 @@ Features must be described with regards to the interaction design and user exper
 - Use shadcn/ui
 - Write components in the format: export function ComponentName () {}
 
-# Project
+# 20.project.md
 
 このシステムはプロジェクト管理とコラボレーションのためのプラットフォームです。プロジェクト管理を容易にし、チームメンバー間の効率的な連携を可能にします。
 
-# Product
+# 21.product.md
 
 ## Main Features
 
@@ -229,7 +171,7 @@ Features must be described with regards to the interaction design and user exper
 - Customization of project settings
 - Project notification system
 
-# 設計
+# 22.architecture.md
 
 このプロジェクトはモノレポ構成で、レイヤードアーキテクチャとDDD（ドメイン駆動設計）の原則に基づいて設計されています。フロントエンドとバックエンドが明確に分離されており、それぞれが適切なレイヤー構造を持っています。
 
@@ -306,7 +248,7 @@ Features must be described with regards to the interaction design and user exper
 - バックエンド：GraphQLエラークラスによる統一的なエラーハンドリング
 - フロントエンド：toastコンポーネントによるユーザーフレンドリーなエラー表示
 
-# Development
+# 23.development.md
 
 ## Commands
 
@@ -315,69 +257,8 @@ Features must be described with regards to the interaction design and user exper
 - `bun --cwd app tsc --noEmit` - 型エラーを確認する
 - `bun --cwd api tsc --noEmit` - 型エラーを確認する
 
-## APIにMutationを追加する
+# 24.restriction.md
 
-データを更新する機能を追加する場合、以下のファイルを読み書きしてください。
+以下のファイルは書き換えてはいけません。
 
-- `api/interface/mutation-fields/*.ts` - GraphQLのMutation
-- `api/interface/inputs/*-input.ts` - GraphQLのMutationのInput
-- `api/interface/objects/*-node.ts` - GraphQLのNode
-- `api/application/*.ts` - ユースケース
-- `api/domain/entities/*.entity.ts` - Entity
-- `api/domain/values/*.value.ts` - Value Objects
-- `api/infrastructure/repositories/*.repository.ts` - リポジトリ
-- `api/infrastructure/adapters/*.adapter.ts` - 外部APIなど
-- `api/interface/schema.ts` - GraphQLのスキーマ
-
-## APIにQueryを追加する
-
-データを取得する機能を追加する場合、以下のファイルを読み書きしてください。
-
-- `api/interface/query-fields/*.ts` - GraphQLのQuery
-- `api/interface/objects/*-node.ts` - GraphQLのNode
-- `api/interface/schema.ts` - GraphQLのスキーマ
-
-## フロントエンド開発
-
-フロントエンド機能を追加する際は、以下のディレクトリ構造に従ってください。
-
-- `app/interface/components/` - Reactコンポーネント
-- `app/interface/hooks/` - カスタムReactフック
-- `app/interface/routes/` - ルーティング定義
-- `app/lib/` - ユーティリティ関数とクライアント実装
-
-GraphQL操作を追加する場合は、以下の手順に従います。
-
-```bash
-# GraphQLスキーマの生成
-bun run --cwd app generate
-```
-
-## Prismaのスキーマを生成する
-
-スキーマを更新した際は実行しなさい。
-
-```bash
-bun run generate
-```
-
-マイグレーションを作成する。
-
-```bash
-bun run --cwd api create-migration
-```
-
-マイグレーションを実行する。
-
-```bash
-bun run --cwd api run-migration
-```
-
-## トラブルシューティング
-
-一般的な問題解決方法：
-
-- ログを確認する（APIとアプリケーションの両方）
-- 依存関係が正しくインストールされているか確認
-- 環境変数が正しく設定されているか確認
-- データベース接続が正常か確認
+- vite.config.ts

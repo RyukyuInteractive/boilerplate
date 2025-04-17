@@ -1,5 +1,5 @@
 ---
-description: 
+description: Entityを定義する
 globs: api/domain/entities/*.entity.ts
 alwaysApply: false
 ---

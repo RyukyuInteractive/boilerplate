@@ -1,6 +1,12 @@
 import fs from "node:fs/promises"
 import config from "./config.json"
 
+await updateCopilotInstructions()
+await updateEditorRule()
+await updateCursorRules()
+await updateVscodeSettings()
+await updateDevinRule()
+
 function extractFrontmatter(markdownText: string): {
   description: string
   globs: string
@@ -70,29 +76,33 @@ alwaysApply: ${props.alwaysApply}
 async function createRulesInstructions(props: {
   rulesPath: string
 }) {
+  let markdown = ""
+
   const rules = await readMdcRules(props.rulesPath)
 
   if (rules.length === 0) {
     return ""
   }
 
-  let markdown = "# ファイル読み込み\n\n"
-
-  markdown += "コードを生成する場合は以下のルールに従います。\n"
+  markdown = "# Rule files\n\n"
 
   markdown +=
-    "対象が、以下のうちの「description」または「globs」のどちらかに一致する場合はそのファイルの指示を読んで従います。\n"
+    "If you find anything below that matches your purpose, read the file indicated in the 'read' section for reference.\n"
 
   markdown += "\n"
 
   for (const rule of rules) {
-    markdown += `- \`${rule.path}\`\n`
-    markdown += `  - description: ${rule.description}\n`
-    markdown += `  - globs: \`${rule.globs}\`\n`
+    markdown += `## ${rule.description || "-"}\n\n`
+    markdown += `- target: \`${rule.globs}\`\n`
+    markdown += `- read: \`${rule.path}\`\n`
     markdown += "\n"
   }
 
-  return `${markdown.trim()}\n`
+  markdown = `${markdown.trim()}\n`
+
+  markdown += "\n"
+
+  return markdown
 }
 
 async function readMdcRules(rulesPath: string): Promise<
@@ -110,7 +120,7 @@ async function readMdcRules(rulesPath: string): Promise<
     const path = `${rulesPath}/${file}`
     const content = await Bun.file(path).text()
     const frontmatter = extractFrontmatter(content)
-    if (frontmatter.alwaysApply === "true") continue
+    // if (frontmatter.alwaysApply === "true") continue
     rules.push({ ...frontmatter, path: path })
   }
 
@@ -173,13 +183,13 @@ async function updateCopilotInstructions() {
 
   const rules = Object.values([
     config.instructions.overview,
-    config.instructions.memory,
     config.instructions.output,
     config.instructions.code,
     config.instructions.project,
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
+    config.instructions.restriction,
   ])
 
   for (const path of rules) {
@@ -264,7 +274,6 @@ async function updateDevinRule() {
 
   const instructions = [
     config.instructions.overview,
-    config.instructions.memory,
     config.instructions.output,
     config.instructions.test,
     config.instructions.code,
@@ -272,6 +281,7 @@ async function updateDevinRule() {
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
+    config.instructions.restriction,
   ]
 
   for (const path of instructions) {
@@ -288,13 +298,10 @@ async function updateDevinRule() {
 async function updateEditorRule() {
   let markdown = ""
 
-  markdown += await createRulesInstructions({ rulesPath: config.input.rules })
-
   markdown += "\n"
 
   const instructions = [
     config.instructions.overview,
-    config.instructions.memory,
     config.instructions.output,
     config.instructions.commitMessage,
     config.instructions.pullRequestDescription,
@@ -305,6 +312,7 @@ async function updateEditorRule() {
     config.instructions.product,
     config.instructions.architecture,
     config.instructions.development,
+    config.instructions.restriction,
   ]
 
   for (const path of instructions) {
@@ -313,7 +321,9 @@ async function updateEditorRule() {
     markdown += "\n\n"
   }
 
-  markdown = `${markdown.trim()}\n`
+  markdown = `${markdown.trim()}\n\n`
+
+  markdown += await createRulesInstructions({ rulesPath: config.input.rules })
 
   if (config.output.clinerules) {
     await writeTextFile(markdown, config.output.clinerules)
@@ -359,9 +369,3 @@ async function updateVscodeSettings() {
 
   await writeTextFile(text, ".vscode", "settings.json")
 }
-
-await updateCopilotInstructions()
-await updateEditorRule()
-await updateCursorRules()
-await updateVscodeSettings()
-await updateDevinRule()

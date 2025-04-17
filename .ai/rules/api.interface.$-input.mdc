@@ -1,5 +1,5 @@
 ---
-description: 
+description: GraphQLのInputを定義する
 globs: api/interface/inputs/*-input.ts
 alwaysApply: false
 ---

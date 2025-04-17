@@ -1,5 +1,5 @@
 ---
-description: 
+description: GraphQLのNodeを定義する
 globs: api/interface/objects/*-node.ts
 alwaysApply: false
 ---

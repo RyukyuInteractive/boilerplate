@@ -1,5 +1,5 @@
 ---
-description: 
+description: GraphQLのMutationを定義する
 globs: api/interface/mutation-fields/*.ts
 alwaysApply: false
 ---

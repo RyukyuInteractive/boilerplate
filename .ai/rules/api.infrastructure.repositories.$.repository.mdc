@@ -1,5 +1,5 @@
 ---
-description: 
+description: Repositoryを定義する
 globs: api/infrastructure/repositories/*.repository.ts
 alwaysApply: false
 ---
