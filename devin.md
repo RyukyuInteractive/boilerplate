@@ -7,8 +7,6 @@ You are an autonomous software engineer that:
 - Makes breaking changes when necessary
 - Defers difficult problems
 - Continues until requirements are met
-- Moves to next feature automatically
-- Reads surrounding files for context
 
 Confirm with user only when:
 
@@ -16,69 +14,158 @@ Confirm with user only when:
 - Facing complex type errors
 - Making critical decisions
 
+# 01.workflow.md
+
+あなたは**必ず**以下の手順に従って進めてください。
+
+1. タスクを端的に説明する
+2. 仕様「.docs」から必要な情報を収集する
+3. 必要に応じて、仕様のドメインの知識に不足が無いかを確認する
+  4. もし問題があれば、これに取り組み、その結果を説明して「3」にもどる
+5. 必要に応じて、仕様を更新する
+  6. もし問題があれば、これに取り組み、その結果を説明して「5」にもどる
+6. 必要に応じて、仕様の全体に矛盾や不整合がないか確認する
+  7. もし問題があれば、これに取り組み、その結果を説明して「6」にもどる
+8. 収集した情報を元にタスクの計画を修正して説明する
+9. 作業の計画した内容に取り組む
+10. テストを実行して結果を説明する
+  11. もし問題がある場合は、これに取り組み、その結果を説明して「10」にもどる
+12. 型の検査して結果を説明する
+  13. もし問題がある場合は、これに取り組み、その結果を説明して「12」にもどる
+14. 必要に応じて、考えうる改善点を作成し説明する
+  15. もし改善点が存在する場合、これに取り組み、その結果を説明して「14」にもどる
+16. リファクタリングを行う
+17. タスクを完了する
+
 ## Memory System
 
 Your memory resets between sessions. You rely on these files:
 
-### `20.project.md`
+- `.docs/overview.md` - プロジェクト/製品の概要と目的を記述
+- `.docs/terms/README.md` - 用語集の概要説明とナビゲーション
+- `.docs/terms/term1.md` - 個別の用語定義（1用語1ファイル）
+- `.docs/terms/term2.md` - 個別の用語定義（1用語1ファイル）
+- `.docs/models/README.md` - ドメインモデルの概要とナビゲーション
+- `.docs/models/model1.md` - 個別ドメインモデルの定義
+- `.docs/models/model2.md` - 個別ドメインモデルの定義
+- `.docs/use-cases/README.md` - ユースケースの概要とナビゲーション
+- `.docs/use-cases/use-case1.md` - 個別ユースケースの定義
+- `.docs/use-cases/use-case2.md` - 個別ユースケースの定義
 
-- Foundation document
-- Core requirements and goals
-- Highest priority
+### 概要ファイル (overview.md)
 
-### `21.product.md`
+プロジェクト全体または個別製品の概要を記述。
 
-- User-facing features
-- Problem statements
-- Target users
-- Must align with 20.project.md
+- 簡潔かつ明確に記述する
+- 技術的詳細よりもビジネス価値に焦点を当てる
+- 全体像を把握できるように記述する
 
-### `22.architecture.md`
+```
+# [プロジェクト/製品名] 概要
 
-- System design
-- Technical decisions
-- Component relationships
-- Must solve 21.product.md requirements
+## 目的
 
-### `23.development.md`
+[このプロジェクト/製品の主な目的と解決する課題]
 
-- Technologies used
-- Environment setup
-- Known issues
-- Must follow 22.architecture.md
+## 主要機能
 
-### `24.restriction.md`
+- [機能1]: [簡潔な説明]
+- [機能2]: [簡潔な説明]
+- [機能3]: [簡潔な説明]
 
-- Project constraints
-- Performance requirements
-- Compatibility needs
-- Protected files and prohibited actions
-- User feedback log
-- Must be reflected in 22.architecture.md
+## ステークホルダー
 
-## File Maintenance
+- [ステークホルダー1]: [関係性]
+- [ステークホルダー2]: [関係性]
 
-Update these files after EVERY task when:
+## ビジネス制約
 
-- Features are added (21.product.md)
-- Bugs are found/fixed (23.development.md)
-- Structure changes (22.architecture.md)
-- Limitations discovered (24.restriction.md)
+- [制約1]
+- [制約2]
+```
 
-Update priority:
+### 用語定義ファイル (terms/*.md)
 
-1. Update most specific file
-2. Update dependent files
-3. Run `bun run .ai/build.ts`
+ドメイン固有の用語とその定義を記述。
 
-## Task Completion Checklist
+- 定義は明確かつ簡潔に
+- 専門家でなくても理解できる例を含める
+- 一般的な用語との違いを明確にする
+- 関連する他の用語へのリンクを含める
 
-Before completing tasks:
+```
+# [用語名]
 
-1. Update .ai files
-2. Fix type errors
-3. Run tests
-4. Format code
+## 定義
+[用語の簡潔かつ正確な定義]
+
+## 例
+[用語の具体的な例や使用例]
+
+## 補足説明
+[必要に応じた補足情報]
+
+## 関連用語
+- [関連用語1]: [関係性の説明]
+- [関連用語2]: [関係性の説明]
+```
+
+### モデル定義ファイル (models/*.md)
+
+ドメインモデル（エンティティ、値オブジェクト、集約など）を定義。
+
+- モデルの種類（エンティティ、値オブジェクト、集約）を明示する
+- 属性には型情報と制約を含める
+- ビジネスルールは明確かつ検証可能な形で記述する
+- 他のモデルとの関係性を明示する
+
+```
+# [モデル名]
+
+[モデルの役割と目的の説明]
+
+## 属性
+
+### [属性名]
+
+[属性の役割と目的の説明]
+
+## ビジネスルール
+
+- [ルール1]
+- [ルール2]
+```
+
+### ユースケース定義ファイル (use-cases/*.md)
+
+システムの利用シナリオと動作を記述。
+
+- フローは明確な番号付きステップで記述する
+- 代替フローは条件ごとに分けて記述する
+- 使用するドメインモデルへの参照を含める
+- エッジケースや例外も考慮する
+
+```
+# [ユースケース名]
+
+[ユースケースの目的と概要を1-2文で]
+
+1. [主語]が[アクション]する
+2. [主語]が[アクション]する
+    If ([条件]) Then
+      [条件成立時の処理]
+    Else
+      [条件不成立時の処理]
+    EndIf
+3. [次のステップ]
+```
+
+必要に応じて、以下の質問を使ってユースケースの詳細を引き出してください:
+
+1. このユースケースの目的は何ですか？
+2. 通常のシナリオでは具体的にどのような流れになりますか？
+3. どのような条件分岐が考えられますか？
+4. 複雑な例外処理が必要なケースはありますか？
 
 # 10.output.md
 
@@ -150,28 +237,7 @@ Before completing tasks:
 - Use shadcn/ui
 - Write components in the format: export function ComponentName () {}
 
-# 20.project.md
-
-このシステムはプロジェクト管理とコラボレーションのためのプラットフォームです。プロジェクト管理を容易にし、チームメンバー間の効率的な連携を可能にします。
-
-# 21.product.md
-
-## Main Features
-
-### User Accounts
-
-- Account registration and profile management
-- Customization of personal settings
-- Secure login using email and password
-
-### Projects
-
-- Simple project creation and setup
-- Invitation and role management for project members
-- Customization of project settings
-- Project notification system
-
-# 22.architecture.md
+# 20.architecture.md
 
 このプロジェクトはモノレポ構成で、レイヤードアーキテクチャとDDD（ドメイン駆動設計）の原則に基づいて設計されています。フロントエンドとバックエンドが明確に分離されており、それぞれが適切なレイヤー構造を持っています。
 
@@ -248,7 +314,7 @@ Before completing tasks:
 - バックエンド：GraphQLエラークラスによる統一的なエラーハンドリング
 - フロントエンド：toastコンポーネントによるユーザーフレンドリーなエラー表示
 
-# 23.development.md
+# 21.development.md
 
 ## Commands
 
@@ -257,7 +323,7 @@ Before completing tasks:
 - `bun --cwd app tsc --noEmit` - 型エラーを確認する
 - `bun --cwd api tsc --noEmit` - 型エラーを確認する
 
-# 24.restriction.md
+# 22.restriction.md
 
 以下のファイルは書き換えてはいけません。
 

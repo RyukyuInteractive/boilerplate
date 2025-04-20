@@ -2,17 +2,16 @@
   "root": ".ai",
   "instructions": {
     "overview": ".ai/00.overview.md",
+    "workflow": ".ai/01.workflow.a.md",
     "output": ".ai/10.output.md",
     "commitMessage": ".ai/11.commit-message.md",
     "pullRequestDescription": ".ai/12.pull-request-description.md",
     "review": ".ai/13.review.md",
     "test": ".ai/14.test.md",
     "code": ".ai/15.code.md",
-    "project": ".ai/20.project.md",
-    "product": ".ai/21.product.md",
-    "architecture": ".ai/22.architecture.md",
-    "development": ".ai/23.development.md",
-    "restriction": ".ai/24.restriction.md"
+    "architecture": ".ai/20.architecture.md",
+    "development": ".ai/21.development.md",
+    "restriction": ".ai/22.restriction.md"
   },
   "input": {
     "rules": ".ai/rules"
