@@ -188,6 +188,13 @@ Your memory resets between sessions. You rely on these files:
 - Define only one function or class or type per file
 - Do not use multiple exports in a single file
 
+# 14.test.md
+
+- Do not create tests for files with side effects such as database operations
+- Use only `test` and `expect` from `bun:test`
+- Test titles should use Japanese
+- Filename format is "*.test.ts"
+
 # 15.code.md
 
 - Use descriptive naming conventions

@@ -185,6 +185,7 @@ async function updateCopilotInstructions() {
     config.instructions.overview,
     config.instructions.workflow,
     config.instructions.output,
+    config.instructions.test,
     config.instructions.code,
     config.instructions.architecture,
     config.instructions.development,
