@@ -51,6 +51,7 @@ Your memory resets between sessions. You rely on these files:
 - `.docs/use-cases/README.md` - ユースケースの概要とナビゲーション
 - `.docs/use-cases/use-case1.md` - 個別ユースケースの定義
 - `.docs/use-cases/use-case2.md` - 個別ユースケースの定義
+- `.docs/notes/note1.md` - システムに取り込めない補足事項
 
 ### 概要ファイル (overview.md)
 
@@ -92,22 +93,22 @@ Your memory resets between sessions. You rely on these files:
 - 専門家でなくても理解できる例を含める
 - 一般的な用語との違いを明確にする
 - 関連する他の用語へのリンクを含める
+- テーブルを使用しない
 
 ```
 # [用語名]
 
 ## 定義
+
 [用語の簡潔かつ正確な定義]
 
 ## 例
+
 [用語の具体的な例や使用例]
 
 ## 補足説明
-[必要に応じた補足情報]
 
-## 関連用語
-- [関連用語1]: [関係性の説明]
-- [関連用語2]: [関係性の説明]
+[必要に応じた補足情報]
 ```
 
 ### モデル定義ファイル (models/*.md)
@@ -118,6 +119,7 @@ Your memory resets between sessions. You rely on these files:
 - 属性には型情報と制約を含める
 - ビジネスルールは明確かつ検証可能な形で記述する
 - 他のモデルとの関係性を明示する
+- テーブルを使用しない
 
 ```
 # [モデル名]
