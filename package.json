@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "open-stack",
   "type": "module",
   "scripts": {
     "dev": "bun run index.ts",
