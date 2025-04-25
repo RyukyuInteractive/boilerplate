@@ -2,7 +2,7 @@
   "name": "boilerplate",
   "type": "module",
   "scripts": {
-    "dev": "bun run .ai/lib/build.ts && prisma generate && bun run index.ts",
+    "dev": "bun run .ai/build.ts && prisma generate && bun run index.ts",
     "format": "biome check . --fix --unsafe && prisma format",
     "check": "bun run --cwd api typecheck && bun run --cwd app typecheck",
     "studio": "prisma studio",
