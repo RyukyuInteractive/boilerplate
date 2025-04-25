@@ -2,30 +2,31 @@
   "name": "boilerplate",
   "type": "module",
   "scripts": {
-    "dev": "bun run .ai/lib/build.ts && prisma generate && bun run index.ts",
+    "dev": "bun run index.ts",
     "format": "biome check . --fix --unsafe && prisma format",
     "check": "bun run --cwd api typecheck && bun run --cwd app typecheck",
     "studio": "prisma studio",
     "push": "prisma db push",
     "generate": "prisma generate",
-    "init": "bun run .ai/build.ts"
+    "init": "bun run .instructions/build.ts",
+    "predev": "bun run .instructions/build.ts && prisma generate"
   },
   "dependencies": {
-    "@prisma/adapter-d1": "^6.5.0",
-    "@prisma/client": "^6.5.0",
+    "@prisma/adapter-d1": "^6.6.0",
+    "@prisma/client": "^6.6.0",
     "graphql": "^16.10.0",
-    "hono": "^4.7.5",
+    "hono": "^4.7.7",
     "valibot": "^1.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.14",
+    "@tailwindcss/postcss": "^4.1.4",
     "postcss": "^8.5.3",
     "@biomejs/biome": "^1.9.4",
     "@types/bun": "latest",
     "concurrently": "^9.1.2",
-    "prisma": "^6.5.0",
-    "typescript": "^5.8.2",
-    "wrangler": "^4.2.0"
+    "prisma": "^6.6.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.13.1"
   },
   "workspaces": ["app", "api"]
 }

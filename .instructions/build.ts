@@ -55,12 +55,6 @@ function extractFrontmatter(markdownText: string): {
   return result
 }
 
-function extractMarkdownTitle(text: string): string | null {
-  const match = text.match(/^# (.+)$/m)
-
-  return match ? match[1] : null
-}
-
 function createFrontmatter(props: {
   description: string
   globs: string

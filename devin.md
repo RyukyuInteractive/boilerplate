@@ -41,17 +41,25 @@ Confirm with user only when:
 
 Your memory resets between sessions. You rely on these files:
 
-- `.docs/overview.md` - プロジェクト/製品の概要と目的を記述
-- `.docs/terms/README.md` - 用語集の概要説明とナビゲーション
-- `.docs/terms/term1.md` - 個別の用語定義（1用語1ファイル）
-- `.docs/terms/term2.md` - 個別の用語定義（1用語1ファイル）
-- `.docs/models/README.md` - ドメインモデルの概要とナビゲーション
-- `.docs/models/model1.md` - 個別ドメインモデルの定義
-- `.docs/models/model2.md` - 個別ドメインモデルの定義
-- `.docs/use-cases/README.md` - ユースケースの概要とナビゲーション
-- `.docs/use-cases/use-case1.md` - 個別ユースケースの定義
-- `.docs/use-cases/use-case2.md` - 個別ユースケースの定義
-- `.docs/notes/note1.md` - システムに取り込めない補足事項
+- `.docs/overview.md` - プロジェクトの概要と目的を記述
+- `.docs/**/*/README.md` - そのディレクトリを説明するAI向けの概要
+- `.docs/**/*.md` - 仕様など
+
+- `.docs/terms/*.md` - 個別の用語定義（1用語1ファイル）
+- `.docs/notes/*.md` - システムに取り込めない補足事項
+- `.docs/products/*/overview.md` - 製品の概要と目的を記述
+- `.docs/products/*/notes/*.md` - システムに取り込めない補足事項
+
+- `.updates/YYYY-MM-DD.md` - 更新履歴
+
+以下はファイルの例です。
+
+- `.docs/products/*/entities/*.md` - Entityの定義
+- `.docs/products/*/values/*.md` - 値オブジェクトの概要
+- `.docs/products/*/terms/term1.md` - 個別の用語定義（1用語1ファイル）
+- `.docs/products/*/use-cases/*.md` - システムの個別ユースケースの定義
+- `.docs/products/*/features/*.md` - 機能要件の定義
+- `.docs/products/*/pages/*.md` - ページの要件定義
 
 ### 概要ファイル (overview.md)
 
@@ -161,13 +169,6 @@ Your memory resets between sessions. You rely on these files:
     EndIf
 3. [次のステップ]
 ```
-
-必要に応じて、以下の質問を使ってユースケースの詳細を引き出してください:
-
-1. このユースケースの目的は何ですか？
-2. 通常のシナリオでは具体的にどのような流れになりますか？
-3. どのような条件分岐が考えられますか？
-4. 複雑な例外処理が必要なケースはありますか？
 
 # 10.output.md
 
