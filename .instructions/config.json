@@ -2,7 +2,7 @@
   "root": ".instructions",
   "instructions": {
     "overview": ".instructions/00.overview.md",
-    "workflow": ".instructions/01.workflow.a.md",
+    "workflow": ".instructions/01.workflow.md",
     "output": ".instructions/10.output.md",
     "commitMessage": ".instructions/11.commit-message.md",
     "pullRequestDescription": ".instructions/12.pull-request-description.md",
