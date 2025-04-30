@@ -328,6 +328,10 @@ async function updateEditorRule() {
   if (config.output.windsurfrules) {
     await writeTextFile(markdown, config.output.windsurfrules)
   }
+
+  if (config.output.augmentGuidelines) {
+    await writeTextFile(markdown, config.output.augmentGuidelines)
+  }
 }
 
 async function updateVscodeSettings() {
