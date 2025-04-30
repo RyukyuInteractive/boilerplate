@@ -1,17 +1,23 @@
 import fs from "node:fs/promises"
 import config from "./config.json"
 
+type Frontmatter = {
+  description: string
+  globs: string
+  alwaysApply: string
+}
+
+type Rule = Frontmatter & {
+  path: string
+}
+
 await updateCopilotInstructions()
 await updateEditorRule()
 await updateCursorRules()
 await updateVscodeSettings()
 await updateDevinRule()
 
-function extractFrontmatter(markdownText: string): {
-  description: string
-  globs: string
-  alwaysApply: string
-} {
+function extractFrontmatter(markdownText: string): Frontmatter {
   const result = {
     description: "",
     globs: "",
@@ -27,6 +33,10 @@ function extractFrontmatter(markdownText: string): {
   }
 
   const [, frontmatter] = match
+
+  if (frontmatter === undefined) {
+    throw new Error("Frontmatter is empty")
+  }
 
   const texts = frontmatter.split("\n")
 
@@ -99,16 +109,10 @@ async function createRulesInstructions(props: {
   return markdown
 }
 
-async function readMdcRules(rulesPath: string): Promise<
-  (ReturnType<typeof extractFrontmatter> & {
-    path: string
-  })[]
-> {
+async function readMdcRules(rulesPath: string): Promise<Rule[]> {
   const glob = new Bun.Glob("*.mdc")
 
-  const rules: (ReturnType<typeof extractFrontmatter> & {
-    path: string
-  })[] = []
+  const rules: Rule[] = []
 
   for await (const file of glob.scan(rulesPath)) {
     const path = `${rulesPath}/${file}`
