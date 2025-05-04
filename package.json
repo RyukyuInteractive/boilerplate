@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "bun run index.ts",
     "format": "biome check . --fix --unsafe && prisma format",
-    "check": "bun run --cwd api typecheck && bun run --cwd app typecheck",
+    "check": "bun run --cwd api check && bun run --cwd app check",
     "studio": "prisma studio",
     "push": "prisma db push",
     "generate": "prisma generate",

@@ -37,15 +37,14 @@ model PrismaUserSetting {
 }
 
 model PrismaProject {
-  id             String                      @id @map("id")
-  login          String                      @unique @map("login")
-  name           String                      @map("name")
+  id             String                @id @map("id")
+  login          String                @unique @map("login")
+  name           String                @map("name")
   members        PrismaProjectMember[]
   settings       PrismaProjectSetting[]
-  notifications  PrismaProjectNotification[]
-  deletedAt      DateTime?                   @map("deleted_at")
-  createdAt      DateTime                    @default(now()) @map("created_at")
-  updatedAt      DateTime                    @updatedAt @map("updated_at")
+  deletedAt      DateTime?             @map("deleted_at")
+  createdAt      DateTime              @default(now()) @map("created_at")
+  updatedAt      DateTime              @updatedAt @map("updated_at")
 
   @@map("projects")
 }
@@ -76,15 +75,4 @@ model PrismaProjectSetting {
   @@map("project_settings")
 }
 
-model PrismaProjectNotification {
-  id        String        @id @map("id")
-  title     String        @map("title")
-  message   String        @map("message")
-  type      String        @map("type")
-  createdAt DateTime      @default(now()) @map("created_at")
-  deletedAt DateTime?     @map("deleted_at")
-  projectId String        @map("project_id")
-  project   PrismaProject @relation(fields: [projectId], references: [id])
 
-  @@map("project_notifications")
-}
