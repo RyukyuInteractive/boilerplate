@@ -4,7 +4,7 @@ const config = {
   output: {
     windsurf: false,
     cline: true,
-    claude: false,
+    claude: true,
     devin: false,
     augment: false,
   },
