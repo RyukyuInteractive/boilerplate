@@ -16,7 +16,8 @@
     "@prisma/client": "^6.6.0",
     "graphql": "^16.10.0",
     "hono": "^4.7.7",
-    "valibot": "^1.0.0"
+    "valibot": "^1.0.0",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
