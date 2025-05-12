@@ -1,14 +1,12 @@
-# APIドキュメントガイド
+APIドキュメント
 
-## このディレクトリについて
+バックエンドAPIの仕様と設計を説明します。
 
-このディレクトリ（`docs/products/api`）には、Open Stackプロジェクト管理プラットフォームのバックエンドAPIに関する仕様や設計ドキュメントが含まれています。AIエージェントは、このディレクトリ内のファイルを参照してAPIの実装方法を理解できます。
+ナビゲーション
 
-## ディレクトリ構造
-
-- `overview.md` - API全体の概要と目的
-- `architecture/` - システムアーキテクチャの設計と説明
-- `entities/` - ドメインエンティティの定義
-- `features/` - APIが提供する機能の仕様
-- `values/` - 値オブジェクトの定義
-- `notes/` - API開発に関する補足事項
+overview.md - API全体の概要
+architecture/ - システム設計
+entities/ - ドメインエンティティ
+features/ - API機能仕様
+values/ - 値オブジェクト
+notes/ - 補足事項
