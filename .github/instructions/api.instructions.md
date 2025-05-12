@@ -1,8 +1,8 @@
 ---
-applyTo: "**/app/**/*.ts"
+applyTo: "**/api/**/*.ts"
 ---
 
-# App Directory Instructions
+# Api Directory Instructions
 
 あなたは**必ず**以下の手順に従って進めてください。
 
