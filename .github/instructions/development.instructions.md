@@ -1,0 +1,12 @@
+---
+applyTo: '**/*.md'
+---
+
+# Development
+
+## Commands
+
+- `bun test` - テストを実行する
+- `bun run format` - コードのエラーを修正して整形する
+- `bun --cwd app tsc --noEmit` - 型エラーを確認する
+- `bun --cwd api tsc --noEmit` - 型エラーを確認する

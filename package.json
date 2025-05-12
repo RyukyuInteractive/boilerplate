@@ -8,8 +8,8 @@
     "studio": "prisma studio",
     "push": "prisma db push",
     "generate": "prisma generate",
-    "init": "bun run .instructions/build.ts",
-    "predev": "bun run .instructions/build.ts && prisma generate"
+    "init": "bun run init.ts",
+    "predev": "bun run init.ts && prisma generate"
   },
   "dependencies": {
     "@prisma/adapter-d1": "^6.6.0",
@@ -28,5 +28,7 @@
     "typescript": "^5.8.3",
     "wrangler": "^4.13.1"
   },
-  "workspaces": ["app", "api"]
+  "workspaces": ["app", "api"],
+  "module": "index.ts",
+  "private": true
 }
