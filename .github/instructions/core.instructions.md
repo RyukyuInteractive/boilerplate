@@ -26,3 +26,10 @@ Confirm with user only when:
 - Use lowercase with hyphens
 - Define only one function or class or type per file
 - Do not use multiple exports in a single file
+
+## Commands
+
+- `bun test` - テストを実行する
+- `bun run format` - コードのエラーを修正して整形する
+- `bun --cwd app tsc --noEmit` - 型エラーを確認する
+- `bun --cwd api tsc --noEmit` - 型エラーを確認する
