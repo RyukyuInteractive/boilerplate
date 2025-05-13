@@ -20,3 +20,9 @@ Confirm with user only when:
 - Adding new libraries
 - Facing complex type errors
 - Making critical decisions
+
+## Files
+
+- Use lowercase with hyphens
+- Define only one function or class or type per file
+- Do not use multiple exports in a single file
