@@ -32,5 +32,8 @@ applyTo: '**/docs/**/features/*.md'
 - add-* - 配列に追加
 - remove-* - 配列から削除
 - update-* - 更新
+- search-* - 検索
 
-その他「search」「import」「archive」など必要に応じて使用します。
+その他「import」「archive」など必要に応じて使用します。
+
+ただし「manage」など粒度が大きい動詞は使用できません。
